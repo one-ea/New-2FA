@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UI页面生成模块 - 完整版本
  * 包含所有原版功能：搜索、导入导出、二维码、编辑删除等
  * 支持代码分割和懒加载优化
@@ -170,7 +170,7 @@ function getHTMLBody() {
         <p>点击上方按钮添加您的第一个2FA密钥</p>
         <div style="margin-top: 20px; font-size: 12px; color: var(--text-tertiary);">
           快捷键：Ctrl+D 调试模式 | Ctrl+R 刷新验证码<br>
-          数据存储：Cloudflare Workers KV
+          数据存储：Cloudflare R2
         </div>
       </div>
     </div>

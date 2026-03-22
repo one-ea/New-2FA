@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Core 核心业务逻辑模块
  * 包含密钥管理、OTP生成、二维码、备份等所有核心功能
  */
@@ -281,7 +281,7 @@ export function getCoreCode() {
           '<p>点击上方按钮添加您的第一个2FA密钥</p>' +
           '<div style="margin-top: 20px; font-size: 12px; color: #95a5a6;">' +
           '快捷键：Ctrl+D 调试模式 | Ctrl+R 刷新验证码<br>' +
-          '数据存储：Cloudflare Workers KV' +
+          '数据存储：Cloudflare R2' +
           '</div>';
         emptyState.style.display = 'block';
         return;

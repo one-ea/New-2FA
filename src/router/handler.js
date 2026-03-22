@@ -82,7 +82,7 @@ export async function handleRequest(request, env) {
 			authDetails = await verifyAuthWithDetails(request, env);
 
 			if (!authDetails || !authDetails.valid) {
-				// 检查是否未配置 KV 存储
+				// 检查是否未配置 R2 存储
 				if (!env.BACKUP_R2) {
 					return createErrorResponse('服务未配置', '服务器未配置 R2 存储。请联系管理员配置 BACKUP_R2。', 503, request);
 				}
