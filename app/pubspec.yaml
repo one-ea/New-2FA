@@ -1,0 +1,74 @@
+name: two_fa_app
+description: "2FA 验证器 - 与 Cloudflare Workers 后端同步的原生 App"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP 客户端
+  http: ^1.2.1
+  dio: ^5.4.3+1                       # 带拦截器的 HTTP 客户端（Token 自动刷新）
+
+  # 安全存储（Keychain / KeyStore）
+  flutter_secure_storage: ^9.0.0
+
+  # 二维码扫描
+  mobile_scanner: ^5.2.3
+
+  # 生物识别（指纹/面容 ID）
+  local_auth: ^2.2.0
+
+  # TOTP 本地计算（OTP 算法）
+  otp: ^3.1.4
+  base32: ^2.1.3
+
+  # 剪贴板
+  clipboard: ^0.1.3
+
+  # 状态管理
+  provider: ^6.1.2
+
+  # 路由
+  go_router: ^13.2.0
+
+  # 时间处理
+  intl: ^0.19.0
+
+  # 平滑动画
+  flutter_animate: ^4.5.0
+
+  # 图标
+  cupertino_icons: ^1.0.6
+  material_symbols_icons: ^4.2719.3
+
+  # 震动反馈
+  vibration: ^2.0.0
+
+  # 共享偏好（非敏感设置）
+  shared_preferences: ^2.2.3
+
+  # URL 启动
+  url_launcher: ^6.3.0
+
+  # 导入/导出 JSON
+  file_picker: ^8.0.7
+  path_provider: ^2.1.3
+  share_plus: ^9.0.0
+
+  # WebDAV 备份
+  webdav_client: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

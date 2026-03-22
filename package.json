@@ -1,0 +1,21 @@
+{
+  "name": "2fa",
+  "version": "2.0.0",
+  "type": "module",
+  "private": true,
+  "description": "2FA OTP 验证器 - Cloudflare Workers + R2 + Flutter App",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "node scripts/deploy.js",
+    "deploy:dev": "node scripts/deploy.js --env development",
+    "deploy:direct": "wrangler deploy"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.37.0"
+  },
+  "author": "one-ea",
+  "license": "MIT"
+}

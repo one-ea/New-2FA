@@ -1,0 +1,26 @@
+name = "2fa"
+main = "src/worker.js"
+compatibility_date = "2024-01-13"
+workers_dev = true
+
+# KV 命名空间（仅存认证信息：密码哈希、JWT 密钥）
+# 部署时自动查找或创建
+# [[kv_namespaces]]
+# binding = "SECRETS_KV"
+# id = "your-kv-namespace-id"
+
+# R2 对象存储（主数据 + 备份）
+# 需先创建：npx wrangler r2 bucket create 2fa-backup
+[[r2_buckets]]
+binding = "BACKUP_R2"
+bucket_name = "2fa-backup"
+
+# 定时备份 - 每天北京 0:00
+[triggers]
+crons = ["0 16 * * *"]
+
+[vars]
+SW_VERSION = "v2"
+
+[env.development]
+name = "2fa-dev"
