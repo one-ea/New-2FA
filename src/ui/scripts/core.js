@@ -245,14 +245,14 @@ export function getCoreCode() {
             ) +
           '</div>' +
         '</div>' +
-        /* 底部：账户名 + 进度条 */
+        /* 底部：进度条（品牌色） + 账户名 */
         '<div class="card-bottom">' +
-          (secret.account ? '<span class="card-account">' + secret.account + '</span>' : '') +
           (isHOTP ? '' :
             '<div class="progress-top">' +
-              '<div class="progress-top-fill" id="progress-' + secret.id + '"></div>' +
+              '<div class="progress-top-fill" id="progress-' + secret.id + '" style="background:' + getServiceColor(secret.name) + ';"></div>' +
             '</div>'
           ) +
+          (secret.account ? '<span class="card-account">' + secret.account + '</span>' : '') +
         '</div>' +
       '</div>';
     }

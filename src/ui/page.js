@@ -1184,26 +1184,17 @@ function getHTMLBody() {
     </div>
   </footer>
 
-  <!-- 固定悬浮按钮组 -->
-  <!-- 操作菜单按钮 -->
-  <div class="action-menu-float">
-    <button class="main-action-button" id="mainActionBtn" onclick="toggleActionMenu()" title="操作菜单">
-      ➕
-    </button>
+  <!-- 右侧浮动竖直工具栏（概念图风格） -->
+  <div class="side-toolbar" id="sideToolbar">
+    <button class="toolbar-btn" onclick="showAddModal()" title="添加密钥">➕</button>
+    <button class="toolbar-btn" onclick="showQRScanner()" title="扫二维码">📷</button>
+    <button class="toolbar-btn" onclick="showImportModal()" title="批量导入">📥</button>
+    <button class="toolbar-btn" id="toolbarMoreBtn" onclick="toggleActionMenu()" title="更多操作">⚙️</button>
+  </div>
 
+  <!-- 更多操作浮动菜单（从工具栏展开） -->
+  <div class="action-menu-float" style="position:fixed; right: 64px; top: 50%; transform: translateY(-50%); z-index: 1002;">
     <div class="action-submenu" id="actionSubmenu">
-      <div class="submenu-item" onclick="showQRScanner(); closeActionMenu();">
-        <span class="item-icon">📷</span>
-        <span class="item-text">扫二维码</span>
-      </div>
-      <div class="submenu-item" onclick="showAddModal(); closeActionMenu();">
-        <span class="item-icon">➕</span>
-        <span class="item-text">手动添加</span>
-      </div>
-      <div class="submenu-item" onclick="showImportModal(); closeActionMenu();">
-        <span class="item-icon">📥</span>
-        <span class="item-text">批量导入</span>
-      </div>
       <div class="submenu-item" onclick="exportAllSecrets(); closeActionMenu();">
         <span class="item-icon">📤</span>
         <span class="item-text">批量导出</span>

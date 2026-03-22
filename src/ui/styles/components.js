@@ -1,5 +1,5 @@
 /**
- * 组件样式 v4 — 方案 C: 紧凑三列卡片
+ * 组件样式 v4.1 — 方案 C 精修：对齐概念图
  */
 export function getComponentStyles() {
 	return `
@@ -13,11 +13,11 @@ export function getComponentStyles() {
       padding-bottom: 60px;
     }
 
-    /* ── 紧凑卡片 ── */
+    /* ── 紧凑卡片（概念图 ~90px 高） ── */
     .secret-card {
       background: var(--card-bg);
       border-radius: var(--radius-md);
-      padding: 12px 14px 0;
+      padding: 10px 12px 0;
       border: 1px solid var(--card-border);
       transition: border-color var(--duration-normal) var(--ease-out),
                   box-shadow var(--duration-normal) var(--ease-out),
@@ -42,39 +42,39 @@ export function getComponentStyles() {
       transform: translateY(0) scale(0.99);
     }
 
-    /* ── 卡片头部：品牌图标 + 服务名（同行） ── */
+    /* ── 卡片头部：品牌图标 + 服务名（同行，紧凑） ── */
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
 
     .secret-info {
       flex: 1;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       min-width: 0;
     }
 
     .service-icon {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-weight: 600;
-      font-size: 10px;
+      font-size: 9px;
       color: var(--accent);
       background: var(--accent-light);
     }
 
     .service-icon img {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       object-fit: contain;
       border-radius: 3px;
     }
@@ -86,16 +86,14 @@ export function getComponentStyles() {
       font-size: 13px;
       font-weight: 600;
       margin: 0;
-      line-height: 1.3;
+      line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* 账户名移到卡片底部 */
-    .secret-text p {
-      display: none;
-    }
+    /* 账户名在 header 中隐藏 */
+    .secret-text p { display: none; }
 
     .secret-header {
       display: flex;
@@ -105,16 +103,18 @@ export function getComponentStyles() {
 
     .service-details { flex: 1; min-width: 0; }
 
-    /* ── 卡片菜单 ── */
+    /* ── 卡片菜单（hover 才显示） ── */
     .card-menu {
       position: relative;
       cursor: pointer;
       padding: 2px 4px;
       margin: -2px -4px;
       border-radius: 4px;
-      transition: background var(--duration-fast);
+      transition: background var(--duration-fast), opacity var(--duration-fast);
+      opacity: 0;
     }
 
+    .secret-card:hover .card-menu { opacity: 1; }
     .card-menu:hover { background: var(--bg-hover); }
 
     .menu-dots {
@@ -181,10 +181,10 @@ export function getComponentStyles() {
     .delete-btn:hover { background: var(--danger-light); color: var(--danger); }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       OTP 显示（紧凑版）
+       OTP 显示（极紧凑）
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .otp-preview {
-      margin: 4px 0 0;
+      margin: 0;
       padding: 0;
       background: none;
       border: none;
@@ -212,8 +212,8 @@ export function getComponentStyles() {
       transition: opacity var(--duration-fast);
       user-select: none;
       margin: 0;
-      padding: 0;
-      line-height: 1.3;
+      padding: 2px 0;
+      line-height: 1.2;
       background: none;
       border: none;
       display: block;
@@ -225,11 +225,8 @@ export function getComponentStyles() {
 
     .otp-bottom { display: none; }
 
-    /* 隐藏 "下一个" 验证码以节省空间 */
-    .otp-next-container {
-      display: none;
-    }
-
+    /* 隐藏 "下一个" 验证码 */
+    .otp-next-container { display: none; }
     .otp-next-label { display: none; }
 
     .otp-next-code {
@@ -241,32 +238,13 @@ export function getComponentStyles() {
       line-height: 1;
     }
 
-    /* ── 卡片底部信息行：账户名 ── */
-    .secret-card .secret-text p {
-      display: none;
-    }
-
-    /* 通过 JS 渲染的 account 在 OTP 下方以小灰字显示 */
-
-    /* ── 卡片底部：账户名 + 进度条 ── */
+    /* ── 卡片底部：进度条 + 账户名（概念图风格） ── */
     .card-bottom {
-      margin-top: 6px;
-      padding-bottom: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      margin-top: 4px;
+      padding-bottom: 8px;
     }
 
-    .card-account {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.2;
-    }
-
-    /* ── 进度条（底部彩色细线） ── */
+    /* 进度条 */
     .progress-mini { display: none; }
     .progress-mini-fill { display: none; }
 
@@ -275,7 +253,6 @@ export function getComponentStyles() {
       height: 3px;
       background: var(--progress-bg);
       position: relative;
-      margin-top: 10px;
       border-radius: 2px;
       overflow: hidden;
     }
@@ -287,6 +264,62 @@ export function getComponentStyles() {
       width: 0%;
       border-radius: 2px;
     }
+
+    /* 账户名在进度条下方，右对齐（概念图风格） */
+    .card-account {
+      display: block;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+      margin-top: 3px;
+      text-align: right;
+    }
+
+    /* ━━ 右侧浮动工具栏（概念图：竖直4按钮） ━━ */
+    .side-toolbar {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 1001;
+      background: var(--menu-bg);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .toolbar-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all var(--duration-fast);
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .toolbar-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .toolbar-btn:active { transform: scale(0.92); }
 
     /* ━━ Footer ━━ */
     .page-footer {
@@ -394,6 +427,9 @@ export function getComponentStyles() {
       .secrets-list {
         grid-template-columns: repeat(2, 1fr);
       }
+      .side-toolbar {
+        right: 12px;
+      }
     }
 
     @media (max-width: 580px) {
@@ -401,32 +437,25 @@ export function getComponentStyles() {
         grid-template-columns: 1fr;
         gap: 8px;
       }
-
       .otp-code { font-size: 28px; }
+      .side-toolbar {
+        position: fixed;
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: 16px;
+        transform: translateX(-50%);
+        flex-direction: row;
+      }
     }
 
     @media (max-width: 480px) {
-      .secret-card {
-        padding: 10px 12px 0;
-      }
-
-      .otp-code {
-        font-size: 24px;
-        letter-spacing: 1.5px;
-      }
+      .secret-card { padding: 8px 10px 0; }
+      .otp-code { font-size: 24px; letter-spacing: 1.5px; }
     }
 
     @media (min-width: 1200px) {
-      .secrets-list {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-      }
-    }
-
-    @media (min-width: 1440px) {
-      .action-menu-float { right: 28px; }
-      .theme-toggle-float, .back-to-top { right: 28px; }
-      .back-to-top.show ~ .theme-toggle-float { bottom: 68px !important; }
+      .secrets-list { gap: 12px; }
     }
 `;
 }
