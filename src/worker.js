@@ -13,6 +13,7 @@ import { getLogger, createRequestLogger, PerformanceTimer } from './utils/logger
 import { getMonitoring, ErrorSeverity } from './utils/monitoring.js';
 import { getAllSecrets } from './api/secrets/shared.js';
 import { executeImmediateBackup, cleanupOldBackups } from './utils/backup.js';
+import { autoWebDAVBackup } from './api/webdav.js';
 
 /**
  * Cloudflare Worker 主入口点
@@ -93,6 +94,17 @@ export default {
 			timer.checkpoint('清理完成');
 
 			timer.end({ success: true, backupKey: result?.backupKey, secretCount: secrets.length });
+
+			// WebDAV 自动备份（如果已配置）
+			try {
+				const davResult = await autoWebDAVBackup(env);
+				if (davResult) {
+					logger.info('WebDAV 自动备份完成', davResult);
+				}
+			} catch (davError) {
+				logger.warn('WebDAV 自动备份失败（不影响 R2 备份）', {}, davError);
+			}
+
 			logger.info('定时备份任务完成', { secretCount: secrets.length });
 		} catch (error) {
 			logger.error('定时备份任务失败', { duration: timer.getDuration() }, error);

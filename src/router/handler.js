@@ -17,6 +17,15 @@ import {
 	handleExportBackup,
 } from '../api/secrets/index.js';
 import { handleFaviconProxy } from '../api/favicon.js';
+import {
+	handleSaveWebDAVConfig,
+	handleGetWebDAVConfig,
+	handleTestWebDAV,
+	handleWebDAVBackup,
+	handleListWebDAVBackups,
+	handleWebDAVRestore,
+	handleDeleteWebDAVFile,
+} from '../api/webdav.js';
 
 // UI 页面生成器
 import { createMainPage } from '../ui/page.js';
@@ -293,6 +302,33 @@ async function handleApiRequest(pathname, method, request, env) {
 			return handleFaviconProxy(request, env, domain);
 		}
 		return createErrorResponse('方法不允许', `不支持的HTTP方法: ${method}`, 405, request);
+	}
+
+	// WebDAV 备份 API
+	if (pathname === '/api/webdav/config') {
+		if (method === 'POST') return handleSaveWebDAVConfig(request, env);
+		if (method === 'GET') return handleGetWebDAVConfig(env);
+		return createErrorResponse('方法不允许', `不支持的HTTP方法: ${method}`, 405, request);
+	}
+
+	if (pathname === '/api/webdav/test' && method === 'POST') {
+		return handleTestWebDAV(request, env);
+	}
+
+	if (pathname === '/api/webdav/backup' && method === 'POST') {
+		return handleWebDAVBackup(request, env);
+	}
+
+	if (pathname === '/api/webdav/list' && method === 'GET') {
+		return handleListWebDAVBackups(env);
+	}
+
+	if (pathname === '/api/webdav/restore' && method === 'POST') {
+		return handleWebDAVRestore(request, env);
+	}
+
+	if (pathname === '/api/webdav/file' && method === 'DELETE') {
+		return handleDeleteWebDAVFile(request, env);
 	}
 
 	// 未知API路径
