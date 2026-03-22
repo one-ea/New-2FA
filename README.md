@@ -21,22 +21,18 @@
 # 1. 安装依赖
 npm install
 
-# 2. 登录 Cloudflare（首次需要）
-npx wrangler login
+# 2. 创建 KV 和 R2
+npx wrangler kv namespace create "2fa-secrets"
+npx wrangler r2 bucket create 2fa-backup
 
-# 3. 一键部署（自动创建 KV + R2 + 迁移数据 + 部署）
+# 3. 将 KV 返回的 id 填入 wrangler.toml
+
+# 4. 部署
 npm run deploy
 
-# 4.（可选）设置加密密钥
+# 5.（可选）设置加密密钥
 npx wrangler secret put ENCRYPTION_KEY
 ```
-
-`npm run deploy` 会自动：
-- 创建 KV 命名空间（存认证信息）
-- 创建 R2 Bucket（存密钥数据 + 备份）
-- 更新 `wrangler.toml` 绑定配置
-- 迁移现有 KV 数据到 R2（如有）
-- 部署 Worker
 
 ## Flutter App
 

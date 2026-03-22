@@ -6,9 +6,7 @@
   "description": "2FA OTP 验证器 - Cloudflare Workers + R2 + Flutter App",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "node scripts/deploy.js",
-    "deploy:dev": "node scripts/deploy.js --env development",
-    "deploy:direct": "wrangler deploy"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "qrcode": "^1.5.3"
