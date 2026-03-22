@@ -206,25 +206,19 @@ export function getCoreCode() {
       const isHOTP = secret.type && secret.type.toUpperCase() === 'HOTP';
 
       return '<div class="secret-card" onclick="copyOTPFromCard(event, &quot;' + secret.id + '&quot;)" title="点击卡片复制验证码">' +
-        // TOTP 显示进度条，HOTP 不显示
-        (isHOTP ? '' :
-          '<div class="progress-top">' +
-            '<div class="progress-top-fill" id="progress-' + secret.id + '"></div>' +
-          '</div>'
-        ) +
+        /* 头部：图标 + 服务名 + 菜单 */
         '<div class="card-header">' +
           '<div class="secret-info">' +
             '<div class="service-icon">' +
               (logoUrl ?
-                '<img src="' + logoUrl + '" alt="' + secret.name + '" style="width: 30px; height: 30px; object-fit: contain; border-radius: 6px;" onerror="this.style.display=&quot;none&quot;; this.nextElementSibling.style.display=&quot;block&quot;;">' +
+                '<img src="' + logoUrl + '" alt="' + secret.name + '" style="width: 16px; height: 16px; object-fit: contain;" onerror="this.style.display=&quot;none&quot;; this.nextElementSibling.style.display=&quot;block&quot;;">' +
                 '<span style="display: none;">' + secret.name.charAt(0).toUpperCase() + '</span>' :
                 '<span>' + secret.name.charAt(0).toUpperCase() + '</span>'
               ) +
             '</div>' +
             '<div class="secret-text">' +
-            '<h3>' + secret.name + (isHOTP ? ' <span style="font-size: 11px; color: var(--text-tertiary); font-weight: 500;">[HOTP]</span>' : '') + '</h3>' +
+            '<h3>' + secret.name + (isHOTP ? ' <span style="font-size: 10px; color: var(--text-tertiary); font-weight: 500;">[HOTP]</span>' : '') + '</h3>' +
             (secret.account ? '<p>' + secret.account + '</p>' : '') +
-            (isHOTP ? '<p style="font-size: 11px; color: var(--text-tertiary); margin-top: 2px;">计数器: ' + (secret.counter || 0) + '</p>' : '') +
             '</div>' +
           '</div>' +
           '<div class="card-menu" onclick="event.stopPropagation(); toggleCardMenu(&quot;' + secret.id + '&quot;)">' +
@@ -237,12 +231,12 @@ export function getCoreCode() {
             '</div>' +
           '</div>' +
         '</div>' +
+        /* OTP 验证码 */
         '<div class="otp-preview">' +
           '<div class="otp-main">' +
             '<div class="otp-code-container">' +
               '<div class="otp-code" id="otp-' + secret.id + '" onclick="event.stopPropagation(); copyOTP(&quot;' + secret.id + '&quot;)" title="点击复制验证码">------</div>' +
             '</div>' +
-            // HOTP 不显示"下一个"验证码（因为不是时间基准）
             (isHOTP ? '' :
               '<div class="otp-next-container" onclick="event.stopPropagation(); copyNextOTP(&quot;' + secret.id + '&quot;)" title="点击复制下一个验证码">' +
                 '<div class="otp-next-label">下一个</div>' +
@@ -250,6 +244,15 @@ export function getCoreCode() {
               '</div>'
             ) +
           '</div>' +
+        '</div>' +
+        /* 底部：账户名 + 进度条 */
+        '<div class="card-bottom">' +
+          (secret.account ? '<span class="card-account">' + secret.account + '</span>' : '') +
+          (isHOTP ? '' :
+            '<div class="progress-top">' +
+              '<div class="progress-top-fill" id="progress-' + secret.id + '"></div>' +
+            '</div>'
+          ) +
         '</div>' +
       '</div>';
     }

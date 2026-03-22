@@ -89,55 +89,53 @@ function getHTMLBody() {
 	return `
 <body>
   <div class="container">
-    <div class="content">
-      <div class="search-section">
-        <div class="search-container">
-          <!-- 防止浏览器自动填充的隐藏输入框 -->
+    <!-- 页面顶部：标题 + 搜索 + 操作 -->
+    <header class="page-header">
+      <h1 class="page-title">Authenticator</h1>
+      <div class="header-actions">
+        <div class="search-input-wrapper" id="headerSearch">
+          <!-- 防止浏览器自动填充 -->
           <input type="text" name="prevent_autofill_username" style="display:none" tabindex="-1" autocomplete="new-password">
           <input type="password" name="prevent_autofill_password" style="display:none" tabindex="-1" autocomplete="new-password">
 
-          <!-- 搜索框和操作按钮的水平布局 -->
-          <div class="search-action-row">
-          <div class="search-input-wrapper">
-            <span class="search-icon">🔍</span>
-            <input type="search"
-                   id="searchInput"
-                   name="search-query"
-                   class="search-input"
-                   placeholder="搜索服务或账户名称"
-                   oninput="filterSecrets(this.value)"
-                   autocomplete="off"
-                   autocorrect="off"
-                   autocapitalize="off"
-                   spellcheck="false"
-                   role="searchbox"
-                   aria-label="搜索2FA密钥"
-                   data-form-type="other"
-                   data-lpignore="true"
-                   data-1p-ignore="true"
-                   data-bwignore="true"
-                   readonly
-                   onfocus="this.removeAttribute('readonly')">
-            <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display: none;">✕</button>
-      </div>
-          <div class="sort-controls">
-            <select id="sortSelect" class="sort-select" onchange="applySorting()">
-              <option value="oldest-first">最早添加</option>
-              <option value="newest-first">最晚添加</option>
-              <option value="name-asc">服务名称 A-Z</option>
-              <option value="name-desc">服务名称 Z-A</option>
-              <option value="account-asc">账户名称 A-Z</option>
-              <option value="account-desc">账户名称 Z-A</option>
-            </select>
-      </div>
-          </div>
-          <div class="search-stats" id="searchStats" style="display: none;"></div>
+          <span class="search-icon">🔍</span>
+          <input type="search"
+                 id="searchInput"
+                 name="search-query"
+                 class="search-input"
+                 placeholder="搜索服务或账户..."
+                 oninput="filterSecrets(this.value)"
+                 autocomplete="off"
+                 autocorrect="off"
+                 autocapitalize="off"
+                 spellcheck="false"
+                 role="searchbox"
+                 aria-label="搜索2FA密钥"
+                 data-form-type="other"
+                 data-lpignore="true"
+                 data-1p-ignore="true"
+                 data-bwignore="true"
+                 readonly
+                 onfocus="this.removeAttribute('readonly')">
+          <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display: none;">✕</button>
         </div>
+        <select id="sortSelect" class="sort-select" onchange="applySorting()">
+          <option value="oldest-first">最早添加</option>
+          <option value="newest-first">最晚添加</option>
+          <option value="name-asc">名称 A-Z</option>
+          <option value="name-desc">名称 Z-A</option>
+          <option value="account-asc">账户 A-Z</option>
+          <option value="account-desc">账户 Z-A</option>
+        </select>
       </div>
+    </header>
+
+    <div class="content">
+      <div class="search-stats" id="searchStats" style="display: none;"></div>
 
       <!-- 背景遮罩 -->
       <div class="menu-overlay" id="menuOverlay" onclick="closeActionMenu()"></div>
-      
+
       <div id="loading" class="loading">
         <div>⏳ 加载中...</div>
       </div>
@@ -149,11 +147,7 @@ function getHTMLBody() {
       <div id="emptyState" class="empty-state" style="display: none;">
         <div class="icon">🔑</div>
         <h3>还没有密钥</h3>
-        <p>点击上方按钮添加您的第一个2FA密钥</p>
-        <div style="margin-top: 20px; font-size: 12px; color: var(--text-tertiary);">
-          快捷键：Ctrl+D 调试模式 | Ctrl+R 刷新验证码<br>
-          数据存储：Cloudflare R2
-        </div>
+        <p>点击右上角 + 按钮添加您的第一个2FA密钥</p>
       </div>
     </div>
   </div>
