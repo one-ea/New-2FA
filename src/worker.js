@@ -1,8 +1,7 @@
 /**
  * 2FA OTP Generator - Cloudflare Worker v2
  *
- * - 密钥数据存储在 R2（异地安全）
- * - KV 仅存认证信息（密码哈希、JWT 密钥等）
+ * - 所有数据存储在 R2（密钥 + 认证 + 备份）
  * - 定时备份直接写 R2
  *
  * 原作者: wuzf (https://github.com/wuzf)

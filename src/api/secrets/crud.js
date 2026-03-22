@@ -9,9 +9,7 @@
  */
 
 import { saveSecretsToKV, getAllSecrets } from './shared.js';
-import { decryptSecrets } from '../../utils/encryption.js';
-import { getLogger } from '../../utils/logger.js';
-import { PerformanceTimer } from '../../utils/logger.js';
+import { getLogger, PerformanceTimer } from '../../utils/logger.js';
 import { getMonitoring, ErrorSeverity } from '../../utils/monitoring.js';
 import { validateRequest, addSecretSchema, checkDuplicateSecret, validateBase32 } from '../../utils/validation.js';
 import { createJsonResponse, createErrorResponse, createSuccessResponse } from '../../utils/response.js';

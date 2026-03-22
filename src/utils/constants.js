@@ -1,31 +1,22 @@
 /**
- * Centralized constants for KV keys and configuration
- * 集中管理 KV 键名和配置常量
+ * Centralized constants for R2 paths and configuration
+ * 集中管理 R2 路径和配置常量
  */
 
 // =============================================================================
-// KV Storage Keys
+// R2 Storage Paths
 // =============================================================================
 
-export const KV_KEYS = {
-	// Main data keys
-	SECRETS: 'secrets',
-	PASSWORD: 'password',
-	SETTINGS: 'settings',
+export const R2_PATHS = {
+	// 主数据
+	SECRETS: 'data/secrets.json',
 
-	// Backup keys
-	BACKUP_PREFIX: 'backup:',
-	BACKUP_METADATA: 'backup:metadata',
-	LAST_HASH: 'last-data-hash',
+	// 认证数据
+	PASSWORD: 'auth/user_password',
+	SETUP_COMPLETED: 'auth/setup_completed',
 
-	// Rate limiting
-	RATE_LIMIT_PREFIX: 'ratelimit:',
-
-	// Session
-	SESSION_PREFIX: 'session:',
-
-	// Setup
-	SETUP_COMPLETED: 'setup_completed',
+	// 备份
+	BACKUP_PREFIX: 'backups/',
 };
 
 // =============================================================================
