@@ -1,25 +1,26 @@
 /**
- * 组件样式 v2
+ * 组件样式 v3
  */
 export function getComponentStyles() {
 	return `
-    /* ─── 密钥卡片列表 ─── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       密钥卡片网格
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .secrets-list {
       display: grid;
-      /* 一列最小320px，自适应屏幕宽度展现2-3列 */
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
-      margin: 0 auto;
-      padding-bottom: 80px; /* 去除旧约束，留足底部空间 */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      padding-bottom: 80px;
     }
 
     .secret-card {
       background: var(--card-bg);
-      border-radius: 18px;
-      padding: 18px;
-      padding-top: 20px;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px 14px;
       border: 1px solid var(--card-border);
-      transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: border-color var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out),
+                  transform var(--duration-normal) var(--ease-out);
       position: relative;
       width: 100%;
       box-shadow: var(--card-shadow);
@@ -33,14 +34,14 @@ export function getComponentStyles() {
     .secret-card:hover {
       border-color: var(--card-hover-border);
       box-shadow: var(--card-hover-shadow);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
 
     .secret-card:active {
-      transform: translateY(0);
+      transform: translateY(0) scale(0.995);
     }
 
-    /* 卡片头部 */
+    /* ── 卡片头部 ── */
     .secret-header {
       display: flex;
       justify-content: space-between;
@@ -64,30 +65,29 @@ export function getComponentStyles() {
     }
 
     .service-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       color: var(--accent);
       background: var(--accent-light);
-      border: 1px solid var(--accent-border);
-      transition: transform 0.3s ease;
+      transition: transform var(--duration-normal) var(--ease-out);
     }
 
     .secret-card:hover .service-icon {
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
     .service-icon img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
-      border-radius: 6px;
+      border-radius: 4px;
     }
 
     .secret-text { flex: 1; min-width: 0; }
@@ -98,8 +98,9 @@ export function getComponentStyles() {
       font-size: 14px;
       font-weight: 600;
       margin: 0 0 1px;
-      line-height: 1.3;
+      line-height: 1.4;
       word-break: break-word;
+      letter-spacing: -0.01em;
     }
 
     .secret-text p {
@@ -107,23 +108,25 @@ export function getComponentStyles() {
       font-size: 12px;
       margin: 0;
       line-height: 1.3;
-      word-break: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* 卡片菜单 */
+    /* ── 卡片菜单 ── */
     .card-menu {
       position: relative;
       cursor: pointer;
-      padding: 6px;
-      margin: -6px;
-      border-radius: 8px;
-      transition: background 0.15s;
+      padding: 4px 6px;
+      margin: -4px -6px;
+      border-radius: var(--radius-sm);
+      transition: background var(--duration-fast);
     }
 
     .card-menu:hover { background: var(--bg-hover); }
 
     .menu-dots {
-      font-size: 18px;
+      font-size: 16px;
       color: var(--text-tertiary);
       line-height: 1;
       user-select: none;
@@ -132,11 +135,11 @@ export function getComponentStyles() {
     .card-menu-dropdown {
       display: none;
       position: absolute;
-      top: -6px; right: -6px;
+      top: -4px; right: -4px;
       background: var(--menu-bg);
       border: 1px solid var(--menu-border);
-      border-radius: 12px;
-      min-width: 80px;
+      border-radius: var(--radius-md);
+      min-width: 100px;
       width: fit-content;
       box-shadow: var(--menu-shadow);
       z-index: 10000;
@@ -147,20 +150,21 @@ export function getComponentStyles() {
     .card-menu-dropdown.show { display: block; }
 
     .menu-item {
-      padding: 10px 14px;
+      padding: 9px 14px;
       color: var(--text-primary);
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background var(--duration-fast);
       font-size: 13px;
+      font-weight: 500;
       white-space: nowrap;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
     }
 
     .menu-item:hover { background: var(--menu-item-hover); }
     .menu-item-danger { color: var(--danger) !important; }
     .menu-item-danger:hover { background: var(--danger-light) !important; }
 
-    /* 操作按钮 */
+    /* ── 操作按钮 ── */
     .secret-actions {
       display: flex;
       gap: 6px;
@@ -169,28 +173,26 @@ export function getComponentStyles() {
     }
 
     .action-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-primary);
+      background: var(--bg-tertiary);
+      border: none;
       color: var(--text-secondary);
-      border-radius: 8px;
-      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
       font-size: 12px;
       font-weight: 500;
+      font-family: var(--font-body);
       cursor: pointer;
-      transition: all 0.2s ease;
-      min-width: 52px;
+      transition: all var(--duration-fast);
     }
 
-    .action-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .action-btn:hover { background: var(--bg-active); color: var(--text-primary); }
+    .delete-btn:hover { background: var(--danger-light); color: var(--danger); }
 
-    .qr-btn { color: var(--text-primary); }
-    .edit-btn { color: var(--text-primary); }
-    .delete-btn { color: var(--danger); border-color: rgba(255,59,48,0.2); }
-    .delete-btn:hover { background: var(--danger-light); color: var(--danger-dark); }
-
-    /* ─── OTP 显示 ─── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       OTP 显示
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .otp-preview {
-      margin-top: 10px;
+      margin-top: 12px;
       padding: 0;
       background: none;
       border: none;
@@ -209,17 +211,17 @@ export function getComponentStyles() {
     }
 
     .otp-code {
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-      font-size: 36px;
+      font-family: var(--font-mono);
+      font-size: 32px;
       font-weight: 500;
       color: var(--otp-text);
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: opacity var(--duration-fast);
       user-select: none;
-      margin: 2px 0;
-      line-height: 1.1;
+      margin: 0;
       padding: 0;
+      line-height: 1.2;
       background: none;
       border: none;
       display: block;
@@ -227,19 +229,19 @@ export function getComponentStyles() {
       text-align: left;
     }
 
-    .otp-code:hover { opacity: 0.7; }
+    .otp-code:hover { opacity: 0.65; }
 
     .otp-bottom { display: none; }
 
     .otp-next-container {
       text-align: right;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background var(--duration-fast);
       padding: 6px 10px;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       background: var(--otp-next-bg);
       flex-shrink: 0;
-      min-width: 68px;
+      min-width: 64px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -251,30 +253,26 @@ export function getComponentStyles() {
     .otp-next-label { display: none; }
 
     .otp-next-code {
-      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       color: var(--otp-next-text);
       letter-spacing: 1px;
       line-height: 1;
       display: block;
       white-space: nowrap;
-      text-align: right;
     }
 
-    /* 进度条 (改为底部极细极简风格) */
-    .progress-mini {
-      display: none; /* 极简设计里隐藏此组件以释放空间 */
-    }
-
+    /* ── 进度条 ── */
+    .progress-mini { display: none; }
     .progress-mini-fill { display: none; }
 
     .progress-top {
       width: 100%;
       height: 2px;
-      background: transparent;
+      background: var(--progress-bg);
       position: absolute;
-      bottom: 0; /* 放到卡片底部 */
+      bottom: 0;
       left: 0; right: 0;
       top: auto;
       border-radius: 0;
@@ -286,13 +284,14 @@ export function getComponentStyles() {
       background: var(--progress-fill);
       transition: width 1s linear, background-color 0.5s ease;
       width: 0%;
-      float: right; /* 从右往左消失 */
     }
 
-    /* ─── Footer ─── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Footer
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .page-footer {
-      margin-top: 32px;
-      padding: 16px 20px 20px;
+      margin-top: 24px;
+      padding: 16px 0 20px;
       border-top: 1px solid var(--footer-border);
       text-align: center;
     }
@@ -312,7 +311,7 @@ export function getComponentStyles() {
       color: var(--footer-link);
       text-decoration: none;
       font-size: 12px;
-      transition: color 0.15s;
+      transition: color var(--duration-fast);
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -329,7 +328,7 @@ export function getComponentStyles() {
     }
 
     .footer-info {
-      color: var(--text-tertiary);
+      color: var(--footer-text);
       font-size: 11px;
       margin-top: 4px;
     }
@@ -337,22 +336,22 @@ export function getComponentStyles() {
     .footer-info a {
       color: var(--footer-link);
       text-decoration: none;
-      transition: color 0.15s;
+      transition: color var(--duration-fast);
     }
 
     .footer-info a:hover { color: var(--footer-link-hover); }
 
-    /* ─── WebDAV 备份列表 ─── */
+    /* ── WebDAV 备份列表 ── */
     .webdav-backup-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
+      border-bottom: 1px solid var(--border-primary);
+      transition: background var(--duration-fast);
     }
     .webdav-backup-item:last-child { border-bottom: none; }
-    .webdav-backup-item:hover { background: var(--bg-tertiary); }
+    .webdav-backup-item:hover { background: var(--bg-hover); }
 
     .webdav-backup-info { flex: 1; min-width: 0; }
     .webdav-backup-name {
@@ -379,29 +378,69 @@ export function getComponentStyles() {
     .webdav-action-btn {
       width: 28px;
       height: 28px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-primary);
       border-radius: 6px;
-      background: var(--bg-primary);
+      background: var(--bg-secondary);
       color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 12px;
-      transition: all 0.15s;
+      transition: all var(--duration-fast);
       padding: 0;
     }
     .webdav-action-btn:hover {
-      background: var(--brand);
+      background: var(--accent);
       color: white;
-      border-color: var(--brand);
+      border-color: var(--accent);
     }
     .webdav-delete-btn:hover {
       background: var(--danger);
       border-color: var(--danger);
     }
 
-    /* 超宽屏 */
+    /* ── 响应式卡片 ── */
+    @media (max-width: 680px) {
+      .secrets-list {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .secret-card {
+        padding: 14px 14px 12px;
+        border-radius: var(--radius-md);
+      }
+
+      .service-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .service-icon img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .otp-code {
+        font-size: 28px;
+        letter-spacing: 2px;
+      }
+
+      .otp-next-code {
+        font-size: 12px;
+      }
+    }
+
+    /* ── 超宽屏 ── */
+    @media (min-width: 1200px) {
+      .secrets-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
     @media (min-width: 1440px) {
       .action-menu-float { right: 28px; }
       .theme-toggle-float, .back-to-top { right: 28px; }

@@ -1,65 +1,57 @@
 /**
- * 基础样式 v2 — 现代极简
+ * 基础样式 v3 — 布局骨架
  */
 export function getBaseStyles() {
 	return `
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--font-body);
       background: var(--bg-primary);
       min-height: 100vh;
       color: var(--text-primary);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
     }
 
+    /* ── 主容器 ── */
     .container {
-      max-width: 1080px; /* 极简风格放宽为主流桌面网格 */
+      max-width: 960px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    .header {
-      padding: 64px 8px 32px; /* 增加上间距，Apple 风格喜欢空旷 */
-      text-align: left; /* 改为左对齐适应多列网格 */
-    }
-
-    .header h1 {
-      font-size: 32px; /* 增加大标题尺寸 */
-      font-weight: 700;
-      letter-spacing: -0.8px;
-      margin-bottom: 8px;
-    }
-
-    .header p {
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 400;
-    }
-
     .content {
-      flex: 1; /* 撑满剩余高度 */
-      padding: 24px 8px 16px;
+      flex: 1;
+      padding: 20px 0;
     }
 
-    /* ─── 搜索栏 ─── */
-    .search-section { margin-bottom: 16px; }
+    /* ── 搜索栏 ── */
+    .search-section { margin-bottom: 20px; }
     .search-container { max-width: 100%; }
 
+    .search-action-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .search-input-wrapper {
+      flex: 1;
       position: relative;
       display: flex;
       align-items: center;
       background: var(--search-bg);
-      border: 1.5px solid var(--search-border);
-      border-radius: 12px;
+      border: 1px solid var(--search-border);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      transition: all 0.2s ease;
+      transition: border-color var(--duration-fast) ease,
+                  box-shadow var(--duration-fast) ease;
     }
 
     .search-input-wrapper:focus-within {
@@ -68,25 +60,26 @@ export function getBaseStyles() {
     }
 
     .search-icon {
-      padding: 10px 14px;
+      padding: 0 12px;
       color: var(--search-icon);
       font-size: 14px;
       user-select: none;
-      height: 44px;
+      height: 42px;
       display: flex;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .search-input {
       flex: 1;
       border: none;
       outline: none;
-      padding: 10px 36px 10px 0;
+      padding: 0 12px 0 0;
       font-size: 14px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       background: transparent;
       color: var(--input-text);
-      height: 44px;
+      height: 42px;
     }
 
     .search-input::placeholder {
@@ -103,12 +96,12 @@ export function getBaseStyles() {
       position: absolute;
       right: 0; top: 0;
       background: none; border: none;
-      padding: 10px 12px;
+      padding: 0 12px;
       color: var(--text-tertiary);
       cursor: pointer;
-      font-size: 14px;
-      transition: color 0.15s;
-      height: 44px;
+      font-size: 13px;
+      transition: color var(--duration-fast);
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -124,28 +117,22 @@ export function getBaseStyles() {
       color: var(--text-tertiary);
     }
 
-    .search-action-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .search-input-wrapper { flex: 1; }
     .sort-controls { flex-shrink: 0; }
 
     .sort-select {
-      padding: 9px 12px;
+      padding: 0 12px;
       border: 1px solid var(--border-primary);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       background: var(--input-bg);
       color: var(--text-primary);
       font-size: 13px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       cursor: pointer;
       outline: none;
-      transition: all 0.2s;
-      min-width: 120px;
-      height: 44px;
+      transition: border-color var(--duration-fast),
+                  box-shadow var(--duration-fast);
+      min-width: 110px;
+      height: 42px;
     }
 
     .sort-select:hover { border-color: var(--accent); }
@@ -154,24 +141,24 @@ export function getBaseStyles() {
       box-shadow: 0 0 0 3px var(--accent-light);
     }
 
-    /* ─── FAB 菜单（右上角 +） ─── */
+    /* ── FAB 菜单（右上角 +） ── */
     .action-menu-float {
       position: fixed;
       top: 20px;
-      right: 20px;
+      right: 24px;
       z-index: 1001;
     }
 
     .main-action-button {
-      background: var(--accent);
-      color: white;
+      background: var(--float-btn-bg);
+      color: var(--float-btn-text);
       border: none;
       width: 44px;
       height: 44px;
-      border-radius: 14px;
+      border-radius: var(--radius-md);
       font-size: 20px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(.4,0,.2,1);
+      transition: all var(--duration-normal) var(--ease-out);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -182,12 +169,13 @@ export function getBaseStyles() {
     }
 
     .main-action-button:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px) scale(1.04);
+      background: var(--float-btn-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(26,26,46,0.4);
     }
 
     .main-action-button:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .main-action-button.active {
@@ -203,18 +191,18 @@ export function getBaseStyles() {
     /* 子菜单 */
     .action-submenu {
       position: absolute;
-      top: 56px;
+      top: 54px;
       right: 0;
       background: var(--menu-bg);
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       box-shadow: var(--menu-shadow);
       border: 1px solid var(--menu-border);
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-8px) scale(0.96);
-      transition: all 0.2s cubic-bezier(.4,0,.2,1);
+      transform: translateY(-6px) scale(0.97);
+      transition: all var(--duration-normal) var(--ease-out);
       z-index: 1000;
-      min-width: 180px;
+      min-width: 200px;
       overflow: hidden;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -229,13 +217,14 @@ export function getBaseStyles() {
     .submenu-item {
       display: flex;
       align-items: center;
-      padding: 11px 16px;
+      padding: 10px 16px;
       color: var(--text-primary);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background var(--duration-fast);
       border-bottom: 1px solid var(--border-secondary);
       background: transparent;
       font-size: 13px;
+      font-weight: 500;
     }
 
     .submenu-item:last-child { border-bottom: none; }
@@ -253,7 +242,7 @@ export function getBaseStyles() {
       margin-right: 10px;
       width: 20px;
       text-align: center;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     .item-text {
@@ -264,9 +253,9 @@ export function getBaseStyles() {
 
     /* 子菜单入场动画 */
     .action-submenu .submenu-item {
-      transform: translateX(-12px);
+      transform: translateX(-8px);
       opacity: 0;
-      transition: all 0.2s ease;
+      transition: all var(--duration-normal) var(--ease-out);
     }
 
     .action-submenu.show .submenu-item {
@@ -275,13 +264,15 @@ export function getBaseStyles() {
     }
 
     .action-submenu.show .submenu-item:nth-child(1) { transition-delay: 0.02s; }
-    .action-submenu.show .submenu-item:nth-child(2) { transition-delay: 0.05s; }
-    .action-submenu.show .submenu-item:nth-child(3) { transition-delay: 0.08s; }
-    .action-submenu.show .submenu-item:nth-child(4) { transition-delay: 0.11s; }
-    .action-submenu.show .submenu-item:nth-child(5) { transition-delay: 0.14s; }
-    .action-submenu.show .submenu-item:nth-child(6) { transition-delay: 0.17s; }
+    .action-submenu.show .submenu-item:nth-child(2) { transition-delay: 0.04s; }
+    .action-submenu.show .submenu-item:nth-child(3) { transition-delay: 0.06s; }
+    .action-submenu.show .submenu-item:nth-child(4) { transition-delay: 0.08s; }
+    .action-submenu.show .submenu-item:nth-child(5) { transition-delay: 0.10s; }
+    .action-submenu.show .submenu-item:nth-child(6) { transition-delay: 0.12s; }
+    .action-submenu.show .submenu-item:nth-child(7) { transition-delay: 0.14s; }
+    .action-submenu.show .submenu-item:nth-child(8) { transition-delay: 0.16s; }
 
-    /* 菜单项 hover 色彩 */
+    /* 菜单项 hover 色 */
     .action-submenu.show .submenu-item:nth-child(1):hover { color: var(--accent); }
     .action-submenu.show .submenu-item:nth-child(2):hover { color: var(--success); }
     .action-submenu.show .submenu-item:nth-child(3):hover { color: #a855f7; }
@@ -296,7 +287,7 @@ export function getBaseStyles() {
       background: transparent;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.2s;
+      transition: all var(--duration-normal);
       z-index: 1;
     }
 
@@ -305,16 +296,16 @@ export function getBaseStyles() {
       visibility: visible;
     }
 
-    /* ─── 浮动按钮组 ─── */
+    /* ── 浮动按钮组 ── */
     .back-to-top {
       position: fixed;
-      bottom: 20px; right: 20px;
-      width: 40px; height: 40px;
+      bottom: 24px; right: 24px;
+      width: 38px; height: 38px;
       background: var(--back-to-top-bg);
-      border: 1.5px solid var(--back-to-top-border);
-      border-radius: 12px;
+      border: 1px solid var(--back-to-top-border);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all var(--duration-normal) var(--ease-out);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -345,25 +336,25 @@ export function getBaseStyles() {
     .back-to-top:active { transform: scale(0.95); }
 
     .back-to-top-icon {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       line-height: 1;
       color: var(--back-to-top-text);
-      transition: transform 0.2s;
+      transition: transform var(--duration-fast);
     }
 
-    .back-to-top:hover .back-to-top-icon { transform: translateY(-2px); }
+    .back-to-top:hover .back-to-top-icon { transform: translateY(-1px); }
 
     /* 主题切换 */
     .theme-toggle-float {
       position: fixed;
-      bottom: 20px; right: 20px;
-      width: 40px; height: 40px;
+      bottom: 24px; right: 24px;
+      width: 38px; height: 38px;
       background: var(--theme-toggle-bg);
-      border: 1.5px solid var(--theme-toggle-border);
-      border-radius: 12px;
+      border: 1px solid var(--theme-toggle-border);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all var(--duration-normal) var(--ease-out);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -382,7 +373,7 @@ export function getBaseStyles() {
     }
 
     .back-to-top.show ~ .theme-toggle-float {
-      bottom: 68px !important;
+      bottom: 70px !important;
     }
 
     .theme-toggle-float:hover {
@@ -394,59 +385,92 @@ export function getBaseStyles() {
     .theme-toggle-float:active { transform: scale(0.95); }
 
     .theme-toggle-float .theme-icon {
-      font-size: 18px;
+      font-size: 16px;
       transition: transform 0.3s;
     }
 
-    .theme-toggle-float:hover .theme-icon { transform: rotate(20deg); }
+    .theme-toggle-float:hover .theme-icon { transform: rotate(15deg); }
 
-    /* ─── 响应式 ─── */
+    /* ── 空状态 ── */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px 40px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+
+    .empty-state h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+    }
+
+    /* ── 响应式 ── */
     @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+
       .search-action-row {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         align-items: stretch;
       }
       .search-input-wrapper { width: 100%; }
       .sort-controls { width: 100%; }
-      .sort-select { width: 100%; height: 42px; }
+      .sort-select { width: 100%; }
     }
 
     @media (max-width: 480px) {
-      .search-input-wrapper { border-radius: 10px; }
-      .search-icon { padding: 9px 12px; font-size: 13px; height: 40px; }
-      .search-input { padding: 9px 36px 9px 0; font-size: 14px; height: 40px; }
+      .container { padding: 0 12px; }
+
+      .search-input-wrapper { border-radius: var(--radius-sm); }
+      .search-icon { padding: 0 10px; font-size: 13px; height: 40px; }
+      .search-input { font-size: 14px; height: 40px; }
       .search-clear { height: 40px; }
-      .sort-select { height: 40px; border-radius: 10px; font-size: 13px; }
+      .sort-select { height: 40px; border-radius: var(--radius-sm); font-size: 13px; }
 
       .action-menu-float { top: 14px; right: 14px; }
-      .main-action-button { width: 38px; height: 38px; font-size: 17px; border-radius: 12px; }
+      .main-action-button { width: 40px; height: 40px; font-size: 18px; border-radius: var(--radius-sm); }
 
       .back-to-top,
       .theme-toggle-float {
-        width: 36px; height: 36px; right: 14px; bottom: 14px; border-radius: 10px;
+        width: 36px; height: 36px; right: 14px; bottom: 16px; border-radius: var(--radius-sm);
       }
 
-      .back-to-top.show ~ .theme-toggle-float { bottom: 58px !important; }
-      .back-to-top-icon { font-size: 16px; }
-      .theme-toggle-float .theme-icon { font-size: 16px; }
+      .back-to-top.show ~ .theme-toggle-float { bottom: 60px !important; }
 
-      .action-submenu { min-width: 160px; top: 48px; border-radius: 14px; }
+      .action-submenu { min-width: 180px; top: 50px; border-radius: var(--radius-md); }
       .submenu-item { padding: 10px 14px; }
-      .item-text { font-size: 13px; }
-      .item-icon { font-size: 14px; margin-right: 8px; }
     }
 
     @media (max-width: 360px) {
-      .search-icon { padding: 8px 10px; height: 38px; }
+      .search-icon { height: 38px; }
       .search-input { height: 38px; font-size: 13px; }
       .search-clear { height: 38px; }
       .sort-select { height: 38px; font-size: 12px; }
       .action-menu-float { top: 10px; right: 10px; }
-      .back-to-top, .theme-toggle-float { width: 34px; height: 34px; right: 10px; bottom: 10px; }
-      .back-to-top.show ~ .theme-toggle-float { bottom: 52px !important; }
-      .main-action-button { width: 34px; height: 34px; font-size: 16px; }
-      .action-submenu { min-width: 140px; top: 44px; }
+      .back-to-top, .theme-toggle-float { width: 34px; height: 34px; right: 10px; bottom: 12px; }
+      .back-to-top.show ~ .theme-toggle-float { bottom: 54px !important; }
+      .main-action-button { width: 36px; height: 36px; font-size: 16px; }
     }
 `;
 }

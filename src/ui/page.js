@@ -49,7 +49,7 @@ function getHTMLStart() {
   <title>2FA - 密钥管理器</title>
 
   <meta name="description" content="安全的两步验证密钥管理器，支持 TOTP、HOTP 验证码生成">
-  <meta name="theme-color" content="#6366f1">
+  <meta name="theme-color" content="#4F6EF7">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
