@@ -26,7 +26,6 @@ import {
 	errorToResponse,
 	logError,
 } from '../../utils/errors.js';
-import { KV_KEYS } from '../../utils/constants.js';
 
 const monitoring = getMonitoring();
 
@@ -41,11 +40,8 @@ export async function handleGetSecrets(env) {
 	const timer = new PerformanceTimer('GetSecrets', logger);
 
 	try {
-		const secretsData = await env.SECRETS_KV.get(KV_KEYS.SECRETS, 'text');
-		timer.checkpoint('KV fetched');
-
-		const secrets = await decryptSecrets(secretsData, env);
-		timer.checkpoint('Decrypted');
+		const secrets = await getAllSecrets(env);
+		timer.checkpoint('Fetched from R2');
 
 		timer.end({ count: secrets.length });
 

@@ -27,13 +27,25 @@ const JWT_AUTO_REFRESH_THRESHOLD_DAYS = 7; // 剩余时间少于7天时自动续
 const COOKIE_NAME = 'auth_token';
 const COOKIE_MAX_AGE = JWT_EXPIRY_DAYS * 24 * 60 * 60; // 30天（秒）
 
-// KV 存储键
-const KV_USER_PASSWORD_KEY = 'user_password';
-const KV_SETUP_COMPLETED_KEY = 'setup_completed';
+// R2 存储路径（替代 KV）
+const R2_USER_PASSWORD_KEY = 'auth/user_password';
+const R2_SETUP_COMPLETED_KEY = 'auth/setup_completed';
+
+// R2 读写辅助函数
+async function r2Get(env, key) {
+	const obj = await env.BACKUP_R2.get(key);
+	return obj ? await obj.text() : null;
+}
+
+async function r2Put(env, key, value) {
+	await env.BACKUP_R2.put(key, value, {
+		httpMetadata: { contentType: 'text/plain' },
+	});
+}
 
 // 密码配置
 const PASSWORD_MIN_LENGTH = 8;
-const PBKDF2_ITERATIONS = 100000; // PBKDF2 迭代次数
+const PBKDF2_ITERATIONS = 100000;
 
 /**
  * 验证密码强度
@@ -338,8 +350,8 @@ export async function verifyAuth(request, env) {
 	const logger = getLogger(env);
 
 	// 🔑 检查 KV 中的用户密码
-	if (env.SECRETS_KV) {
-		const storedPasswordHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+	if (env.BACKUP_R2) {
+		const storedPasswordHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 
 		if (!storedPasswordHash) {
 			// 未设置密码，需要首次设置
@@ -389,12 +401,12 @@ export async function verifyAuthWithDetails(request, env) {
 	const logger = getLogger(env);
 
 	// 🔑 检查 KV 中的用户密码
-	if (!env.SECRETS_KV) {
+	if (!env.BACKUP_R2) {
 		logger.error('未配置 KV 存储，拒绝访问');
 		return null;
 	}
 
-	const storedPasswordHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+	const storedPasswordHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 
 	if (!storedPasswordHash) {
 		logger.info('未设置用户密码，需要首次设置');
@@ -459,8 +471,8 @@ export function createUnauthorizedResponse(message = '未授权访问', request 
  */
 export async function checkIfSetupRequired(env) {
 	// 检查 KV 中是否已设置密码
-	if (env.SECRETS_KV) {
-		const storedPasswordHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+	if (env.BACKUP_R2) {
+		const storedPasswordHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 		return !storedPasswordHash; // 未设置则需要首次设置
 	}
 
@@ -506,7 +518,7 @@ export async function handleFirstTimeSetup(request, env) {
 		}
 
 		// 检查是否已经设置过
-		const existingHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+		const existingHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 		if (existingHash) {
 			throw new ConflictError('密码已设置，无法重复设置。如需修改密码，请联系管理员。', {
 				operation: 'first_time_setup',
@@ -527,8 +539,8 @@ export async function handleFirstTimeSetup(request, env) {
 		const passwordHash = await hashPassword(password);
 
 		// 存储到 KV
-		await env.SECRETS_KV.put(KV_USER_PASSWORD_KEY, passwordHash);
-		await env.SECRETS_KV.put(KV_SETUP_COMPLETED_KEY, new Date().toISOString());
+		await r2Put(env, R2_USER_PASSWORD_KEY, passwordHash);
+		await r2Put(env, R2_SETUP_COMPLETED_KEY, new Date().toISOString());
 
 		logger.info('首次设置完成', {
 			setupAt: new Date().toISOString(),
@@ -586,10 +598,10 @@ export async function handleFirstTimeSetup(request, env) {
 		);
 
 		// 检测 KV 未绑定的情况
-		if (!env.SECRETS_KV) {
+		if (!env.BACKUP_R2) {
 			return createErrorResponse(
 				'设置失败',
-				'KV 存储未绑定，请在 Cloudflare Dashboard 或 wrangler.toml 中配置 SECRETS_KV 命名空间后重试',
+				'R2 存储未绑定，请在 Cloudflare Dashboard 或 wrangler.toml 中配置 BACKUP_R2 后重试',
 				500,
 				request,
 			);
@@ -631,13 +643,13 @@ export async function handleLogin(request, env) {
 		}
 
 		// 🔑 KV 密码认证
-		if (!env.SECRETS_KV) {
-			throw new ConfigurationError('服务器未配置 KV 存储，请联系管理员', {
-				missingConfig: 'SECRETS_KV',
+		if (!env.BACKUP_R2) {
+			throw new ConfigurationError('R2 存储未绑定', {
+				missingConfig: 'BACKUP_R2',
 			});
 		}
 
-		const storedPasswordHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+		const storedPasswordHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 
 		if (!storedPasswordHash) {
 			throw new AuthorizationError('请先完成首次设置', {
@@ -736,13 +748,13 @@ export async function handleRefreshToken(request, env) {
 		}
 
 		// 获取 KV 中的密码哈希作为 JWT 密钥
-		if (!env.SECRETS_KV) {
-			throw new ConfigurationError('服务器未配置 KV 存储', {
-				missingConfig: 'SECRETS_KV',
+		if (!env.BACKUP_R2) {
+			throw new ConfigurationError('R2 存储未绑定', {
+				missingConfig: 'BACKUP_R2',
 			});
 		}
 
-		const storedPasswordHash = await env.SECRETS_KV.get(KV_USER_PASSWORD_KEY);
+		const storedPasswordHash = await r2Get(env, R2_USER_PASSWORD_KEY);
 		if (!storedPasswordHash) {
 			throw new AuthorizationError('请先完成首次设置', {
 				operation: 'refresh_token',
