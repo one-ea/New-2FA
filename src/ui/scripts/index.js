@@ -17,6 +17,7 @@ import { getGoogleMigrationCode } from './googleMigration.js';
 import { getCoreCode } from './core.js';
 import { getUtilsCode } from './utils.js';
 import { getModuleLoaderCode } from './moduleLoader.js';
+import { getWebDAVCode } from './webdav.js';
 
 /**
  * 获取核心JavaScript代码（首次加载必需）
@@ -35,7 +36,7 @@ export function getCoreScripts() {
 export function getScripts() {
 	// QRCode must come before GoogleMigration, GoogleMigration must come before Export
 	// because Export calls showExportToGoogleModal from GoogleMigration
-	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getToolsCode()}${getCoreCode()}`;
+	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getToolsCode()}${getWebDAVCode()}${getCoreCode()}`;
 }
 
 /**
@@ -50,6 +51,7 @@ export function getModuleCode(moduleName) {
 		backup: getBackupCode,
 		qrcode: getQRCodeCode,
 		tools: getToolsCode,
+		webdav: getWebDAVCode,
 		googleMigration: getGoogleMigrationCode,
 	};
 

@@ -428,7 +428,63 @@ function getHTMLBody() {
     </div>
   </div>
   
-  <!-- 实用工具模态框 -->
+  <!-- WebDAV 备份模态框 -->
+  <div id="webdavModal" class="modal">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2>☁️ WebDAV 备份</h2>
+        <button class="close-btn" onclick="hideWebDAVModal()">&times;</button>
+      </div>
+      
+      <div style="padding: 0 20px 20px;">
+        <!-- 配置区域 -->
+        <div style="margin-bottom: 16px;">
+          <label class="form-label" style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--text-secondary);">服务器地址</label>
+          <input type="url" id="webdavUrl" class="form-input" placeholder="https://dav.example.com/dav" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);font-size:14px;">
+        </div>
+
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+          <div style="flex:1;">
+            <label class="form-label" style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--text-secondary);">用户名</label>
+            <input type="text" id="webdavUsername" class="form-input" placeholder="username" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);font-size:14px;">
+          </div>
+          <div style="flex:1;">
+            <label class="form-label" style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--text-secondary);">密码</label>
+            <input type="password" id="webdavPassword" class="form-input" placeholder="••••••••" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);font-size:14px;">
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label class="form-label" style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--text-secondary);">远程目录</label>
+          <input type="text" id="webdavPath" class="form-input" value="2fa-backup" placeholder="2fa-backup" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);font-size:14px;">
+        </div>
+
+        <div style="margin-bottom:20px;display:flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="webdavAutoBackup" style="width:16px;height:16px;accent-color:var(--brand);">
+          <label for="webdavAutoBackup" style="font-size:13px;color:var(--text-secondary);cursor:pointer;">启用定时自动备份</label>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div style="display:flex;gap:8px;margin-bottom:20px;">
+          <button id="webdavTestBtn" class="btn btn-outline" onclick="testWebDAVConnection()" style="flex:1;padding:10px;border-radius:8px;font-size:13px;">🔗 测试连接</button>
+          <button id="webdavSaveBtn" class="btn btn-primary" onclick="saveWebDAVConfig()" style="flex:1;padding:10px;border-radius:8px;font-size:13px;">💾 保存配置</button>
+          <button id="webdavBackupBtn" class="btn btn-success" onclick="webdavBackupNow()" style="flex:1;padding:10px;border-radius:8px;font-size:13px;">📤 立即备份</button>
+        </div>
+
+        <!-- 远程备份列表 -->
+        <div style="border-top:1px solid var(--border);padding-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h3 style="margin:0;font-size:14px;font-weight:600;color:var(--text-primary);">远程备份</h3>
+            <button class="btn btn-outline" onclick="loadWebDAVBackups()" style="padding:4px 12px;border-radius:6px;font-size:12px;">🔄 刷新</button>
+          </div>
+          <div id="webdavBackupList" style="max-height:240px;overflow-y:auto;border-radius:8px;border:1px solid var(--border);background:var(--bg-secondary);">
+            <div style="text-align:center;padding:20px;color:var(--text-tertiary);font-size:13px;">保存配置后自动加载</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div id="toolsModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1161,6 +1217,10 @@ function getHTMLBody() {
       <div class="submenu-item" onclick="showRestoreModal(); closeActionMenu();">
         <span class="item-icon">🔄</span>
         <span class="item-text">还原配置</span>
+      </div>
+      <div class="submenu-item" onclick="showWebDAVModal(); closeActionMenu();">
+        <span class="item-icon">☁️</span>
+        <span class="item-text">WebDAV 备份</span>
       </div>
       <div class="submenu-item" onclick="showToolsModal(); closeActionMenu();">
         <span class="item-icon">🔧</span>

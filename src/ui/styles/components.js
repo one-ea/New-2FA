@@ -344,6 +344,65 @@ export function getComponentStyles() {
 
     .footer-info a:hover { color: var(--footer-link-hover); }
 
+    /* ─── WebDAV 备份列表 ─── */
+    .webdav-backup-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .webdav-backup-item:last-child { border-bottom: none; }
+    .webdav-backup-item:hover { background: var(--bg-tertiary); }
+
+    .webdav-backup-info { flex: 1; min-width: 0; }
+    .webdav-backup-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .webdav-backup-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .webdav-backup-actions {
+      display: flex;
+      gap: 4px;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    .webdav-action-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.15s;
+      padding: 0;
+    }
+    .webdav-action-btn:hover {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+    .webdav-delete-btn:hover {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
     /* 超宽屏 */
     @media (min-width: 1440px) {
       .action-menu-float { right: 28px; }
