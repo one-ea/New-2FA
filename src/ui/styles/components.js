@@ -13,11 +13,11 @@ export function getComponentStyles() {
 
     .secret-card {
       background: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px;
-      padding-top: 18px;
-      border: 1.5px solid var(--card-border);
-      transition: all 0.25s cubic-bezier(.4,0,.2,1);
+      border-radius: 18px;
+      padding: 18px;
+      padding-top: 20px;
+      border: 1px solid var(--card-border);
+      transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
       position: relative;
       width: 100%;
       box-shadow: var(--card-shadow);
@@ -25,6 +25,7 @@ export function getComponentStyles() {
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: none;
+      overflow: hidden;
     }
 
     .secret-card:hover {
@@ -61,19 +62,19 @@ export function getComponentStyles() {
     }
 
     .service-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--accent);
       background: var(--accent-light);
       border: 1px solid var(--accent-border);
-      transition: all 0.2s;
+      transition: transform 0.3s ease;
     }
 
     .secret-card:hover .service-icon {
@@ -81,10 +82,10 @@ export function getComponentStyles() {
     }
 
     .service-icon img {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
-      border-radius: 5px;
+      border-radius: 6px;
     }
 
     .secret-text { flex: 1; min-width: 0; }
@@ -166,23 +167,24 @@ export function getComponentStyles() {
     }
 
     .action-btn {
-      background: none;
-      border: 1.5px solid;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
       border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-family: 'Inter', sans-serif;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       min-width: 52px;
     }
 
-    .qr-btn { border-color: #a855f7; color: #a855f7; }
-    .qr-btn:hover { background: #a855f7; color: white; }
-    .edit-btn { border-color: var(--warning); color: var(--warning); }
-    .edit-btn:hover { background: var(--warning); color: white; }
-    .delete-btn { border-color: var(--danger); color: var(--danger); }
-    .delete-btn:hover { background: var(--danger); color: white; }
+    .action-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+    .qr-btn { color: var(--text-primary); }
+    .edit-btn { color: var(--text-primary); }
+    .delete-btn { color: var(--danger); border-color: rgba(255,59,48,0.2); }
+    .delete-btn:hover { background: var(--danger-light); color: var(--danger-dark); }
 
     /* ─── OTP 显示 ─── */
     .otp-preview {
@@ -258,30 +260,23 @@ export function getComponentStyles() {
       text-align: right;
     }
 
-    /* 进度条 */
+    /* 进度条 (改为底部极细极简风格) */
     .progress-mini {
-      width: 56px;
-      height: 3px;
-      background: var(--border-primary);
-      border-radius: 2px;
-      overflow: hidden;
+      display: none; /* 极简设计里隐藏此组件以释放空间 */
     }
 
-    .progress-mini-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-      transition: width 1s ease-in-out;
-    }
+    .progress-mini-fill { display: none; }
 
     .progress-top {
       width: 100%;
       height: 2px;
       background: transparent;
-      overflow: hidden;
       position: absolute;
-      top: 0; left: 0; right: 0;
-      border-radius: 16px 16px 0 0;
+      bottom: 0; /* 放到卡片底部 */
+      left: 0; right: 0;
+      top: auto;
+      border-radius: 0;
+      overflow: hidden;
     }
 
     .progress-top-fill {
@@ -289,6 +284,7 @@ export function getComponentStyles() {
       background: var(--progress-fill);
       transition: width 1s linear, background-color 0.5s ease;
       width: 0%;
+      float: right; /* 从右往左消失 */
     }
 
     /* ─── Footer ─── */
