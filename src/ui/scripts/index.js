@@ -25,7 +25,7 @@ import { getWebDAVCode } from './webdav.js';
  * @returns {string} 核心JavaScript代码
  */
 export function getCoreScripts() {
-	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getCoreCode()}${getModuleLoaderCode()}`;
+	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getWebDAVCode()}${getCoreCode()}${getModuleLoaderCode()}`;
 }
 
 /**

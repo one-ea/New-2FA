@@ -114,6 +114,18 @@ export async function handleRequest(request, env) {
 			return await createMainPage();
 		}
 
+		// Service Worker 注销脚本（清理旧缓存）
+		if (pathname === '/sw.js') {
+			return new Response(
+				`self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (e) => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
+  self.clients.matchAll().then(clients => clients.forEach(c => c.navigate(c.url)));
+  self.registration.unregister();
+});`,
+				{ headers: { 'Content-Type': 'application/javascript', 'Cache-Control': 'no-store' } }
+			);
+		}
 
 
 		// PWA 图标（使用默认SVG图标）
