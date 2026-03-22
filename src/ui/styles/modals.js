@@ -25,7 +25,7 @@ export function getModalStyles() {
       background: var(--modal-bg);
       border: 1px solid var(--modal-border);
       border-radius: 20px;
-      padding: 30px;
+      padding: 28px;
       max-width: 600px;
       width: 100%;
       max-height: 85vh;
@@ -171,8 +171,9 @@ export function getModalStyles() {
       width: 100%;
       padding: 14px 16px;
       border: 2px solid var(--input-border);
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
       transition: all 0.3s ease;
       background: var(--input-bg);
       color: var(--input-text);
@@ -189,8 +190,9 @@ export function getModalStyles() {
       width: 100%;
       padding: 14px 16px;
       border: 2px solid var(--input-border);
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
       background: var(--input-bg-focus);
       color: var(--input-text);
       transition: all 0.3s ease;
@@ -370,11 +372,12 @@ export function getModalStyles() {
     }
 
     .btn {
-      padding: 14px 24px;
+      padding: 12px 22px;
       border: none;
-      border-radius: 4px;
-      font-size: 15px;
+      border-radius: 12px;
+      font-size: 14px;
       font-weight: 500;
+      font-family: 'Inter', sans-serif;
       cursor: pointer;
       transition: background-color 0.2s ease;
       min-width: 120px;
@@ -422,7 +425,7 @@ export function getModalStyles() {
     /* 导入模态框样式 */
     .import-instructions {
       background: var(--import-instructions-bg);
-      border-radius: 4px;
+      border-radius: 12px;
       padding: 20px;
       margin-bottom: 25px;
       border: 1px solid var(--import-instructions-border);
@@ -459,8 +462,8 @@ export function getModalStyles() {
     .file-import-section {
       background: var(--import-file-bg);
       border: 2px dashed var(--import-file-border);
-      border-radius: 4px;
-      padding: 25px;
+      border-radius: 12px;
+      padding: 24px;
       text-align: center;
       margin-bottom: 25px;
       transition: all 0.3s ease;
@@ -852,7 +855,7 @@ export function getModalStyles() {
       .modal-content {
         padding: 20px;
         max-height: 90vh;
-        border-radius: 6px;
+        border-radius: 16px;
         /* 移动端模态框滚动条样式 */
         scrollbar-width: thin;
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);

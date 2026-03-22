@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 响应式样式模块
  * CSS 变量会自动处理颜色主题切换,此文件仅包含响应式布局调整
  */
@@ -446,7 +446,7 @@ export function getResponsiveStyles() {
         padding: 12px;
         padding-top: 16px;
         margin-bottom: 0;
-        border-radius: 4px;
+        border-radius: 14px;
         box-shadow: none;
       }
       
@@ -482,7 +482,7 @@ export function getResponsiveStyles() {
       
       .otp-code {
         font-size: 28px !important;
-        letter-spacing: 4px !important;
+        letter-spacing: 3px !important;
         margin: 6px 0 !important;
       }
       
