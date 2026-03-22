@@ -279,7 +279,8 @@ export function getCoreCode() {
           '<div class="icon">🔑</div>' +
           '<h3>还没有密钥</h3>' +
           '<p>点击上方按钮添加您的第一个2FA密钥</p>' +
-          '<div style="margin-top: 20px; font-size: 12px; color: #95a5a6;">' +
+          '<button style="margin-top: 20px; padding: 8px 16px; background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-primary); border-radius: 8px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background=\\\'var(--bg-hover)\\\'" onmouseout="this.style.background=\\\'var(--bg-secondary)\\\'" onclick="window.addMockData()">填充测试数据(仅预览)</button>' +
+          '<div style="margin-top: 20px; font-size: 12px; color: var(--text-tertiary);">' +
           '快捷键：Ctrl+D 调试模式 | Ctrl+R 刷新验证码<br>' +
           '数据存储：Cloudflare R2' +
           '</div>';
@@ -289,6 +290,19 @@ export function getCoreCode() {
 
       emptyState.style.display = 'none';
       secretsList.style.display = 'grid';
+
+      // --- 临时测试数据注入 ---
+      window.addMockData = function() {
+        secrets = [
+          { id: '1', name: 'Google', account: 'test@gmail.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+          { id: '2', name: 'GitHub', account: 'developer', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
+          { id: '3', name: 'Cloudflare', account: 'admin@domain.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+          { id: '4', name: 'Twitter', account: '@elonmusk', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
+          { id: '5', name: 'Amazon Web Services', account: 'root', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+          { id: '6', name: 'Binance', account: 'crypto_whale', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 }
+        ];
+        renderSecrets();
+      };
 
       // 应用排序
       const sortedSecrets = sortSecrets(filteredSecrets, currentSortType);
