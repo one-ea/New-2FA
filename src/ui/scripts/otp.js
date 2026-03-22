@@ -428,16 +428,9 @@ export function getOTPCode() {
         const progress = (remaining / timeStep) * 100;
         progressElement.style.width = progress + '%';
 
+        // 通过 opacity 暗示剩余时间紧迫度（保留品牌色）
         const ratio = remaining / timeStep;
-        let color;
-        if (ratio > 0.6) {
-          color = '#4CAF50';
-        } else if (ratio > 0.3) {
-          color = '#FF9800';
-        } else {
-          color = '#F44336';
-        }
-        progressElement.style.backgroundColor = color;
+        progressElement.style.opacity = ratio > 0.3 ? '1' : '0.7';
       }
 
       // 🔄 防御性检查：如果验证码显示为默认值，立即刷新
