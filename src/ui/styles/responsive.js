@@ -442,87 +442,7 @@ export function getResponsiveStyles() {
         min-width: 160px;
       }
       
-      .secret-card {
-        padding: 12px;
-        padding-top: 16px;
-        margin-bottom: 0;
-        border-radius: 14px;
-        box-shadow: none;
-      }
-      
-      .secret-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-      
-      .secret-actions {
-        justify-content: center;
-        width: 100%;
-        gap: 8px;
-      }
-      
-      .action-btn {
-        flex: 1;
-        max-width: 90px;
-        min-width: 60px;
-        font-size: 11px;
-        padding: 6px 8px;
-      }
-      
-      .otp-code {
-        font-size: 24px;
-        letter-spacing: 5px;
-        padding: 12px 16px;
-      }
-      
-      .otp-preview {
-        margin-top: 8px;
-      }
-      
-      .otp-code {
-        font-size: 28px !important;
-        letter-spacing: 3px !important;
-        margin: 6px 0 !important;
-      }
-      
-      .otp-main {
-        gap: 12px !important;
-        /* Chrome兼容性修复 */
-        display: -webkit-flex !important;
-        -webkit-align-items: center !important;
-        -webkit-justify-content: space-between !important;
-      }
-      
-      .otp-next-container {
-        min-width: 70px !important;
-        padding: 6px 8px !important;
-        /* Chrome兼容性修复 */
-        display: -webkit-flex !important;
-        -webkit-flex-direction: column !important;
-        -webkit-justify-content: center !important;
-        -webkit-align-items: flex-end !important;
-        -webkit-flex-shrink: 0 !important;
-        -webkit-box-flex: 0 !important;
-      }
-      
-      .otp-next-code {
-        font-size: 14px !important;
-        letter-spacing: 1px !important;
-      }
-      
-      .progress-mini {
-        width: 60px;
-        height: 5px;
-      }
-
-      .progress-top {
-        border-radius: 0;
-      }
-
-      .progress-top-fill {
-        border-radius: 0;
-      }
+      /* 卡片和OTP样式由 components.js 统一管理 */
 
       .modal {
         padding: 10px;
@@ -573,41 +493,9 @@ export function getResponsiveStyles() {
       }
     }
     
-    /* 大屏幕手机和小平板适配 */
+    /* 大屏幕手机和小平板：网格列数由 components.js 管理 */
     @media (min-width: 481px) and (max-width: 767px) {
-      /* 容器宽度适配 */
-      .container {
-        max-width: 600px;
-      }
-
-      body {
-        padding: 8px;
-      }
-      
-      .secrets-list {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        justify-content: center;
-        text-align: left;
-      }
-      
-      .content {
-        text-align: center;
-      }
-      
-      .secret-header {
-        flex-wrap: nowrap;
-        align-items: center;
-      }
-      
-      .secret-actions {
-        flex-wrap: wrap;
-      }
-      
-      .action-btn {
-        font-size: 12px;
-        min-width: 50px;
-      }
+      body { padding: 8px; }
     }
 
     /* 平板和中等桌面屏幕适配 */
@@ -663,22 +551,7 @@ export function getResponsiveStyles() {
         max-width: 100% !important;
       }
 
-      /* 容器宽度适配 */
-      .container {
-        max-width: 750px;
-      }
-
-      /* iPad 和平板两列卡片布局 */
-      .secrets-list {
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-        justify-content: center;
-        text-align: left;
-      }
-
-      .content {
-        text-align: center;
-      }
+      /* 容器和网格列数由 base.js / components.js 管理 */
 
       /* 确保备份表格在中等屏幕端正确显示 */
       .backup-table {
