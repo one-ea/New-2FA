@@ -275,6 +275,22 @@ export function getCoreCode() {
 
       if (secrets.length === 0) {
         secretsList.style.display = 'none';
+
+        // 注册测试数据注入函数（必须在 return 前注册，否则按钮点击时函数不存在）
+        window.addMockData = function() {
+          secrets = [
+            { id: '1', name: 'Google', account: 'test@gmail.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+            { id: '2', name: 'GitHub', account: 'developer', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
+            { id: '3', name: 'Cloudflare', account: 'admin@domain.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+            { id: '4', name: 'Twitter', account: '@elonmusk', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
+            { id: '5', name: 'Amazon Web Services', account: 'root', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+            { id: '6', name: 'Binance', account: 'crypto_whale', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
+            { id: '7', name: 'Discord', account: 'gamer#1234', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
+            { id: '8', name: 'Microsoft', account: 'work@outlook.com', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 }
+          ];
+          renderSecrets();
+        };
+
         emptyState.innerHTML =
           '<div class="icon">🔑</div>' +
           '<h3>还没有密钥</h3>' +
@@ -290,19 +306,6 @@ export function getCoreCode() {
 
       emptyState.style.display = 'none';
       secretsList.style.display = 'grid';
-
-      // --- 临时测试数据注入 ---
-      window.addMockData = function() {
-        secrets = [
-          { id: '1', name: 'Google', account: 'test@gmail.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
-          { id: '2', name: 'GitHub', account: 'developer', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
-          { id: '3', name: 'Cloudflare', account: 'admin@domain.com', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
-          { id: '4', name: 'Twitter', account: '@elonmusk', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 },
-          { id: '5', name: 'Amazon Web Services', account: 'root', secret: 'JBSWY3DPEHPK3PXP', type: 'TOTP', digits: 6, period: 30 },
-          { id: '6', name: 'Binance', account: 'crypto_whale', secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ', type: 'TOTP', digits: 6, period: 30 }
-        ];
-        renderSecrets();
-      };
 
       // 应用排序
       const sortedSecrets = sortSecrets(filteredSecrets, currentSortType);
