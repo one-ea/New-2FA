@@ -725,52 +725,7 @@ export function getResponsiveStyles() {
         width: 100% !important;
         max-width: 100% !important;
       }
-
-      .container {
-        max-width: 900px;
-      }
-
-      .secrets-list {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        justify-content: center;
-        text-align: left;
-      }
-
-      .content {
-        text-align: center;
-      }
-
-      .secret-card {
-        padding: 20px;
-        padding-top: 24px;
-        margin-bottom: 0;
-        border-radius: 6px;
-        box-shadow: none;
-      }
-
-      .otp-code {
-        font-size: 38px;
-        letter-spacing: 6px;
-        margin: 6px 0;
-      }
-
-      .otp-preview {
-        margin-top: 14px;
-      }
-
-      .progress-mini {
-        width: 120px;
-        height: 8px;
-      }
-
-      .progress-top {
-        border-radius: 0;
-      }
-
-      .progress-top-fill {
-        border-radius: 0;
-      }
+      /* 容器和卡片布局由 base.js / components.js 统一管理 */
 
       /* 确保备份表格在大屏幕端正确显示 */
       .backup-table {
