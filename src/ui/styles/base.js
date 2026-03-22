@@ -48,47 +48,56 @@ export function getBaseStyles() {
       display: flex;
       align-items: center;
       gap: 8px;
-      flex: 1;
-      max-width: 420px;
       justify-content: flex-end;
     }
 
-    /* ━━ 搜索栏（紧凑版） ━━ */
-    .search-input-wrapper {
-      flex: 1;
-      position: relative;
+    /* ━━ 折叠搜索按钮 ━━ */
+    .search-toggle-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-sm);
+      background: var(--input-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all var(--duration-fast);
+      padding: 0;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .search-toggle-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-hover);
+    }
+
+    /* 展开后的搜索框 */
+    .search-expanded {
       display: flex;
       align-items: center;
       background: var(--search-bg);
       border: 1px solid var(--search-border);
       border-radius: var(--radius-sm);
       overflow: hidden;
-      transition: border-color var(--duration-fast) ease,
-                  box-shadow var(--duration-fast) ease;
-      max-width: 260px;
+      transition: border-color var(--duration-fast);
+      max-width: 280px;
+      flex: 1;
+      position: relative;
     }
 
-    .search-input-wrapper:focus-within {
+    .search-expanded:focus-within {
       border-color: var(--search-border-focus);
       box-shadow: 0 0 0 2px var(--accent-light);
-    }
-
-    .search-icon {
-      padding: 0 8px 0 10px;
-      color: var(--search-icon);
-      font-size: 13px;
-      user-select: none;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
     }
 
     .search-input {
       flex: 1;
       border: none;
       outline: none;
-      padding: 0 8px 0 0;
+      padding: 0 8px 0 10px;
       font-size: 13px;
       font-family: var(--font-body);
       background: transparent;
@@ -107,22 +116,46 @@ export function getBaseStyles() {
       -webkit-appearance: none;
     }
 
-    .search-clear {
-      position: absolute;
-      right: 0; top: 0;
-      background: none; border: none;
+    .search-close-btn {
+      background: none;
+      border: none;
       padding: 0 8px;
       color: var(--text-tertiary);
       cursor: pointer;
       font-size: 12px;
-      transition: color var(--duration-fast);
       height: 34px;
       display: flex;
       align-items: center;
-      z-index: 1;
     }
 
-    .search-clear:hover { color: var(--danger); }
+    .search-close-btn:hover { color: var(--danger); }
+
+    /* header 内 + 小按钮（概念图风格：橙色小圆角） */
+    .header-add-btn {
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: white;
+      font-size: 18px;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--duration-fast);
+      padding: 0;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .header-add-btn:hover {
+      background: var(--accent-dark, #e67e22);
+      transform: translateY(-1px);
+    }
+
+    .header-add-btn:active { transform: scale(0.94); }
 
     .search-stats {
       margin-bottom: 8px;
@@ -131,26 +164,70 @@ export function getBaseStyles() {
       color: var(--text-tertiary);
     }
 
-    .sort-select {
-      padding: 0 10px;
+    /* ━━ Filter Chips（概念图标签筛选） ━━ */
+    .filter-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 0 12px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 5px 14px;
+      border: 1px solid var(--border-primary);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .chip-count {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .chip-spacer { flex: 1; }
+
+    .sort-select-inline {
+      padding: 4px 24px 4px 8px;
       border: 1px solid var(--border-primary);
       border-radius: var(--radius-sm);
       background: var(--input-bg);
-      color: var(--text-primary);
-      font-size: 12px;
+      color: var(--text-secondary);
+      font-size: 11px;
       font-family: var(--font-body);
       cursor: pointer;
       outline: none;
       transition: border-color var(--duration-fast);
-      height: 34px;
-      flex-shrink: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      background-size: 12px;
     }
 
-    .sort-select:hover { border-color: var(--accent); }
-    .sort-select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent-light);
-    }
+    .sort-select-inline:hover { border-color: var(--accent); }
 
     .content {
       flex: 1;

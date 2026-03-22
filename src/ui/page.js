@@ -89,22 +89,26 @@ function getHTMLBody() {
 	return `
 <body>
   <div class="container">
-    <!-- 页面顶部：标题 + 搜索 + 操作 -->
+    <!-- 页面顶部：标题 + 操作 -->
     <header class="page-header">
       <h1 class="page-title">Authenticator</h1>
       <div class="header-actions">
-        <div class="search-input-wrapper" id="headerSearch">
-          <!-- 防止浏览器自动填充 -->
+        <!-- 折叠搜索：默认只显示 🔍 图标 -->
+        <button class="search-toggle-btn" id="searchToggleBtn" onclick="toggleSearch()" title="搜索">
+          <span>🔍</span>
+        </button>
+        <!-- 展开后的搜索框 -->
+        <div class="search-expanded" id="searchExpanded" style="display: none;">
           <input type="text" name="prevent_autofill_username" style="display:none" tabindex="-1" autocomplete="new-password">
           <input type="password" name="prevent_autofill_password" style="display:none" tabindex="-1" autocomplete="new-password">
-
-          <span class="search-icon">🔍</span>
           <input type="search"
                  id="searchInput"
                  name="search-query"
                  class="search-input"
                  placeholder="搜索服务或账户..."
                  oninput="filterSecrets(this.value)"
+                 onblur="collapseSearchIfEmpty()"
+                 onkeydown="if(event.key==='Escape'){collapseSearch()}"
                  autocomplete="off"
                  autocorrect="off"
                  autocapitalize="off"
@@ -114,21 +118,35 @@ function getHTMLBody() {
                  data-form-type="other"
                  data-lpignore="true"
                  data-1p-ignore="true"
-                 data-bwignore="true"
-                 readonly
-                 onfocus="this.removeAttribute('readonly')">
-          <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display: none;">✕</button>
+                 data-bwignore="true">
+          <button class="search-close-btn" onclick="collapseSearch()" title="关闭搜索">✕</button>
         </div>
-        <select id="sortSelect" class="sort-select" onchange="applySorting()">
-          <option value="oldest-first">最早添加</option>
-          <option value="newest-first">最晚添加</option>
-          <option value="name-asc">名称 A-Z</option>
-          <option value="name-desc">名称 Z-A</option>
-          <option value="account-asc">账户 A-Z</option>
-          <option value="account-desc">账户 Z-A</option>
-        </select>
+        <!-- + 小按钮 -->
+        <button class="header-add-btn" onclick="showAddModal()" title="添加密钥">＋</button>
       </div>
     </header>
+
+    <!-- Filter Chips（概念图风格） -->
+    <div class="filter-chips" id="filterChips">
+      <button class="chip active" id="chipAll" onclick="setFilter('all')">
+        全部 <span class="chip-count" id="chipAllCount">0</span>
+      </button>
+      <button class="chip" id="chipFav" onclick="setFilter('favorites')">
+        收藏 ★
+      </button>
+      <button class="chip" id="chipRecent" onclick="setFilter('recent')">
+        最近使用
+      </button>
+      <div class="chip-spacer"></div>
+      <select id="sortSelect" class="sort-select-inline" onchange="applySorting()">
+        <option value="oldest-first">最早添加</option>
+        <option value="newest-first">最晚添加</option>
+        <option value="name-asc">名称 A-Z</option>
+        <option value="name-desc">名称 Z-A</option>
+        <option value="account-asc">账户 A-Z</option>
+        <option value="account-desc">账户 Z-A</option>
+      </select>
+    </div>
 
     <div class="content">
       <div class="search-stats" id="searchStats" style="display: none;"></div>

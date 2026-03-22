@@ -175,12 +175,12 @@ export function getCoreCode() {
 
     // 渲染密钥列表
     async function renderSecrets() {
-      filteredSecrets = [...secrets];
+      updateChipCounts();
       const searchInput = document.getElementById('searchInput');
       if (searchInput && searchInput.value.trim()) {
         filterSecrets(searchInput.value);
       } else {
-        await renderFilteredSecrets();
+        await applyFilter();
       }
     }
 
@@ -224,6 +224,7 @@ export function getCoreCode() {
           '<div class="card-menu" onclick="event.stopPropagation(); toggleCardMenu(&quot;' + secret.id + '&quot;)">' +
             '<div class="menu-dots">⋮</div>' +
             '<div class="card-menu-dropdown" id="menu-' + secret.id + '">' +
+              '<div class="menu-item menu-item-fav" onclick="event.stopPropagation(); toggleFavorite(&quot;' + secret.id + '&quot;); closeAllCardMenus();">' + (isFavorite(secret.id) ? '★ 取消收藏' : '☆ 收藏') + '</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); showQRCode(&quot;' + secret.id + '&quot;); closeAllCardMenus();">二维码</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); copyOTPAuthURL(&quot;' + secret.id + '&quot;); closeAllCardMenus();">复制链接</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); editSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();">编辑</div>' +
@@ -358,6 +359,7 @@ export function getCoreCode() {
 
       try {
         await navigator.clipboard.writeText(otpText);
+        recordRecentUse(secretId);
         showOTPCopyFeedback(secretId);
       } catch (err) {
         const textArea = document.createElement('textarea');
@@ -366,6 +368,7 @@ export function getCoreCode() {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
+        recordRecentUse(secretId);
         showOTPCopyFeedback(secretId);
       }
     }
