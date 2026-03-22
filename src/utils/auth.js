@@ -842,10 +842,8 @@ export function requiresAuth(pathname) {
 		'/api/refresh-token', // Token 刷新接口（已在内部验证）
 		'/api/setup', // 首次设置接口
 		'/setup', // 设置页面
-		'/manifest.json', // PWA manifest
-		'/sw.js', // Service Worker
-		'/icon-192.png', // PWA 图标
-		'/icon-512.png', // PWA 图标
+		'/icon-192.png', // 网站图标
+		'/icon-512.png', // 网站图标
 		'/favicon.ico', // 网站图标
 		'/otp', // OTP 生成页面（无参数）
 	];

@@ -48,31 +48,13 @@ function getHTMLStart() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>2FA - 密钥管理器</title>
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- PWA Meta Tags -->
-  <meta name="application-name" content="2FA">
   <meta name="description" content="安全的两步验证密钥管理器，支持 TOTP、HOTP 验证码生成">
-  <meta name="theme-color" content="#2196F3">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="2FA">
-  
-  <!-- iOS Icons -->
-  <link rel="apple-touch-icon" href="/icon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/icon-192.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/icon-192.png">
+  <meta name="theme-color" content="#6366f1">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
   <link rel="shortcut icon" href="/icon-192.png">
   
-  <!-- Microsoft Tiles -->
-  <meta name="msapplication-TileColor" content="#2196F3">
   <meta name="msapplication-TileImage" content="/icon-192.png">
   <meta name="msapplication-config" content="none">
   

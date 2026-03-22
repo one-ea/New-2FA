@@ -344,118 +344,11 @@ export function getComponentStyles() {
 
     .footer-info a:hover { color: var(--footer-link-hover); }
 
-    /* ─── PWA 安装按钮 ─── */
-    .pwa-install-btn-float {
-      position: fixed;
-      bottom: 20px; right: 20px;
-      width: 40px; height: 40px;
-      background: var(--theme-toggle-bg);
-      border: 1.5px solid var(--theme-toggle-border);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      user-select: none;
-      outline: none;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .pwa-install-btn-float.show {
-      opacity: 1;
-      visibility: visible;
-      bottom: 68px;
-    }
-
-    .pwa-install-btn-float:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      background: var(--theme-toggle-hover);
-    }
-
-    .pwa-install-btn-float:active { transform: scale(0.95); }
-
-    .pwa-install-icon {
-      font-size: 18px;
-      transition: transform 0.2s;
-    }
-
-    .pwa-install-btn-float:hover .pwa-install-icon { transform: scale(1.1); }
-
-    .back-to-top.show ~ .pwa-install-btn-float.show {
-      bottom: 116px !important;
-    }
-
-    /* ─── 离线横幅 ─── */
-    .offline-banner {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: linear-gradient(135deg, var(--warning) 0%, var(--danger) 100%);
-      color: white;
-      padding: 10px 20px;
-      box-shadow: var(--shadow-md);
-      z-index: 999;
-      transform: translateY(-100%);
-      transition: transform 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .offline-banner.show { transform: translateY(0); }
-
-    .offline-banner-icon {
-      font-size: 18px;
-      animation: pulse 2s infinite;
-    }
-
-    .offline-banner-text {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(0.95); }
-    }
-
-    body.offline-mode { padding-top: 40px; }
-    body.offline-mode .secret-card { opacity: 0.95; }
-
-    /* PWA 响应式 */
-    @media (max-width: 480px) {
-      .pwa-install-btn-float { width: 36px; height: 36px; right: 14px; border-radius: 10px; }
-      .pwa-install-btn-float.show { bottom: 58px; }
-      .pwa-install-icon { font-size: 16px; }
-      .back-to-top.show ~ .pwa-install-btn-float.show { bottom: 100px !important; }
-      .offline-banner { padding: 8px 16px; }
-      .offline-banner-icon { font-size: 16px; }
-      .offline-banner-text { font-size: 12px; }
-      body.offline-mode { padding-top: 36px; }
-    }
-
-    @media (max-width: 360px) {
-      .pwa-install-btn-float { width: 34px; height: 34px; right: 10px; border-radius: 10px; }
-      .pwa-install-btn-float.show { bottom: 52px; }
-      .pwa-install-icon { font-size: 14px; }
-      .back-to-top.show ~ .pwa-install-btn-float.show { bottom: 94px !important; }
-    }
-
     /* 超宽屏 */
     @media (min-width: 1440px) {
       .action-menu-float { right: 28px; }
       .theme-toggle-float, .back-to-top { right: 28px; }
       .back-to-top.show ~ .theme-toggle-float { bottom: 72px !important; }
-      .pwa-install-btn-float { right: 28px; }
-      .pwa-install-btn-float.show { bottom: 72px; }
-      .back-to-top.show ~ .pwa-install-btn-float.show { bottom: 124px !important; }
     }
 `;
 }

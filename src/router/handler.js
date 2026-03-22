@@ -21,8 +21,7 @@ import { handleFaviconProxy } from '../api/favicon.js';
 // UI 页面生成器
 import { createMainPage } from '../ui/page.js';
 import { createSetupPage } from '../ui/setupPage.js';
-import { createManifest, createDefaultIcon } from '../ui/manifest.js';
-import { createServiceWorker } from '../ui/serviceworker.js';
+import { createDefaultIcon } from '../ui/manifest.js';
 import { getModuleCode } from '../ui/scripts/index.js';
 
 // 工具函数
@@ -106,15 +105,7 @@ export async function handleRequest(request, env) {
 			return await createMainPage();
 		}
 
-		// PWA Manifest
-		if (pathname === '/manifest.json') {
-			return createManifest(request);
-		}
 
-		// Service Worker
-		if (pathname === '/sw.js') {
-			return createServiceWorker(env);
-		}
 
 		// PWA 图标（使用默认SVG图标）
 		if (pathname === '/icon-192.png' || pathname === '/icon-512.png') {
