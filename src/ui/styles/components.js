@@ -6,9 +6,11 @@ export function getComponentStyles() {
     /* ─── 密钥卡片列表 ─── */
     .secrets-list {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
+      /* 一列最小320px，自适应屏幕宽度展现2-3列 */
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
       margin: 0 auto;
+      padding-bottom: 80px; /* 去除旧约束，留足底部空间 */
     }
 
     .secret-card {

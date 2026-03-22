@@ -16,32 +16,35 @@ export function getBaseStyles() {
     }
 
     .container {
-      max-width: 460px;
+      max-width: 1080px; /* 极简风格放宽为主流桌面网格 */
       margin: 0 auto;
-      padding: 0;
+      padding: 0 16px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .header {
-      padding: 48px 20px 32px;
-      text-align: center;
+      padding: 64px 8px 32px; /* 增加上间距，Apple 风格喜欢空旷 */
+      text-align: left; /* 改为左对齐适应多列网格 */
     }
 
     .header h1 {
-      font-size: 24px;
+      font-size: 32px; /* 增加大标题尺寸 */
       font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
+      letter-spacing: -0.8px;
+      margin-bottom: 8px;
     }
 
     .header p {
       color: var(--text-secondary);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 400;
     }
 
     .content {
-      padding: 24px 16px 16px;
+      flex: 1; /* 撑满剩余高度 */
+      padding: 24px 8px 16px;
     }
 
     /* ─── 搜索栏 ─── */
@@ -132,7 +135,7 @@ export function getBaseStyles() {
 
     .sort-select {
       padding: 9px 12px;
-      border: 1.5px solid var(--border-primary);
+      border: 1px solid var(--border-primary);
       border-radius: 12px;
       background: var(--input-bg);
       color: var(--text-primary);
