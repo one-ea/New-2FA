@@ -127,32 +127,54 @@ export function getComponentStyles() {
     .card-menu-dropdown {
       display: none;
       position: absolute;
-      top: -2px; right: -2px;
+      top: 24px; right: 0;
       background: var(--menu-bg);
       border: 1px solid var(--menu-border);
-      border-radius: var(--radius-sm);
-      min-width: 90px;
+      border-radius: 10px;
+      min-width: 140px;
       width: fit-content;
-      box-shadow: var(--menu-shadow);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
       z-index: 10000;
       overflow: hidden;
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 4px 0;
     }
 
     .card-menu-dropdown.show { display: block; }
 
     .menu-item {
-      padding: 7px 12px;
+      padding: 8px 14px;
       color: var(--text-primary);
       cursor: pointer;
       transition: background var(--duration-fast);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
       white-space: nowrap;
       font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 菜单项图标 */
+    .mi {
+      font-size: 14px;
+      width: 18px;
+      text-align: center;
+      flex-shrink: 0;
+      line-height: 1;
     }
 
     .menu-item:hover { background: var(--menu-item-hover); }
+
+    /* 分割线 */
+    .menu-divider {
+      height: 1px;
+      background: var(--border-primary);
+      margin: 4px 0;
+    }
+
     .menu-item-danger { color: var(--danger) !important; }
     .menu-item-danger:hover { background: var(--danger-light) !important; }
 

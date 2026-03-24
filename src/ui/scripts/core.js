@@ -224,11 +224,12 @@ export function getCoreCode() {
           '<div class="card-menu" onclick="event.stopPropagation(); toggleCardMenu(&quot;' + secret.id + '&quot;)">' +
             '<div class="menu-dots">⋮</div>' +
             '<div class="card-menu-dropdown" id="menu-' + secret.id + '">' +
-              '<div class="menu-item menu-item-fav" onclick="event.stopPropagation(); toggleFavorite(&quot;' + secret.id + '&quot;); closeAllCardMenus();">' + (isFavorite(secret.id) ? '★ 取消收藏' : '☆ 收藏') + '</div>' +
-              '<div class="menu-item" onclick="event.stopPropagation(); showQRCode(&quot;' + secret.id + '&quot;); closeAllCardMenus();">二维码</div>' +
-              '<div class="menu-item" onclick="event.stopPropagation(); copyOTPAuthURL(&quot;' + secret.id + '&quot;); closeAllCardMenus();">复制链接</div>' +
-              '<div class="menu-item" onclick="event.stopPropagation(); editSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();">编辑</div>' +
-              '<div class="menu-item menu-item-danger" onclick="event.stopPropagation(); deleteSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();">删除</div>' +
+              '<div class="menu-item menu-item-fav" onclick="event.stopPropagation(); toggleFavorite(&quot;' + secret.id + '&quot;); closeAllCardMenus();">' + (isFavorite(secret.id) ? '<span class="mi">★</span> 取消收藏' : '<span class="mi">☆</span> 收藏') + '</div>' +
+              '<div class="menu-item" onclick="event.stopPropagation(); showQRCode(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi">📱</span> 二维码</div>' +
+              '<div class="menu-item" onclick="event.stopPropagation(); copyOTPAuthURL(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi">🔗</span> 复制链接</div>' +
+              '<div class="menu-item" onclick="event.stopPropagation(); editSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi">✏️</span> 编辑</div>' +
+              '<div class="menu-divider"></div>' +
+              '<div class="menu-item menu-item-danger" onclick="event.stopPropagation(); deleteSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi">🗑️</span> 删除</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
