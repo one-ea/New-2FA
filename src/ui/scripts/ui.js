@@ -187,15 +187,12 @@ export function getUICode() {
       hideModal('toolsModal');
     }
 
-    // 折叠式菜单控制函数
+    // 折叠式菜单控制函数（适配右侧 side-toolbar）
     function toggleActionMenu() {
-      const mainBtn = document.getElementById('mainActionBtn');
       const submenu = document.getElementById('actionSubmenu');
       const overlay = document.getElementById('menuOverlay');
 
-      const isActive = mainBtn.classList.contains('active');
-
-      if (isActive) {
+      if (submenu.classList.contains('show')) {
         closeActionMenu();
       } else {
         openActionMenu();
@@ -203,26 +200,26 @@ export function getUICode() {
     }
 
     function openActionMenu() {
-      const mainBtn = document.getElementById('mainActionBtn');
       const submenu = document.getElementById('actionSubmenu');
       const overlay = document.getElementById('menuOverlay');
+      const moreBtn = document.getElementById('toolbarMoreBtn');
 
-      mainBtn.classList.add('active');
       submenu.classList.add('show');
       overlay.classList.add('show');
+      if (moreBtn) moreBtn.style.background = 'var(--bg-active)';
 
       // 防止点击事件冒泡
-      event.stopPropagation();
+      if (event) event.stopPropagation();
     }
 
     function closeActionMenu() {
-      const mainBtn = document.getElementById('mainActionBtn');
       const submenu = document.getElementById('actionSubmenu');
       const overlay = document.getElementById('menuOverlay');
+      const moreBtn = document.getElementById('toolbarMoreBtn');
 
-      mainBtn.classList.remove('active');
       submenu.classList.remove('show');
       overlay.classList.remove('show');
+      if (moreBtn) moreBtn.style.background = '';
     }
 
     // 高级选项切换函数
