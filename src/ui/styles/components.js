@@ -29,7 +29,7 @@ export function getComponentStyles() {
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: none;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .secret-card:hover {
