@@ -475,26 +475,34 @@ export function getCoreCode() {
       const dropdown = document.getElementById('menu-' + secretId);
       if (!dropdown) return;
       
+      // 先关闭其他菜单并重置 z-index
       document.querySelectorAll('.card-menu-dropdown').forEach(menu => {
         if (menu.id !== 'menu-' + secretId) {
           menu.classList.remove('show');
+          const card = menu.closest('.secret-card');
+          if (card) card.style.zIndex = '';
         }
       });
       
       dropdown.classList.toggle('show');
+      // 提升当前卡片 z-index，让菜单浮于其他卡片之上
+      const parentCard = dropdown.closest('.secret-card');
+      if (parentCard) {
+        parentCard.style.zIndex = dropdown.classList.contains('show') ? '9999' : '';
+      }
     }
     
     function closeAllCardMenus() {
       document.querySelectorAll('.card-menu-dropdown').forEach(menu => {
         menu.classList.remove('show');
+        const card = menu.closest('.secret-card');
+        if (card) card.style.zIndex = '';
       });
     }
 
     document.addEventListener('click', function(event) {
       if (!event.target.closest('.card-menu')) {
-        document.querySelectorAll('.card-menu-dropdown').forEach(menu => {
-          menu.classList.remove('show');
-        });
+        closeAllCardMenus();
       }
     });
 
