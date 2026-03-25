@@ -214,9 +214,9 @@ export function getComponentStyles() {
 
     .otp-main {
       display: flex;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 0;
-      justify-content: flex-start;
     }
 
     .otp-code-container {
