@@ -247,18 +247,38 @@ export function getComponentStyles() {
 
     .otp-bottom { display: none; }
 
-    /* 隐藏 "下一个" 验证码 */
-    .otp-next-container { display: none; }
-    .otp-next-label { display: none; }
+    /* 下一个验证码预览（最后5秒显示） */
+    .otp-next-container {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .otp-next-container.show {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .otp-next-label {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+    }
 
     .otp-next-code {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--otp-next-text);
-      letter-spacing: 1px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1.5px;
       line-height: 1;
+      cursor: pointer;
     }
+    .otp-next-code:hover { opacity: 0.7; }
 
     /* ── 卡片底部：进度条 + 账户名（概念图风格） ── */
     .card-bottom {

@@ -442,6 +442,21 @@ export function getOTPCode() {
         progressElement.style.opacity = ratio > 0.3 ? '1' : '0.7';
       }
 
+      // 最后 5 秒显示下一个验证码预览
+      const nextContainer = document.getElementById('next-otp-' + secretId);
+      if (nextContainer) {
+        const parent = nextContainer.closest('.otp-next-container');
+        if (remaining <= 5 && remaining > 0) {
+          if (parent && !parent.classList.contains('show')) {
+            parent.classList.add('show');
+          }
+        } else {
+          if (parent && parent.classList.contains('show')) {
+            parent.classList.remove('show');
+          }
+        }
+      }
+
       // 🔄 防御性检查：如果验证码显示为默认值，立即刷新
       const otpElement = document.getElementById('otp-' + secretId);
       if (otpElement && otpElement.textContent === '------') {

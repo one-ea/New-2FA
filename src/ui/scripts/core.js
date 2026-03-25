@@ -240,8 +240,8 @@ export function getCoreCode() {
               '<div class="otp-code" id="otp-' + secret.id + '" onclick="event.stopPropagation(); copyOTP(&quot;' + secret.id + '&quot;)" title="点击复制验证码">------</div>' +
             '</div>' +
             (isHOTP ? '' :
-              '<div class="otp-next-container" onclick="event.stopPropagation(); copyNextOTP(&quot;' + secret.id + '&quot;)" title="点击复制下一个验证码">' +
-                '<div class="otp-next-label">下一个</div>' +
+              '<div class="otp-next-container" onclick="event.stopPropagation(); smartCopyOTP(&quot;' + secret.id + '&quot;)" title="点击复制下一个验证码">' +
+                '<div class="otp-next-label">下一个 →</div>' +
                 '<div class="otp-next-code" id="next-otp-' + secret.id + '">------</div>' +
               '</div>'
             ) +
@@ -949,42 +949,50 @@ export function getCoreCode() {
       const secret = secrets.find(s => s.id === secretId);
       if (!secret) return;
 
-      // 计算剩余时间
       const period = secret.period || 30;
       const now = Math.floor(Date.now() / 1000);
       const remaining = period - (now % period);
 
       let otpText;
+      let isNextOTP = false;
 
       if (remaining <= 5) {
-        // 剩余不足5秒，等待下一个 OTP
-        showCenterToast('⏳', '等待新验证码...');
-        await new Promise(resolve => setTimeout(resolve, remaining * 1000 + 300));
-        // 重新获取
-        const freshEl = document.getElementById('otp-' + secretId);
-        otpText = freshEl ? (freshEl.getAttribute('data-raw') || freshEl.textContent.replace(/\\s/g, '')) : null;
-      } else {
-        otpText = otpElement.getAttribute('data-raw') || otpElement.textContent.replace(/\\s/g, '');
+        const nextEl = document.getElementById('next-otp-' + secretId);
+        if (nextEl) {
+          const raw = nextEl.getAttribute('data-raw');
+          otpText = raw || nextEl.textContent.replace(/\s/g, '');
+          if (otpText && otpText !== '------') isNextOTP = true;
+        }
+      }
+
+      if (!otpText || otpText === '------') {
+        const raw = otpElement.getAttribute('data-raw');
+        otpText = raw || otpElement.textContent.replace(/\s/g, '');
+        isNextOTP = false;
       }
 
       if (!otpText || otpText === '------') return;
 
       try {
         await navigator.clipboard.writeText(otpText);
-        recordRecentUse(secretId);
-        showOTPCopyFeedback(secretId);
       } catch (err) {
-        const textArea = document.createElement('textarea');
-        textArea.value = otpText;
-        document.body.appendChild(textArea);
-        textArea.select();
+        const ta = document.createElement('textarea');
+        ta.value = otpText;
+        document.body.appendChild(ta);
+        ta.select();
         document.execCommand('copy');
-        document.body.removeChild(textArea);
-        recordRecentUse(secretId);
+        document.body.removeChild(ta);
+      }
+
+      recordRecentUse(secretId);
+      if (isNextOTP) {
+        showCenterToast('✨', (secret.name || '') + ' 下一个验证码已复制');
+      } else {
         showOTPCopyFeedback(secretId);
       }
     }
 
+    
     // ========== Feature: OTP 隐藏/揭示 ==========
     const otpRevealState = {};
 
