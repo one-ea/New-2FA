@@ -132,11 +132,11 @@ export function getBaseStyles() {
 
     /* header 内 + 小按钮（概念图风格：橙色小圆角） */
     .header-add-btn {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border: none;
-      border-radius: var(--radius-sm);
-      background: var(--accent);
+      border-radius: 8px;
+      background: #F5A623;
       color: white;
       font-size: 18px;
       font-weight: 300;
@@ -151,7 +151,7 @@ export function getBaseStyles() {
     }
 
     .header-add-btn:hover {
-      background: var(--accent-dark, #e67e22);
+      background: #E09516;
       transform: translateY(-1px);
     }
 
@@ -168,8 +168,8 @@ export function getBaseStyles() {
     .filter-chips {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 0 0 12px;
+      gap: 10px;
+      padding: 0 0 16px;
       flex-wrap: wrap;
     }
 
@@ -196,9 +196,10 @@ export function getBaseStyles() {
     }
 
     .chip.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border-color: var(--text-primary);
+      font-weight: 600;
     }
 
     .chip-count {

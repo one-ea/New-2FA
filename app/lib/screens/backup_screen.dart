@@ -136,8 +136,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
     final json = _buildBackupJson();
     final dir = await getApplicationDocumentsDirectory();
-    final fileName =
-        '2fa_backup_${DateTime.now().millisecondsSinceEpoch}.json';
+    final fileName = '2fa_backup_${DateTime.now().millisecondsSinceEpoch}.json';
     final file = File('${dir.path}/$fileName');
     await file.writeAsString(json);
 
@@ -465,7 +464,8 @@ class _BackupScreenState extends State<BackupScreen> {
       appBar: AppBar(title: const Text('备份管理')),
       body: RefreshIndicator(
         onRefresh: () async {
-          await Future.wait([_loadWebDavFiles(), _loadServerBackups(), _loadR2Backups()]);
+          await Future.wait(
+              [_loadWebDavFiles(), _loadServerBackups(), _loadR2Backups()]);
         },
         child: ListView(
           padding: const EdgeInsets.all(16),
@@ -535,8 +535,8 @@ class _BackupScreenState extends State<BackupScreen> {
               Card(
                 child: Column(children: [
                   ListTile(
-                    leading: Icon(Icons.cloud_upload_rounded,
-                        color: colors.primary),
+                    leading:
+                        Icon(Icons.cloud_upload_rounded, color: colors.primary),
                     title: const Text('立即备份到 WebDAV'),
                     subtitle: Text(_webdav.url ?? '',
                         style: const TextStyle(fontSize: 12)),
@@ -565,8 +565,7 @@ class _BackupScreenState extends State<BackupScreen> {
             const SizedBox(height: 4),
             Text(
               '每天北京 0:00 自动快照（数据变化时），保留 100 个，存在 KV 内。',
-              style:
-                  TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
+              style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
             _buildServerBackupList(colors),
@@ -622,7 +621,9 @@ class _BackupScreenState extends State<BackupScreen> {
   Widget _sectionTitle(String title, ColorScheme colors) {
     return Text(title,
         style: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w600, color: colors.onSurface));
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: colors.onSurface));
   }
 
   // ── WebDAV 文件列表 ──
@@ -790,11 +791,10 @@ class _BackupScreenState extends State<BackupScreen> {
             if (idx > 0) const Divider(height: 1, indent: 56),
             ListTile(
               dense: true,
-              leading: Icon(Icons.storage_rounded,
+              leading: const Icon(Icons.storage_rounded,
                   color: Colors.teal, size: 20),
               title: Text(display, style: const TextStyle(fontSize: 14)),
-              subtitle: Text(
-                  '${count != null ? "$count 个密钥 · " : ""}$sizeText',
+              subtitle: Text('${count != null ? "$count 个密钥 · " : ""}$sizeText',
                   style: const TextStyle(fontSize: 12)),
               trailing: TextButton(
                 onPressed: () => _restoreR2Backup(key),

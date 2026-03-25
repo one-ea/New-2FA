@@ -355,7 +355,7 @@ export function getCoreCode() {
       const otpElement = document.getElementById('otp-' + secretId);
       if (!otpElement) return;
 
-      const otpText = otpElement.textContent;
+      const otpText = otpElement.getAttribute('data-raw') || otpElement.textContent.replace(/\s/g, '');
       if (otpText === '------') return;
 
       try {

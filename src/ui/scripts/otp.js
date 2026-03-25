@@ -10,6 +10,15 @@
 export function getOTPCode() {
 	return `    // ========== OTP 计算模块 ==========
 
+    // OTP 显示格式化（分组显示，如 291 483）
+    function formatOTPDisplay(token) {
+      if (!token || token === '------') return token;
+      const len = token.length;
+      if (len === 6) return token.slice(0, 3) + '\u2002' + token.slice(3);      // 3+3（en space 分隔）
+      if (len === 8) return token.slice(0, 4) + '\u2002' + token.slice(4);      // 4+4
+      return token;
+    }
+
     // OTP计算核心类
     class OTPCalculator {
       constructor() {
@@ -369,15 +378,15 @@ export function getOTPCode() {
         // 更新当前OTP显示
         const otpElement = document.getElementById('otp-' + secretId);
         if (otpElement) {
-          otpElement.textContent = currentToken;
-          console.log('当前OTP更新:', currentToken, '时间窗口:', currentWindow);
+          otpElement.textContent = formatOTPDisplay(currentToken);
+          otpElement.setAttribute('data-raw', currentToken);
         }
 
         // 更新下一个OTP显示
         const nextOtpElement = document.getElementById('next-otp-' + secretId);
         if (nextOtpElement) {
-          nextOtpElement.textContent = nextToken;
-          console.log('下一个OTP更新:', nextToken, '时间窗口:', nextWindow);
+          nextOtpElement.textContent = formatOTPDisplay(nextToken);
+          nextOtpElement.setAttribute('data-raw', nextToken);
         }
       } catch (error) {
         console.error('更新OTP失败:', error);

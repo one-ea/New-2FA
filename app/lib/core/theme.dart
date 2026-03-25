@@ -25,30 +25,29 @@ class AppTheme {
   static ThemeData _buildTheme(ColorScheme colorScheme) {
     // 使用 Inter 字体（中文回退到系统字体）
     const textTheme = TextTheme(
-      displayLarge: const TextStyle(
+      displayLarge: TextStyle(
           fontSize: 57, fontWeight: FontWeight.w300, letterSpacing: -0.25),
-      displayMedium: const TextStyle(fontSize: 45, fontWeight: FontWeight.w300),
-      displaySmall: const TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
-      headlineLarge: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
-      headlineMedium:
-          const TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-      headlineSmall: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-      titleLarge: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-      titleMedium: const TextStyle(
+      displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w300),
+      displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
+      headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+      headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+      headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+      titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+      titleMedium: TextStyle(
           fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-      titleSmall: const TextStyle(
+      titleSmall: TextStyle(
           fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-      bodyLarge: const TextStyle(
+      bodyLarge: TextStyle(
           fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-      bodyMedium: const TextStyle(
+      bodyMedium: TextStyle(
           fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-      bodySmall: const TextStyle(
+      bodySmall: TextStyle(
           fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-      labelLarge: const TextStyle(
+      labelLarge: TextStyle(
           fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.1),
-      labelMedium: const TextStyle(
+      labelMedium: TextStyle(
           fontSize: 12, fontWeight: FontWeight.w500, letterSpacing: 0.5),
-      labelSmall: const TextStyle(
+      labelSmall: TextStyle(
           fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.5),
     );
 

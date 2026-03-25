@@ -9,7 +9,7 @@ export function getComponentStyles() {
     .secrets-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 14px 16px;
       padding-bottom: 60px;
     }
 
@@ -17,7 +17,7 @@ export function getComponentStyles() {
     .secret-card {
       background: var(--card-bg);
       border-radius: var(--radius-md);
-      padding: 10px 12px 0;
+      padding: 14px 16px 0;
       border: 1px solid var(--card-border);
       transition: border-color var(--duration-normal) var(--ease-out),
                   box-shadow var(--duration-normal) var(--ease-out),
@@ -226,10 +226,10 @@ export function getComponentStyles() {
 
     .otp-code {
       font-family: var(--font-mono);
-      font-size: 26px;
-      font-weight: 500;
+      font-size: 28px;
+      font-weight: 800;
       color: var(--otp-text);
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       cursor: pointer;
       transition: opacity var(--duration-fast);
       user-select: none;
@@ -262,8 +262,8 @@ export function getComponentStyles() {
 
     /* ── 卡片底部：进度条 + 账户名（概念图风格） ── */
     .card-bottom {
-      margin-top: 4px;
-      padding-bottom: 8px;
+      margin-top: 6px;
+      padding-bottom: 10px;
     }
 
     /* 进度条 */
@@ -272,7 +272,7 @@ export function getComponentStyles() {
 
     .progress-top {
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: var(--progress-bg);
       position: relative;
       border-radius: 2px;
