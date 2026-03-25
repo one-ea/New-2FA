@@ -1242,8 +1242,24 @@ function getHTMLBody() {
     <span class="theme-icon" id="theme-icon" aria-hidden="true">🌓</span>
   </button>
 
-`;
-}
+  <!-- Ctrl+K 命令面板 -->
+  <div class="cmd-palette-overlay" id="cmdPaletteOverlay" onclick="closeCmdPalette()" style="display:none;">
+    <div class="cmd-palette" onclick="event.stopPropagation()">
+      <div class="cmd-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cmdInput" class="cmd-input" placeholder="输入服务名，回车复制 OTP..." autocomplete="off" spellcheck="false">
+        <kbd class="cmd-kbd">ESC</kbd>
+      </div>
+      <div class="cmd-results" id="cmdResults"></div>
+      <div class="cmd-footer">
+        <span><kbd>↑↓</kbd> 选择</span>
+        <span><kbd>Enter</kbd> 复制 OTP</span>
+        <span><kbd>ESC</kbd> 关闭</span>
+      </div>
+    </div>
+  </div>
+
+`;}
 
 /**
  * JavaScript脚本部分 - 引用外部脚本文件

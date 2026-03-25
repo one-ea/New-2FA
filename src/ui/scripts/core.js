@@ -347,31 +347,9 @@ export function getCoreCode() {
       await copyOTP(secretId);
     }
 
-    // 复制OTP验证码
+    // 复制OTP验证码（代理到智能复制）
     async function copyOTP(secretId) {
-      // 关闭所有打开的卡片菜单
-      closeAllCardMenus();
-
-      const otpElement = document.getElementById('otp-' + secretId);
-      if (!otpElement) return;
-
-      const otpText = otpElement.getAttribute('data-raw') || otpElement.textContent.replace(/\s/g, '');
-      if (otpText === '------') return;
-
-      try {
-        await navigator.clipboard.writeText(otpText);
-        recordRecentUse(secretId);
-        showOTPCopyFeedback(secretId);
-      } catch (err) {
-        const textArea = document.createElement('textarea');
-        textArea.value = otpText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        recordRecentUse(secretId);
-        showOTPCopyFeedback(secretId);
-      }
+      smartCopyOTP(secretId);
     }
 
     function showOTPCopyFeedback(secretId) {
@@ -860,5 +838,209 @@ export function getCoreCode() {
         }
       });
     }, 5000); // 每5秒检查一次
+
+    // ========== Feature: Ctrl+K 命令面板 ==========
+    let cmdSelectedIndex = 0;
+    let cmdFilteredSecrets = [];
+
+    function openCmdPalette() {
+      const overlay = document.getElementById('cmdPaletteOverlay');
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => overlay.classList.add('show'));
+      const input = document.getElementById('cmdInput');
+      input.value = '';
+      input.focus();
+      cmdSelectedIndex = 0;
+      renderCmdResults('');
+    }
+
+    function closeCmdPalette() {
+      const overlay = document.getElementById('cmdPaletteOverlay');
+      overlay.classList.remove('show');
+      setTimeout(() => overlay.style.display = 'none', 200);
+    }
+
+    function renderCmdResults(query) {
+      const container = document.getElementById('cmdResults');
+      const q = query.toLowerCase().trim();
+      cmdFilteredSecrets = secrets.filter(s =>
+        !q || s.name.toLowerCase().includes(q) || (s.account || '').toLowerCase().includes(q) || (s.issuer || '').toLowerCase().includes(q)
+      );
+      if (cmdFilteredSecrets.length === 0) {
+        container.innerHTML = '<div class="cmd-empty">没有匹配的服务</div>';
+        return;
+      }
+      cmdSelectedIndex = Math.min(cmdSelectedIndex, cmdFilteredSecrets.length - 1);
+      container.innerHTML = cmdFilteredSecrets.map((s, i) => {
+        const otpEl = document.getElementById('otp-' + s.id);
+        const otp = otpEl ? (otpEl.getAttribute('data-raw') || otpEl.textContent) : '------';
+        const displayOtp = otp.length === 6 ? otp.slice(0,3) + ' ' + otp.slice(3) : otp;
+        const logo = window.SERVICE_LOGOS_MAP && window.SERVICE_LOGOS_MAP[s.name.toLowerCase()] ? window.SERVICE_LOGOS_MAP[s.name.toLowerCase()] : '';
+        return '<div class="cmd-item' + (i === cmdSelectedIndex ? ' active' : '') + '" data-index="' + i + '" onmouseenter="cmdSelectedIndex=' + i + ';highlightCmdItem(' + i + ')" onclick="cmdSelectItem(' + i + ')">' +
+          '<div class="cmd-item-left">' +
+            (logo ? '<img src="' + logo + '" class="cmd-logo" alt="">' : '<span class="cmd-logo-placeholder">' + s.name.charAt(0).toUpperCase() + '</span>') +
+            '<div class="cmd-item-info"><span class="cmd-item-name">' + s.name + '</span>' + (s.account ? '<span class="cmd-item-account">' + s.account + '</span>' : '') + '</div>' +
+          '</div>' +
+          '<span class="cmd-item-otp">' + displayOtp + '</span>' +
+        '</div>';
+      }).join('');
+    }
+
+    function highlightCmdItem(index) {
+      cmdSelectedIndex = index;
+      document.querySelectorAll('.cmd-item').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+      });
+    }
+
+    function cmdSelectItem(index) {
+      const secret = cmdFilteredSecrets[index];
+      if (!secret) return;
+      smartCopyOTP(secret.id);
+      closeCmdPalette();
+    }
+
+    // 命令面板键盘事件
+    document.getElementById('cmdInput').addEventListener('input', function(e) {
+      cmdSelectedIndex = 0;
+      renderCmdResults(e.target.value);
+    });
+
+    document.getElementById('cmdInput').addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        cmdSelectedIndex = Math.min(cmdSelectedIndex + 1, cmdFilteredSecrets.length - 1);
+        highlightCmdItem(cmdSelectedIndex);
+        const active = document.querySelector('.cmd-item.active');
+        if (active) active.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        cmdSelectedIndex = Math.max(cmdSelectedIndex - 1, 0);
+        highlightCmdItem(cmdSelectedIndex);
+        const active = document.querySelector('.cmd-item.active');
+        if (active) active.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        cmdSelectItem(cmdSelectedIndex);
+      } else if (e.key === 'Escape') {
+        closeCmdPalette();
+      }
+    });
+
+    // 全局快捷键 Ctrl+K / Cmd+K
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        const overlay = document.getElementById('cmdPaletteOverlay');
+        if (overlay.style.display === 'none' || !overlay.style.display) {
+          openCmdPalette();
+        } else {
+          closeCmdPalette();
+        }
+      }
+    });
+
+    // ========== Feature: 智能复制 ==========
+    async function smartCopyOTP(secretId) {
+      closeAllCardMenus();
+      const otpElement = document.getElementById('otp-' + secretId);
+      if (!otpElement) return;
+
+      const secret = secrets.find(s => s.id === secretId);
+      if (!secret) return;
+
+      // 计算剩余时间
+      const period = secret.period || 30;
+      const now = Math.floor(Date.now() / 1000);
+      const remaining = period - (now % period);
+
+      let otpText;
+
+      if (remaining <= 5) {
+        // 剩余不足5秒，等待下一个 OTP
+        showCenterToast('⏳', '等待新验证码...');
+        await new Promise(resolve => setTimeout(resolve, remaining * 1000 + 300));
+        // 重新获取
+        const freshEl = document.getElementById('otp-' + secretId);
+        otpText = freshEl ? (freshEl.getAttribute('data-raw') || freshEl.textContent.replace(/\\s/g, '')) : null;
+      } else {
+        otpText = otpElement.getAttribute('data-raw') || otpElement.textContent.replace(/\\s/g, '');
+      }
+
+      if (!otpText || otpText === '------') return;
+
+      try {
+        await navigator.clipboard.writeText(otpText);
+        recordRecentUse(secretId);
+        showOTPCopyFeedback(secretId);
+      } catch (err) {
+        const textArea = document.createElement('textarea');
+        textArea.value = otpText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        recordRecentUse(secretId);
+        showOTPCopyFeedback(secretId);
+      }
+    }
+
+    // ========== Feature: OTP 隐藏/揭示 ==========
+    const otpRevealState = {};
+
+    function isOtpRevealed(secretId) {
+      return otpRevealState[secretId] === true;
+    }
+
+    function revealOTP(secretId) {
+      otpRevealState[secretId] = true;
+      const el = document.getElementById('otp-' + secretId);
+      if (el) {
+        el.classList.add('revealed');
+        el.classList.remove('masked');
+      }
+    }
+
+    function hideOTP(secretId) {
+      otpRevealState[secretId] = false;
+      const el = document.getElementById('otp-' + secretId);
+      if (el) {
+        el.classList.remove('revealed');
+        el.classList.add('masked');
+      }
+    }
+
+    // 自动为卡片绑定 hover 揭示
+    function setupOTPMasking() {
+      document.querySelectorAll('.secret-card').forEach(card => {
+        const otpEl = card.querySelector('.otp-code');
+        if (!otpEl || card.dataset.maskBound) return;
+        card.dataset.maskBound = 'true';
+
+        const secretId = otpEl.id.replace('otp-', '');
+        otpEl.classList.add('masked');
+
+        card.addEventListener('mouseenter', () => revealOTP(secretId));
+        card.addEventListener('mouseleave', () => {
+          // 延迟隐藏，给用户反应时间
+          setTimeout(() => {
+            if (!card.matches(':hover')) hideOTP(secretId);
+          }, 300);
+        });
+      });
+    }
+
+    // 在渲染后自动绑定
+    const origRenderFilteredSecrets = typeof renderFilteredSecrets === 'function' ? renderFilteredSecrets : null;
+    if (origRenderFilteredSecrets) {
+      const _origRFS = renderFilteredSecrets;
+      renderFilteredSecrets = function(list) {
+        _origRFS(list);
+        setTimeout(setupOTPMasking, 50);
+      };
+    }
+
+    // 初始绑定
+    setTimeout(setupOTPMasking, 500);
 `;
 }

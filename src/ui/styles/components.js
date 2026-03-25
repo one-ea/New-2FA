@@ -479,5 +479,189 @@ export function getComponentStyles() {
     @media (min-width: 1200px) {
       .secrets-list { gap: 12px; }
     }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       Ctrl+K 命令面板
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .cmd-palette-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 99999;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 15vh;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .cmd-palette-overlay.show { opacity: 1; }
+
+    .cmd-palette {
+      width: 520px;
+      max-width: 90vw;
+      background: var(--card-bg);
+      border: 1px solid var(--border-primary);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transform: scale(0.95) translateY(-10px);
+      transition: transform 0.2s ease;
+    }
+    .cmd-palette-overlay.show .cmd-palette {
+      transform: scale(1) translateY(0);
+    }
+
+    .cmd-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-tertiary);
+    }
+
+    .cmd-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: var(--font-body);
+      outline: none;
+    }
+    .cmd-input::placeholder { color: var(--text-tertiary); }
+
+    .cmd-kbd {
+      font-size: 10px;
+      padding: 2px 6px;
+      border: 1px solid var(--border-primary);
+      border-radius: 4px;
+      color: var(--text-tertiary);
+      background: var(--bg-hover);
+      font-family: var(--font-mono);
+    }
+
+    .cmd-results {
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 6px 0;
+    }
+
+    .cmd-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .cmd-item:hover, .cmd-item.active {
+      background: var(--bg-hover);
+    }
+
+    .cmd-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .cmd-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .cmd-logo-placeholder {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cmd-item-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .cmd-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cmd-item-account {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cmd-item-otp {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 2px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .cmd-empty {
+      padding: 24px 16px;
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    .cmd-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 16px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+    .cmd-footer kbd {
+      font-size: 10px;
+      padding: 1px 5px;
+      border: 1px solid var(--border-primary);
+      border-radius: 3px;
+      background: var(--bg-hover);
+      font-family: var(--font-mono);
+      margin-right: 2px;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       OTP 隐藏/揭示动画
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .otp-code.masked {
+      filter: blur(8px);
+      transition: filter 0.3s ease;
+      user-select: none;
+    }
+
+    .otp-code.revealed {
+      filter: blur(0);
+      transition: filter 0.25s ease;
+    }
 `;
 }
