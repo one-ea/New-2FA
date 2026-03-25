@@ -321,11 +321,13 @@ export function getBaseStyles() {
     .action-submenu.show .submenu-item:active { background: var(--bg-active); }
 
     .item-icon {
-      font-size: 14px;
       margin-right: 8px;
       width: 18px;
-      text-align: center;
-      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      flex-shrink: 0;
     }
 
     .item-text {

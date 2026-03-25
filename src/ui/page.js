@@ -95,7 +95,7 @@ function getHTMLBody() {
       <div class="header-actions">
         <!-- 折叠搜索：默认只显示 🔍 图标 -->
         <button class="search-toggle-btn" id="searchToggleBtn" onclick="toggleSearch()" title="搜索">
-          <span>🔍</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
         <!-- 展开后的搜索框 -->
         <div class="search-expanded" id="searchExpanded" style="display: none;">
@@ -122,7 +122,7 @@ function getHTMLBody() {
           <button class="search-close-btn" onclick="collapseSearch()" title="关闭搜索">✕</button>
         </div>
         <!-- + 小按钮 -->
-        <button class="header-add-btn" onclick="showAddModal()" title="添加密钥">＋</button>
+        <button class="header-add-btn" onclick="showAddModal()" title="添加密钥"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
       </div>
     </header>
 
@@ -1204,29 +1204,29 @@ function getHTMLBody() {
 
   <!-- 右侧浮动竖直工具栏（概念图风格） -->
   <div class="side-toolbar" id="sideToolbar">
-    <button class="toolbar-btn" onclick="showAddModal()" title="添加密钥">➕</button>
-    <button class="toolbar-btn" onclick="showQRScanner()" title="扫二维码">📷</button>
-    <button class="toolbar-btn" onclick="showImportModal()" title="批量导入">📥</button>
-    <button class="toolbar-btn" id="toolbarMoreBtn" onclick="toggleActionMenu()" title="更多操作">⚙️</button>
+    <button class="toolbar-btn" onclick="showAddModal()" title="添加密钥"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="toolbar-btn" onclick="showQRScanner()" title="扫二维码"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 012-2h2"/><path d="M17 3h2a2 2 0 012 2v2"/><path d="M21 17v2a2 2 0 01-2 2h-2"/><path d="M7 21H5a2 2 0 01-2-2v-2"/><rect x="7" y="7" width="3" height="3"/><rect x="14" y="7" width="3" height="3"/><rect x="7" y="14" width="3" height="3"/><path d="M14 14h3v3"/></svg></button>
+    <button class="toolbar-btn" onclick="showImportModal()" title="批量导入"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+    <button class="toolbar-btn" id="toolbarMoreBtn" onclick="toggleActionMenu()" title="更多操作"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
   </div>
 
   <!-- 更多操作浮动菜单（从工具栏展开） -->
   <div class="action-menu-float" style="position:fixed; right: 64px; top: 50%; transform: translateY(-50%); z-index: 1002;">
     <div class="action-submenu" id="actionSubmenu">
       <div class="submenu-item" onclick="exportAllSecrets(); closeActionMenu();">
-        <span class="item-icon">📤</span>
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
         <span class="item-text">批量导出</span>
       </div>
       <div class="submenu-item" onclick="showRestoreModal(); closeActionMenu();">
-        <span class="item-icon">🔄</span>
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></span>
         <span class="item-text">还原配置</span>
       </div>
       <div class="submenu-item" onclick="showWebDAVModal(); closeActionMenu();">
-        <span class="item-icon">☁️</span>
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg></span>
         <span class="item-text">WebDAV 备份</span>
       </div>
       <div class="submenu-item" onclick="showToolsModal(); closeActionMenu();">
-        <span class="item-icon">🔧</span>
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
         <span class="item-text">实用工具</span>
       </div>
     </div>
