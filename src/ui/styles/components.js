@@ -320,48 +320,38 @@ export function getComponentStyles() {
       text-align: right;
     }
 
-    /* ━━ 右侧浮动工具栏（概念图：竖直4按钮） ━━ */
-    .side-toolbar {
+    /* ━━ 设置 FAB（齿轮按钮） ━━ */
+    .settings-fab {
       position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      z-index: 1001;
-      background: var(--menu-bg);
+      right: 24px;
+      bottom: 24px;
+      width: 44px;
+      height: 44px;
       border: 1px solid var(--border-primary);
-      border-radius: var(--radius-md);
-      padding: 4px;
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .toolbar-btn {
-      width: 36px;
-      height: 36px;
-      border: none;
-      background: transparent;
+      background: var(--menu-bg);
       color: var(--text-secondary);
-      border-radius: var(--radius-sm);
+      border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      transition: all var(--duration-fast);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all var(--duration-normal) var(--ease-out);
+      z-index: 1001;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      outline: none;
     }
 
-    .toolbar-btn:hover {
-      background: var(--bg-hover);
+    .settings-fab:hover {
       color: var(--text-primary);
+      transform: rotate(30deg) scale(1.05);
+      box-shadow: var(--shadow-xl);
     }
 
-    .toolbar-btn:active { transform: scale(0.92); }
+    .settings-fab:active { transform: scale(0.92); }
 
     /* ━━ Footer ━━ */
     .page-footer {
@@ -469,9 +459,6 @@ export function getComponentStyles() {
       .secrets-list {
         grid-template-columns: repeat(2, 1fr);
       }
-      .side-toolbar {
-        right: 12px;
-      }
     }
 
     @media (max-width: 580px) {
@@ -480,14 +467,11 @@ export function getComponentStyles() {
         gap: 8px;
       }
       .otp-code { font-size: 28px; }
-      .side-toolbar {
-        position: fixed;
-        right: auto;
-        left: 50%;
-        top: auto;
+      .settings-fab {
+        width: 40px;
+        height: 40px;
+        right: 16px;
         bottom: 16px;
-        transform: translateX(-50%);
-        flex-direction: row;
       }
     }
 

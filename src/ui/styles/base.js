@@ -281,7 +281,7 @@ export function getBaseStyles() {
     .action-submenu {
       position: absolute;
       bottom: 0;
-      right: 0;
+      right: 56px;
       background: var(--menu-bg);
       border-radius: var(--radius-md);
       box-shadow: var(--menu-shadow);
@@ -397,7 +397,7 @@ export function getBaseStyles() {
     /* ━━ 浮动按钮组 ━━ */
     .back-to-top {
       position: fixed;
-      bottom: 24px; right: 24px;
+      bottom: 128px; right: 28px;
       width: 34px; height: 34px;
       background: var(--back-to-top-bg);
       border: 1px solid var(--back-to-top-border);
@@ -430,7 +430,7 @@ export function getBaseStyles() {
 
     .theme-toggle-float {
       position: fixed;
-      bottom: 24px; right: 24px;
+      bottom: 80px; right: 28px;
       width: 34px; height: 34px;
       background: var(--theme-toggle-bg);
       border: 1px solid var(--theme-toggle-border);
@@ -449,7 +449,7 @@ export function getBaseStyles() {
     }
 
     .theme-toggle-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .back-to-top.show ~ .theme-toggle-float { bottom: 66px !important; }
+    .back-to-top.show ~ .theme-toggle-float { bottom: 128px !important; }
     .theme-toggle-float:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); background: var(--theme-toggle-hover); }
     .theme-toggle-float:active { transform: scale(0.95); }
 
