@@ -1229,6 +1229,10 @@ function getHTMLBody() {
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
         <span class="item-text">实用工具</span>
       </div>
+      <div class="submenu-item" onclick="showAppLockSettings(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+        <span class="item-text">应用锁</span>
+      </div>
     </div>
   </div>
 
@@ -1241,6 +1245,111 @@ function getHTMLBody() {
   <button class="theme-toggle-float" onclick="toggleTheme()" title="当前：跟随系统（点击切换）" aria-label="切换主题" type="button">
     <span class="theme-icon" id="theme-icon" aria-hidden="true">🌓</span>
   </button>
+
+  <!-- 🔐 应用锁 — 全屏锁定界面 -->
+  <div id="appLockOverlay" class="app-lock-overlay" style="display: none;">
+    <div class="app-lock-card">
+      <div class="app-lock-icon">🔒</div>
+      <div class="app-lock-title">应用已锁定</div>
+      <div class="app-lock-subtitle">请输入 PIN 码解锁</div>
+
+      <!-- 隐藏输入框（接收键盘输入） -->
+      <input type="tel" id="appLockHiddenInput" class="app-lock-hidden-input"
+             maxlength="6" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+
+      <!-- PIN 圆点 -->
+      <div class="pin-dots-container">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+
+      <div id="appLockError" class="app-lock-error" style="display: none;"></div>
+
+      <!-- 数字键盘 -->
+      <div class="pin-keypad">
+        <button class="pin-key" onclick="handlePinInput('1')">1</button>
+        <button class="pin-key" onclick="handlePinInput('2')">2</button>
+        <button class="pin-key" onclick="handlePinInput('3')">3</button>
+        <button class="pin-key" onclick="handlePinInput('4')">4</button>
+        <button class="pin-key" onclick="handlePinInput('5')">5</button>
+        <button class="pin-key" onclick="handlePinInput('6')">6</button>
+        <button class="pin-key" onclick="handlePinInput('7')">7</button>
+        <button class="pin-key" onclick="handlePinInput('8')">8</button>
+        <button class="pin-key" onclick="handlePinInput('9')">9</button>
+        <button class="pin-key pin-key-empty"></button>
+        <button class="pin-key" onclick="handlePinInput('0')">0</button>
+        <button class="pin-key pin-key-action" onclick="handlePinBackspace()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔐 应用锁设置弹窗 -->
+  <div id="appLockSettingsModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h2>🔐 应用锁</h2>
+        <button class="close-btn" onclick="hideAppLockSettings()">&times;</button>
+      </div>
+
+      <div style="padding: 0 20px 20px;">
+        <!-- 启用开关 -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding: 12px 16px; background: var(--bg-secondary); border-radius: 10px;">
+          <div>
+            <div style="font-weight: 600; font-size: 14px; color: var(--text-primary);">启用应用锁</div>
+            <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 2px;">进入应用时需要 PIN 码</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="appLockToggle" onchange="toggleAppLockEnabled()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- 设置新 PIN 区域 -->
+        <div id="appLockSetupSection" style="display: none;">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="appLockNewPin" style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;">新 PIN 码 (4-6位数字)</label>
+            <input type="password" id="appLockNewPin" maxlength="6" placeholder="输入 PIN 码" autocomplete="new-password"
+                   inputmode="numeric" pattern="[0-9]*"
+                   style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 18px; letter-spacing: 8px; text-align: center; font-family: var(--font-mono);">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="appLockConfirmPin" style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;">确认 PIN 码</label>
+            <input type="password" id="appLockConfirmPin" maxlength="6" placeholder="再次输入 PIN 码" autocomplete="new-password"
+                   inputmode="numeric" pattern="[0-9]*"
+                   style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 18px; letter-spacing: 8px; text-align: center; font-family: var(--font-mono);">
+          </div>
+          <div id="appLockSetupError" style="display: none; padding: 8px 12px; background: var(--danger-light); color: var(--danger); border-radius: 6px; font-size: 13px; margin-bottom: 12px;"></div>
+          <button class="btn btn-primary" onclick="saveNewAppLockPin()" style="width: 100%; padding: 12px; font-size: 14px; border-radius: 8px;">🔒 设置 PIN 码</button>
+        </div>
+
+        <!-- 管理已有 PIN 区域 -->
+        <div id="appLockManageSection" style="display: none;">
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;">自动锁定时间</label>
+            <select id="appLockTimeoutSelect" onchange="onAppLockTimeoutChange()" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 14px;">
+              <option value="1">1 分钟</option>
+              <option value="3">3 分钟</option>
+              <option value="5">5 分钟（默认）</option>
+              <option value="10">10 分钟</option>
+              <option value="30">30 分钟</option>
+              <option value="0">不自动锁定</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-outline" onclick="changeAppLockPin()" style="flex: 1; padding: 10px; border-radius: 8px; font-size: 13px;">修改 PIN</button>
+            <button class="btn btn-primary" onclick="showAppLockScreen(); hideAppLockSettings();" style="flex: 1; padding: 10px; border-radius: 8px; font-size: 13px;">🔒 立即锁定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Ctrl+K 命令面板 -->
   <div class="cmd-palette-overlay" id="cmdPaletteOverlay" onclick="closeCmdPalette()" style="display:none;">

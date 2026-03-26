@@ -673,15 +673,200 @@ export function getComponentStyles() {
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        OTP 隐藏/揭示动画
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-    .otp-code.masked {
+    .otp-code.masked,
+    .otp-next-code.masked {
       filter: blur(8px);
       transition: filter 0.3s ease;
       user-select: none;
     }
 
-    .otp-code.revealed {
+    .otp-code.revealed,
+    .otp-next-code.revealed {
       filter: blur(0);
       transition: filter 0.25s ease;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       🔐 应用锁 — 锁屏界面
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .app-lock-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .app-lock-overlay.show { opacity: 1; }
+
+    .app-lock-card {
+      text-align: center;
+      padding: 40px 32px;
+      max-width: 320px;
+      width: 90vw;
+    }
+
+    .app-lock-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      animation: lockBounce 0.6s ease;
+    }
+
+    @keyframes lockBounce {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .app-lock-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .app-lock-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+    }
+
+    .app-lock-hidden-input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    /* PIN 圆点 */
+    .pin-dots-container {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .pin-dot.filled {
+      background: #fff;
+      border-color: #fff;
+      transform: scale(1.15);
+    }
+
+    /* 抖动动画 */
+    @keyframes pinShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    .pin-dots-container.shake {
+      animation: pinShake 0.4s ease;
+    }
+    .pin-dots-container.shake .pin-dot.filled {
+      background: var(--danger, #ef4444);
+      border-color: var(--danger, #ef4444);
+    }
+
+    .app-lock-error {
+      color: #ef4444;
+      font-size: 13px;
+      margin-bottom: 16px;
+      min-height: 20px;
+    }
+
+    /* 数字键盘 */
+    .pin-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    .pin-key {
+      width: 72px;
+      height: 56px;
+      border: none;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .pin-key:hover { background: rgba(255,255,255,0.18); }
+    .pin-key:active { transform: scale(0.93); background: rgba(255,255,255,0.25); }
+
+    .pin-key-empty {
+      background: transparent;
+      cursor: default;
+    }
+    .pin-key-empty:hover { background: transparent; }
+    .pin-key-empty:active { transform: none; }
+
+    .pin-key-action {
+      font-size: 18px;
+    }
+
+    /* ━━ Toggle Switch 开关组件 ━━ */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: var(--bg-tertiary, #ccc);
+      border-radius: 24px;
+      transition: background 0.3s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      bottom: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--accent, #4F6EF7);
+    }
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(20px);
     }
 `;
 }

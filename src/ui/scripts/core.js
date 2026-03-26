@@ -1007,6 +1007,12 @@ export function getCoreCode() {
         el.classList.add('revealed');
         el.classList.remove('masked');
       }
+      // 同步揭示下一个 OTP
+      const nextEl = document.getElementById('next-otp-' + secretId);
+      if (nextEl) {
+        nextEl.classList.add('revealed');
+        nextEl.classList.remove('masked');
+      }
     }
 
     function hideOTP(secretId) {
@@ -1015,6 +1021,12 @@ export function getCoreCode() {
       if (el) {
         el.classList.remove('revealed');
         el.classList.add('masked');
+      }
+      // 同步隐藏下一个 OTP
+      const nextEl = document.getElementById('next-otp-' + secretId);
+      if (nextEl) {
+        nextEl.classList.remove('revealed');
+        nextEl.classList.add('masked');
       }
     }
 
@@ -1027,6 +1039,12 @@ export function getCoreCode() {
 
         const secretId = otpEl.id.replace('otp-', '');
         otpEl.classList.add('masked');
+
+        // 同时遮罩下一个 OTP
+        const nextOtpEl = card.querySelector('.otp-next-code');
+        if (nextOtpEl) {
+          nextOtpEl.classList.add('masked');
+        }
 
         card.addEventListener('mouseenter', () => revealOTP(secretId));
         card.addEventListener('mouseleave', () => {
