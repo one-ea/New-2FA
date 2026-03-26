@@ -1276,6 +1276,10 @@ function getHTMLBody() {
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
         <span class="item-text">应用锁</span>
       </div>
+      <div class="submenu-item" onclick="showSyncModal(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></span>
+        <span class="item-text">设备同步</span>
+      </div>
     </div>
   </div>
 
@@ -1328,6 +1332,55 @@ function getHTMLBody() {
         <button class="pin-key pin-key-action" onclick="handlePinBackspace()">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔄 P2P 同步弹窗 -->
+  <div id="syncModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 440px;">
+      <div class="modal-header">
+        <h2>🔄 设备同步</h2>
+        <button class="close-btn" onclick="hideSyncModal()">&times;</button>
+      </div>
+
+      <div style="padding: 0 20px 20px;">
+        <!-- Tab 切换 -->
+        <div class="sync-tabs">
+          <button class="sync-tab-btn active" id="syncTabSend" onclick="switchSyncTab('send')">📤 发送</button>
+          <button class="sync-tab-btn" id="syncTabReceive" onclick="switchSyncTab('receive')">📥 接收</button>
+        </div>
+
+        <!-- 发送面板 -->
+        <div id="syncSendPanel">
+          <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            <strong style="color: var(--text-primary);">🔐 端到端加密</strong><br>
+            密钥使用 AES-256-GCM 加密后传输<br>
+            服务器只存储密文，无法读取你的数据
+          </div>
+
+          <div id="syncPairingCode" class="sync-pairing-code"></div>
+          <div id="syncSendStatus" style="margin-bottom: 16px;"></div>
+
+          <button class="btn btn-primary" id="syncSendBtn" onclick="startSyncSend()" style="width: 100%; padding: 12px; border-radius: 8px; font-size: 14px;">📤 生成配对码</button>
+        </div>
+
+        <!-- 接收面板 -->
+        <div id="syncReceivePanel" style="display: none;">
+          <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            在另一台设备上生成配对码，然后在此输入
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;">配对码（12位）</label>
+            <input type="text" id="syncReceiveInput" maxlength="14" placeholder="XXXX XXXX XXXX" autocomplete="off"
+                   style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 20px; letter-spacing: 4px; text-align: center; font-family: var(--font-mono); text-transform: uppercase;">
+          </div>
+
+          <div id="syncReceiveStatus" style="margin-bottom: 16px;"></div>
+
+          <button class="btn btn-primary" id="syncReceiveBtn" onclick="startSyncReceive()" style="width: 100%; padding: 12px; border-radius: 8px; font-size: 14px;">📥 开始接收</button>
+        </div>
       </div>
     </div>
   </div>

@@ -26,6 +26,7 @@ import {
 	handleWebDAVRestore,
 	handleDeleteWebDAVFile,
 } from '../api/webdav.js';
+import { handleSyncCreate, handleSyncRetrieve } from '../api/sync.js';
 
 // UI 页面生成器
 import { createMainPage } from '../ui/page.js';
@@ -341,6 +342,15 @@ async function handleApiRequest(pathname, method, request, env) {
 
 	if (pathname === '/api/webdav/file' && method === 'DELETE') {
 		return handleDeleteWebDAVFile(request, env);
+	}
+
+	// P2P 同步 API
+	if (pathname === '/api/sync/create' && method === 'POST') {
+		return handleSyncCreate(request, env);
+	}
+
+	if (pathname === '/api/sync/retrieve' && method === 'POST') {
+		return handleSyncRetrieve(request, env);
 	}
 
 	// 未知API路径

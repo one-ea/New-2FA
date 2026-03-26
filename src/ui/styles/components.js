@@ -688,6 +688,76 @@ export function getComponentStyles() {
 
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       🔄 P2P 同步
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .sync-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 3px;
+    }
+
+    .sync-tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sync-tab-btn.active {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .sync-pairing-code {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-align: center;
+      padding: 16px;
+      margin-bottom: 12px;
+      color: var(--accent, #4F6EF7);
+      min-height: 28px;
+      user-select: all;
+    }
+
+    .sync-status-info {
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--info-light, rgba(79,110,247,0.1));
+      color: var(--info, #4F6EF7);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .sync-status-success {
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--success-light, rgba(16,185,129,0.1));
+      color: var(--success, #10B981);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .sync-status-error {
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--danger-light, rgba(239,68,68,0.1));
+      color: var(--danger, #EF4444);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        🎯 URL 智能匹配
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .url-match-bar {
