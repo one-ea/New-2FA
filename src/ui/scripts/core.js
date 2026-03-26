@@ -520,6 +520,11 @@ export function getCoreCode() {
         checkbox.checked = false;
         toggleAdvancedOptions();
       }
+
+      // 填充分组选择器
+      updateGroupSelect();
+      const groupSelect = document.getElementById('secretGroup');
+      if (groupSelect) groupSelect.value = secret.group || '';
       
       const modal = document.getElementById('secretModal');
       modal.style.display = 'flex';
@@ -628,6 +633,10 @@ export function getCoreCode() {
       const algorithm = document.getElementById('secretAlgorithm').value || 'SHA1';
       const counter = parseInt(document.getElementById('secretCounter').value) || 0;
 
+      // 获取分组
+      const groupSelect = document.getElementById('secretGroup');
+      const group = groupSelect ? groupSelect.value : '';
+
       if (!name || !secret) {
         showCenterToast('❌', '请填写服务名称和密钥');
         return;
@@ -652,7 +661,8 @@ export function getCoreCode() {
             digits,
             period,
             algorithm,
-            counter
+            counter,
+            group
           };
 
           const action = editingId ? '更新' : '新增';

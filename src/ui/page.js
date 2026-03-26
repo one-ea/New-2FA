@@ -243,6 +243,14 @@ function getHTMLBody() {
           <label for="secretKey">密钥 (Base32) *</label>
           <input type="text" id="secretKey" required placeholder="输入16位或更长的Base32密钥" autocomplete="off">
         </div>
+
+        <!-- 分组选择器 -->
+        <div class="form-group">
+          <label for="secretGroup">📂 分组</label>
+          <select id="secretGroup" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 14px;">
+            <option value="">无分组</option>
+          </select>
+        </div>
         
         <!-- 高级参数区域 -->
         <div class="form-section">
@@ -1229,6 +1237,10 @@ function getHTMLBody() {
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
         <span class="item-text">实用工具</span>
       </div>
+      <div class="submenu-item" onclick="showGroupManager(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></span>
+        <span class="item-text">分组管理</span>
+      </div>
       <div class="submenu-item" onclick="showAppLockSettings(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
         <span class="item-text">应用锁</span>
@@ -1285,6 +1297,32 @@ function getHTMLBody() {
         <button class="pin-key pin-key-action" onclick="handlePinBackspace()">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📂 分组管理弹窗 -->
+  <div id="groupManagerModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h2>📂 分组管理</h2>
+        <button class="close-btn" onclick="hideGroupManager()">&times;</button>
+      </div>
+
+      <div style="padding: 0 20px 20px;">
+        <!-- 新建分组 -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <input type="text" id="newGroupNameInput" placeholder="输入分组名称..."
+                 maxlength="20" autocomplete="off"
+                 onkeydown="if(event.key==='Enter'){addGroupFromManager()}"
+                 style="flex: 1; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 14px;">
+          <button class="btn btn-primary" onclick="addGroupFromManager()" style="padding: 10px 16px; border-radius: 8px; font-size: 13px; white-space: nowrap;">+ 新建</button>
+        </div>
+
+        <!-- 分组列表 -->
+        <div id="groupManagerList" style="max-height: 320px; overflow-y: auto;">
+          <div style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:13px;">还没有分组，点击上方按钮创建</div>
+        </div>
       </div>
     </div>
   </div>

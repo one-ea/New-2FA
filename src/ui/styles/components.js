@@ -687,6 +687,81 @@ export function getComponentStyles() {
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       📂 分组 Chips 与管理
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .chip-color-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .chip-group-dynamic {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* 分组管理列表 */
+    .group-manager-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      transition: background var(--duration-fast);
+    }
+    .group-manager-item:last-child { border-bottom: none; }
+    .group-manager-item:hover { background: var(--bg-hover); }
+
+    .group-manager-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .group-manager-name {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-manager-count {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      background: var(--bg-tertiary);
+      padding: 2px 8px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .group-manager-btn {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: background var(--duration-fast);
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .group-manager-btn:hover { background: var(--bg-active); }
+    .group-manager-btn-danger:hover { background: var(--danger-light); }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        🔐 应用锁 — 锁屏界面
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .app-lock-overlay {

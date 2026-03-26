@@ -135,10 +135,12 @@ export function getSearchCode() {
         filteredSecrets = secrets.filter(s => favs.includes(s.id));
       } else if (currentFilter === 'recent') {
         const recentIds = getRecentSecretIds();
-        // 按使用时间排序
         filteredSecrets = recentIds
           .map(id => secrets.find(s => s.id === id))
           .filter(Boolean);
+      } else if (currentFilter.startsWith('group:')) {
+        const groupId = currentFilter.substring(6);
+        filteredSecrets = secrets.filter(s => s.group === groupId);
       }
 
       // 如果同时有搜索关键词，进一步过滤
@@ -201,6 +203,11 @@ export function getSearchCode() {
       } else if (currentFilter === 'recent') {
         const recentIds = getRecentSecretIds();
         baseList = recentIds.map(id => secrets.find(s => s.id === id)).filter(Boolean);
+      } else if (currentFilter.startsWith('group:')) {
+        const groupId = currentFilter.substring(6);
+        baseList = secrets.filter(s => s.group === groupId);
+      } else {
+        baseList = [...secrets];
       }
 
       filteredSecrets = baseList.filter(secret => {
