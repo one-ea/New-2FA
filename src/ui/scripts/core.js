@@ -525,6 +525,9 @@ export function getCoreCode() {
       updateGroupSelect();
       const groupSelect = document.getElementById('secretGroup');
       if (groupSelect) groupSelect.value = secret.group || '';
+
+      // 填充域名字段
+      fillDomainsField(secret);
       
       const modal = document.getElementById('secretModal');
       modal.style.display = 'flex';
@@ -637,6 +640,9 @@ export function getCoreCode() {
       const groupSelect = document.getElementById('secretGroup');
       const group = groupSelect ? groupSelect.value : '';
 
+      // 获取域名列表
+      const domains = getDomainsFromInput();
+
       if (!name || !secret) {
         showCenterToast('❌', '请填写服务名称和密钥');
         return;
@@ -662,7 +668,8 @@ export function getCoreCode() {
             period,
             algorithm,
             counter,
-            group
+            group,
+            domains
           };
 
           const action = editingId ? '更新' : '新增';

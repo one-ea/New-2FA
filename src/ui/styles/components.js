@@ -688,6 +688,82 @@ export function getComponentStyles() {
 
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       🎯 URL 智能匹配
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .url-match-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 10px 16px;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-primary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+    }
+    .url-match-bar.show { transform: translateY(0); }
+
+    .url-match-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .url-match-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      padding: 6px 0;
+      font-family: var(--font-mono);
+    }
+    .url-match-input::placeholder { color: var(--text-tertiary); }
+
+    .url-match-result {
+      font-size: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .url-match-close {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: background var(--duration-fast);
+    }
+    .url-match-close:hover { background: var(--bg-hover); }
+
+    /* 卡片匹配状态 */
+    .secret-card.url-matched {
+      outline: 2px solid var(--accent, #4F6EF7);
+      outline-offset: 2px;
+      box-shadow: 0 0 16px rgba(79, 110, 247, 0.25);
+      position: relative;
+      z-index: 1;
+    }
+    .secret-card.url-dimmed {
+      opacity: 0.35;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        📊 安全仪表盘
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .dash-score-section {

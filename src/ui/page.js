@@ -251,6 +251,13 @@ function getHTMLBody() {
             <option value="">无分组</option>
           </select>
         </div>
+
+        <!-- 域名关联 -->
+        <div class="form-group">
+          <label for="secretDomains">🎯 关联域名 <small style="color:var(--text-tertiary);font-weight:400;">(自动匹配用，逗号分隔)</small></label>
+          <input type="text" id="secretDomains" placeholder="例如：github.com, gitlab.com" autocomplete="off"
+                 style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px;">
+        </div>
         
         <!-- 高级参数区域 -->
         <div class="form-section">
@@ -1185,6 +1192,22 @@ function getHTMLBody() {
     </div>
   </div>
 
+
+  <!-- 🎯 URL 智能匹配浮动栏 -->
+  <div id="urlMatchBar" class="url-match-bar" style="display: none;">
+    <div class="url-match-inner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;opacity:0.5;">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="urlMatchInput" class="url-match-input"
+             placeholder="粘贴网址匹配 OTP..."
+             autocomplete="off" spellcheck="false"
+             oninput="performURLMatch()">
+      <span id="urlMatchResult" class="url-match-result"></span>
+      <button class="url-match-close" onclick="hideURLMatcher()" title="关闭">✕</button>
+    </div>
+  </div>
+
   <!-- 页面底部链接 -->
   <footer class="page-footer">
     <div class="footer-content">
@@ -1236,6 +1259,10 @@ function getHTMLBody() {
       <div class="submenu-item" onclick="showToolsModal(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
         <span class="item-text">实用工具</span>
+      </div>
+      <div class="submenu-item" onclick="showURLMatcher(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></span>
+        <span class="item-text">URL 匹配</span>
       </div>
       <div class="submenu-item" onclick="showSecurityDashboard(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
