@@ -1237,6 +1237,10 @@ function getHTMLBody() {
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
         <span class="item-text">实用工具</span>
       </div>
+      <div class="submenu-item" onclick="showSecurityDashboard(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <span class="item-text">安全仪表盘</span>
+      </div>
       <div class="submenu-item" onclick="showGroupManager(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></span>
         <span class="item-text">分组管理</span>
@@ -1298,6 +1302,17 @@ function getHTMLBody() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- 📊 安全仪表盘弹窗 -->
+  <div id="securityDashboardModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2>📊 安全仪表盘</h2>
+        <button class="close-btn" onclick="hideSecurityDashboard()">&times;</button>
+      </div>
+      <div id="dashboardContent" style="padding: 0 20px 20px; max-height: 65vh; overflow-y: auto;"></div>
     </div>
   </div>
 

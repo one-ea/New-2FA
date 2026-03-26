@@ -18,6 +18,7 @@ import { getCoreCode } from './core.js';
 import { getUtilsCode } from './utils.js';
 import { getAppLockCode } from './applock.js';
 import { getGroupsCode } from './groups.js';
+import { getDashboardCode } from './dashboard.js';
 import { getModuleLoaderCode } from './moduleLoader.js';
 import { getWebDAVCode } from './webdav.js';
 
@@ -27,7 +28,7 @@ import { getWebDAVCode } from './webdav.js';
  * @returns {string} 核心JavaScript代码
  */
 export function getCoreScripts() {
-	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}${getModuleLoaderCode()}`;
+	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}${getDashboardCode()}${getModuleLoaderCode()}`;
 }
 
 /**
@@ -38,7 +39,7 @@ export function getCoreScripts() {
 export function getScripts() {
 	// QRCode must come before GoogleMigration, GoogleMigration must come before Export
 	// because Export calls showExportToGoogleModal from GoogleMigration
-	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getToolsCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}`;
+	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getToolsCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}${getDashboardCode()}`;
 }
 
 /**

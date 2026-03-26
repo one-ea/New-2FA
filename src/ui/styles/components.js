@@ -686,6 +686,169 @@ export function getComponentStyles() {
       transition: filter 0.25s ease;
     }
 
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       📊 安全仪表盘
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .dash-score-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .dash-score-ring-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 12px;
+    }
+
+    .dash-score-ring {
+      width: 120px;
+      height: 120px;
+      transform: rotate(-90deg);
+    }
+
+    .dash-ring-bg {
+      fill: none;
+      stroke: var(--border-primary);
+      stroke-width: 8;
+    }
+
+    .dash-ring-fg {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .dash-score-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dash-score-num {
+      font-size: 32px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .dash-score-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .dash-grade {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 20px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .dash-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+
+    .dash-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dash-stat-num {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .dash-stat-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* 检查项 */
+    .dash-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dash-check-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border-left: 3px solid;
+      background: var(--bg-secondary);
+    }
+
+    .dash-check-danger { border-left-color: #EF4444; }
+    .dash-check-warning { border-left-color: #F59E0B; }
+    .dash-check-info { border-left-color: #4F6EF7; }
+    .dash-check-success { border-left-color: #10B981; }
+
+    .dash-check-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .dash-check-body { flex: 1; min-width: 0; }
+
+    .dash-check-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .dash-check-detail {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .dash-check-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .dash-check-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    .dash-check-action {
+      margin-top: 8px;
+      padding: 5px 14px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent, #4F6EF7);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .dash-check-action:hover { opacity: 0.85; }
+
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        📂 分组 Chips 与管理
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
