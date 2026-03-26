@@ -280,7 +280,7 @@ export function getBaseStyles() {
     /* 子菜单 */
     .action-submenu {
       position: absolute;
-      top: 44px;
+      bottom: 0;
       right: 0;
       background: var(--menu-bg);
       border-radius: var(--radius-md);
@@ -292,7 +292,10 @@ export function getBaseStyles() {
       transition: all var(--duration-normal) var(--ease-out);
       z-index: 1000;
       min-width: 180px;
-      overflow: hidden;
+      max-height: min(80vh, 560px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -317,7 +320,7 @@ export function getBaseStyles() {
     }
 
     .submenu-item:last-child { border-bottom: none; }
-    .action-submenu.show .submenu-item:hover { background: var(--bg-hover); }
+    .action-submenu.show .submenu-item:hover { background: var(--bg-hover); color: var(--accent); }
     .action-submenu.show .submenu-item:active { background: var(--bg-active); }
 
     .item-icon {
@@ -356,13 +359,29 @@ export function getBaseStyles() {
     .action-submenu.show .submenu-item:nth-child(6) { transition-delay: 0.12s; }
     .action-submenu.show .submenu-item:nth-child(7) { transition-delay: 0.14s; }
     .action-submenu.show .submenu-item:nth-child(8) { transition-delay: 0.16s; }
+    .action-submenu.show .submenu-item:nth-child(9) { transition-delay: 0.18s; }
+    .action-submenu.show .submenu-item:nth-child(10) { transition-delay: 0.20s; }
+    .action-submenu.show .submenu-item:nth-child(11) { transition-delay: 0.22s; }
+    .action-submenu.show .submenu-item:nth-child(12) { transition-delay: 0.24s; }
 
-    .action-submenu.show .submenu-item:nth-child(1):hover { color: var(--accent); }
-    .action-submenu.show .submenu-item:nth-child(2):hover { color: var(--success); }
-    .action-submenu.show .submenu-item:nth-child(3):hover { color: #a855f7; }
-    .action-submenu.show .submenu-item:nth-child(4):hover { color: var(--warning); }
-    .action-submenu.show .submenu-item:nth-child(5):hover { color: var(--info); }
-    .action-submenu.show .submenu-item:nth-child(6):hover { color: #ec4899; }
+    /* 菜单分组标签 */
+    .submenu-group-label {
+      padding: 8px 14px 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-tertiary);
+      border-bottom: none;
+      cursor: default;
+      user-select: none;
+    }
+    .submenu-group-label:first-child { padding-top: 10px; }
+    .submenu-group-label ~ .submenu-group-label {
+      margin-top: 4px;
+      border-top: 1px solid var(--border-secondary);
+      padding-top: 10px;
+    }
 
     /* 遮罩 */
     .menu-overlay {

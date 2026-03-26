@@ -1242,8 +1242,9 @@ function getHTMLBody() {
   </div>
 
   <!-- 更多操作浮动菜单（从工具栏展开） -->
-  <div class="action-menu-float" style="position:fixed; right: 64px; top: 50%; transform: translateY(-50%); z-index: 1002;">
+  <div class="action-menu-float" style="position:fixed; right: 64px; top: auto; bottom: 60px; z-index: 1002;">
     <div class="action-submenu" id="actionSubmenu">
+      <div class="submenu-group-label">数据管理</div>
       <div class="submenu-item" onclick="exportAllSecrets(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
         <span class="item-text">批量导出</span>
@@ -1256,29 +1257,33 @@ function getHTMLBody() {
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg></span>
         <span class="item-text">WebDAV 备份</span>
       </div>
-      <div class="submenu-item" onclick="showToolsModal(); closeActionMenu();">
-        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
-        <span class="item-text">实用工具</span>
+      <div class="submenu-item" onclick="showSyncModal(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></span>
+        <span class="item-text">设备同步</span>
       </div>
+
+      <div class="submenu-group-label">智能功能</div>
       <div class="submenu-item" onclick="showURLMatcher(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></span>
         <span class="item-text">URL 匹配</span>
-      </div>
-      <div class="submenu-item" onclick="showSecurityDashboard(); closeActionMenu();">
-        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-        <span class="item-text">安全仪表盘</span>
       </div>
       <div class="submenu-item" onclick="showGroupManager(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></span>
         <span class="item-text">分组管理</span>
       </div>
+      <div class="submenu-item" onclick="showToolsModal(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
+        <span class="item-text">实用工具</span>
+      </div>
+
+      <div class="submenu-group-label">安全与设置</div>
+      <div class="submenu-item" onclick="showSecurityDashboard(); closeActionMenu();">
+        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <span class="item-text">安全仪表盘</span>
+      </div>
       <div class="submenu-item" onclick="showAppLockSettings(); closeActionMenu();">
         <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
         <span class="item-text">应用锁</span>
-      </div>
-      <div class="submenu-item" onclick="showSyncModal(); closeActionMenu();">
-        <span class="item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></span>
-        <span class="item-text">设备同步</span>
       </div>
     </div>
   </div>
