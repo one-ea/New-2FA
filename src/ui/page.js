@@ -156,6 +156,9 @@ function getHTMLBody() {
     </div>
 
     <div class="content">
+      <!-- 📊 内嵌安全仪表盘 -->
+      <div id="inlineDashboard" class="inline-dashboard" style="display: none;"></div>
+
       <div class="search-stats" id="searchStats" style="display: none;"></div>
 
       <!-- 背景遮罩 -->

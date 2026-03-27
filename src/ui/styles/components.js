@@ -671,6 +671,105 @@ export function getComponentStyles() {
     }
 
 
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       📊 内嵌安全仪表盘卡片
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .inline-dashboard { margin-bottom: 16px; }
+
+    .inline-dash-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-out);
+      user-select: none;
+    }
+    .inline-dash-card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: var(--card-hover-shadow);
+      transform: translateY(-1px);
+    }
+    .inline-dash-card:active { transform: translateY(0) scale(0.995); }
+
+    .inline-dash-score {
+      position: relative;
+      width: 48px; height: 48px;
+      flex-shrink: 0;
+    }
+    .inline-dash-ring { width: 48px; height: 48px; }
+    .inline-ring-fg { transition: stroke-dashoffset 0.8s var(--ease-out); }
+    .inline-dash-num {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px; font-weight: 800;
+      font-family: var(--font-mono);
+    }
+
+    .inline-dash-info { flex: 1; min-width: 0; }
+    .inline-dash-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .inline-dash-grade {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      color: white;
+      font-size: 11px; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .inline-dash-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .inline-dash-summary { font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
+
+    .inline-dash-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+      max-width: 260px;
+    }
+    .inline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px; font-weight: 500;
+      white-space: nowrap;
+    }
+    .inline-pill.danger { background: var(--danger-light); color: var(--danger); }
+    .inline-pill.warning { background: var(--warning-light); color: var(--warning); }
+    .inline-pill.success { background: var(--success-light); color: var(--success); }
+
+    .inline-dash-arrow {
+      flex-shrink: 0;
+      color: var(--text-tertiary);
+      transition: transform var(--duration-fast);
+    }
+    .inline-dash-card:hover .inline-dash-arrow {
+      transform: translateX(2px);
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) { .inline-dash-pills { display: none; } }
+    @media (max-width: 480px) {
+      .inline-dash-card { padding: 10px 14px; gap: 12px; }
+      .inline-dash-score { width: 40px; height: 40px; }
+      .inline-dash-ring { width: 40px; height: 40px; }
+      .inline-dash-num { font-size: 12px; }
+    }
+
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        🔄 P2P 同步
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */

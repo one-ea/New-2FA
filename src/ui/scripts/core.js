@@ -143,6 +143,7 @@ export function getCoreCode() {
         }
 
         await renderSecrets();
+        renderInlineDashboard();
       } catch (error) {
         console.error('加载密钥失败:', error);
 
@@ -155,6 +156,7 @@ export function getCoreCode() {
 
             // 显示缓存数据
             await renderSecrets();
+            renderInlineDashboard();
 
             // 提示用户正在使用缓存数据
             const cacheTime = new Date(timestamp).toLocaleString('zh-CN');
