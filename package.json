@@ -3,13 +3,10 @@
   "version": "2.0.0",
   "type": "module",
   "private": true,
-  "description": "2FA OTP 验证器 - Cloudflare Workers + R2 + Flutter App",
+  "description": "2FA 验证器 - Cloudflare Workers + R2 全栈 Web 应用",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
-  },
-  "dependencies": {
-    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "wrangler": "^4.37.0"
