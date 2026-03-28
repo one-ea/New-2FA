@@ -203,10 +203,16 @@ export function getUICode() {
       const submenu = document.getElementById('actionSubmenu');
       const overlay = document.getElementById('menuOverlay');
       const moreBtn = document.getElementById('toolbarMoreBtn');
+      const menuFloat = submenu.closest('.action-menu-float');
 
       submenu.classList.add('show');
       overlay.classList.add('show');
       if (moreBtn) moreBtn.style.background = 'var(--bg-active)';
+      // 移动端 Bottom Sheet 模式
+      if (menuFloat && window.innerWidth <= 580) {
+        menuFloat.classList.add('sheet-open');
+        document.body.style.overflow = 'hidden';
+      }
 
       // 防止点击事件冒泡
       if (event) event.stopPropagation();
@@ -216,10 +222,16 @@ export function getUICode() {
       const submenu = document.getElementById('actionSubmenu');
       const overlay = document.getElementById('menuOverlay');
       const moreBtn = document.getElementById('toolbarMoreBtn');
+      const menuFloat = submenu ? submenu.closest('.action-menu-float') : null;
 
-      submenu.classList.remove('show');
-      overlay.classList.remove('show');
+      if (submenu) submenu.classList.remove('show');
+      if (overlay) overlay.classList.remove('show');
       if (moreBtn) moreBtn.style.background = '';
+      // 移动端 Bottom Sheet 关闭
+      if (menuFloat) {
+        menuFloat.classList.remove('sheet-open');
+        document.body.style.overflow = '';
+      }
     }
 
     // 高级选项切换函数

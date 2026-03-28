@@ -49,8 +49,8 @@ export function getActionMenu() {
 
 	let html = `
   <!-- 更多操作菜单 -->
-  <div class="action-menu-float" style="position:fixed; right: 24px; bottom: 80px; z-index: 1002;">
-    <div class="action-submenu" id="actionSubmenu">`;
+  <div class="action-menu-float" onclick="closeActionMenu()">
+    <div class="action-submenu" id="actionSubmenu" onclick="event.stopPropagation()">`;
 
 	for (const group of groups) {
 		html += `\n      <div class="submenu-group-label">${group.label}</div>`;

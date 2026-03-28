@@ -282,12 +282,12 @@ export function getBaseStyles() {
       padding: 0 0 20px;
     }
 
-    /* ━━ FAB 菜单（右上角 +） ━━ */
+    /* ━━ FAB 菜单（齿轮旁弹出） ━━ */
     .action-menu-float {
       position: fixed;
-      top: 20px;
       right: 24px;
-      z-index: 1001;
+      bottom: 80px;
+      z-index: 1002;
     }
 
     .main-action-button {
@@ -580,6 +580,62 @@ export function getBaseStyles() {
       .back-to-top.show ~ .theme-toggle-float { bottom: 56px !important; }
 
       .action-submenu { min-width: 170px; top: 42px; }
+    }
+
+    /* 移动端 Bottom Sheet 交互 */
+    @media (max-width: 580px) {
+      .action-menu-float {
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 1100 !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: center !important;
+        background: rgba(0,0,0,0.35) !important;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .action-menu-float.sheet-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .action-submenu {
+        position: relative !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        border-radius: 16px 16px 0 0 !important;
+        max-height: 70vh !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.3s var(--ease-out) !important;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15) !important;
+      }
+      .action-menu-float.sheet-open .action-submenu.show {
+        transform: translateY(0) !important;
+      }
+
+      /* Bottom Sheet 顶部手柄 */
+      .action-submenu::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--border-primary);
+        margin: 10px auto;
+      }
+
+      .submenu-item {
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+      }
+      .submenu-group-label {
+        padding: 10px 20px 4px !important;
+      }
     }
 
     @media (max-width: 360px) {
