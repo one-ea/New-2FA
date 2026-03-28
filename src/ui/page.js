@@ -145,14 +145,20 @@ function getHTMLBody() {
         最近使用
       </button>
       <div class="chip-spacer"></div>
-      <select id="sortSelect" class="sort-select-inline" onchange="applySorting()">
-        <option value="oldest-first">最早添加</option>
-        <option value="newest-first">最晚添加</option>
-        <option value="name-asc">名称 A-Z</option>
-        <option value="name-desc">名称 Z-A</option>
-        <option value="account-asc">账户 A-Z</option>
-        <option value="account-desc">账户 Z-A</option>
-      </select>
+      <div class="sort-dropdown" id="sortDropdown">
+        <button class="sort-trigger" id="sortTrigger" onclick="toggleSortDropdown()">
+          <span id="sortLabel">最早添加</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        </button>
+        <div class="sort-options" id="sortOptions">
+          <div class="sort-option active" data-value="oldest-first" onclick="selectSort(this)">最早添加</div>
+          <div class="sort-option" data-value="newest-first" onclick="selectSort(this)">最晚添加</div>
+          <div class="sort-option" data-value="name-asc" onclick="selectSort(this)">名称 A-Z</div>
+          <div class="sort-option" data-value="name-desc" onclick="selectSort(this)">名称 Z-A</div>
+          <div class="sort-option" data-value="account-asc" onclick="selectSort(this)">账户 A-Z</div>
+          <div class="sort-option" data-value="account-desc" onclick="selectSort(this)">账户 Z-A</div>
+        </div>
+      </div>
     </div>
 
     <div class="content">
@@ -175,7 +181,7 @@ function getHTMLBody() {
       <div id="emptyState" class="empty-state" style="display: none;">
         <div class="icon">🔑</div>
         <h3>还没有密钥</h3>
-        <p>点击右上角 + 按钮添加您的第一个2FA密钥</p>
+        <p>点击上方 + 按钮添加您的第一个2FA密钥</p>
       </div>
     </div>
   </div>

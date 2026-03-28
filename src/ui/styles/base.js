@@ -212,26 +212,70 @@ export function getBaseStyles() {
 
     .chip-spacer { flex: 1; }
 
-    .sort-select-inline {
-      padding: 4px 24px 4px 8px;
+    /* ━━ 自定义排序下拉 ━━ */
+    .sort-dropdown {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .sort-trigger {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
       border: 1px solid var(--border-primary);
       border-radius: var(--radius-sm);
       background: var(--input-bg);
       color: var(--text-secondary);
-      font-size: 11px;
+      font-size: 12px;
       font-family: var(--font-body);
       cursor: pointer;
-      outline: none;
-      transition: border-color var(--duration-fast);
-      -webkit-appearance: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 6px center;
-      background-size: 12px;
+      transition: all var(--duration-fast);
+      white-space: nowrap;
+      line-height: 1.4;
     }
 
-    .sort-select-inline:hover { border-color: var(--accent); }
+    .sort-trigger:hover { border-color: var(--accent); color: var(--text-primary); }
+    .sort-dropdown.open .sort-trigger { border-color: var(--accent); color: var(--text-primary); }
+
+    .sort-options {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--menu-bg);
+      border: 1px solid var(--menu-border);
+      border-radius: 10px;
+      min-width: 120px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      z-index: 1000;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 4px 0;
+    }
+
+    .sort-dropdown.open .sort-options { display: block; }
+
+    .sort-option {
+      padding: 7px 14px;
+      font-size: 12px;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      white-space: nowrap;
+    }
+
+    .sort-option:hover {
+      background: var(--menu-item-hover);
+      color: var(--text-primary);
+    }
+
+    .sort-option.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
 
     .content {
       flex: 1;
@@ -525,7 +569,7 @@ export function getBaseStyles() {
       .search-icon { font-size: 12px; height: 32px; }
       .search-input { font-size: 13px; height: 32px; }
       .search-clear { height: 32px; }
-      .sort-select { height: 32px; font-size: 12px; }
+      .sort-trigger { font-size: 11px; padding: 3px 8px; }
 
       .action-menu-float { top: 12px; right: 12px; }
       .main-action-button { width: 34px; height: 34px; font-size: 16px; }

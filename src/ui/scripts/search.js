@@ -169,10 +169,15 @@ export function getSearchCode() {
         const savedSort = localStorage.getItem('2fa-sort-preference');
         if (savedSort) {
           currentSortType = savedSort;
-          const sortSelect = document.getElementById('sortSelect');
-          if (sortSelect) {
-            sortSelect.value = savedSort;
-          }
+          // 更新自定义下拉 UI
+          const label = document.getElementById('sortLabel');
+          const options = document.querySelectorAll('.sort-option');
+          options.forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.value === savedSort);
+            if (opt.dataset.value === savedSort && label) {
+              label.textContent = opt.textContent;
+            }
+          });
         }
       } catch (e) {}
     }
@@ -241,12 +246,34 @@ export function getSearchCode() {
     }
 
     // 应用排序
-    async function applySorting() {
-      const sortSelect = document.getElementById('sortSelect');
-      currentSortType = sortSelect.value;
-      saveSortPreference(currentSortType);
-      await renderFilteredSecrets();
+    // 自定义排序下拉交互
+    function toggleSortDropdown() {
+      const dropdown = document.getElementById('sortDropdown');
+      dropdown.classList.toggle('open');
     }
+
+    function selectSort(el) {
+      const value = el.dataset.value;
+      // 更新 active 状态
+      document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('active'));
+      el.classList.add('active');
+      // 更新 trigger label
+      document.getElementById('sortLabel').textContent = el.textContent;
+      // 关闭下拉
+      document.getElementById('sortDropdown').classList.remove('open');
+      // 应用排序
+      currentSortType = value;
+      saveSortPreference(value);
+      renderFilteredSecrets();
+    }
+
+    // 点击外部关闭排序下拉
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('sortDropdown');
+      if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
 
     // 排序密钥
     function sortSecrets(secretsToSort, sortType) {
