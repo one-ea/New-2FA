@@ -282,155 +282,7 @@ export function getBaseStyles() {
       padding: 0 0 20px;
     }
 
-    /* ━━ FAB 菜单（齿轮旁弹出） ━━ */
-    .action-menu-float {
-      position: fixed;
-      right: 24px;
-      bottom: 80px;
-      z-index: 1002;
-    }
-
-    .main-action-button {
-      background: var(--float-btn-bg);
-      color: var(--float-btn-text);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-sm);
-      font-size: 18px;
-      cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-out);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--float-btn-shadow);
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      outline: none;
-    }
-
-    .main-action-button:hover {
-      background: var(--float-btn-hover);
-      transform: translateY(-1px);
-    }
-
-    .main-action-button:active { transform: scale(0.94); }
-
-    .main-action-button.active {
-      transform: rotate(45deg);
-      background: var(--danger);
-      border-radius: 50%;
-    }
-
-    .main-action-button.active:hover { background: var(--danger-dark); }
-
-    /* 子菜单 */
-    .action-submenu {
-      position: absolute;
-      bottom: 0;
-      right: 56px;
-      background: var(--menu-bg);
-      border-radius: var(--radius-md);
-      box-shadow: var(--menu-shadow);
-      border: 1px solid var(--menu-border);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-4px) scale(0.97);
-      transition: all var(--duration-normal) var(--ease-out);
-      z-index: 1000;
-      min-width: 180px;
-      max-height: min(80vh, 560px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      overscroll-behavior: contain;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .action-submenu.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-    }
-
-    .submenu-item {
-      display: flex;
-      align-items: center;
-      padding: 9px 14px;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: background var(--duration-fast);
-      border-bottom: 1px solid var(--border-secondary);
-      background: transparent;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .submenu-item:last-child { border-bottom: none; }
-    .action-submenu.show .submenu-item:hover { background: var(--bg-hover); color: var(--accent); }
-    .action-submenu.show .submenu-item:active { background: var(--bg-active); }
-
-    .item-icon {
-      margin-right: 8px;
-      width: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
-
-    .item-text {
-      font-size: 13px;
-      font-weight: 500;
-      flex: 1;
-    }
-
-    /* 子菜单入场动画 */
-    .action-submenu .submenu-item {
-      transform: translateX(-6px);
-      opacity: 0;
-      transition: all var(--duration-normal) var(--ease-out);
-    }
-
-    .action-submenu.show .submenu-item {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .action-submenu.show .submenu-item:nth-child(1) { transition-delay: 0.02s; }
-    .action-submenu.show .submenu-item:nth-child(2) { transition-delay: 0.04s; }
-    .action-submenu.show .submenu-item:nth-child(3) { transition-delay: 0.06s; }
-    .action-submenu.show .submenu-item:nth-child(4) { transition-delay: 0.08s; }
-    .action-submenu.show .submenu-item:nth-child(5) { transition-delay: 0.10s; }
-    .action-submenu.show .submenu-item:nth-child(6) { transition-delay: 0.12s; }
-    .action-submenu.show .submenu-item:nth-child(7) { transition-delay: 0.14s; }
-    .action-submenu.show .submenu-item:nth-child(8) { transition-delay: 0.16s; }
-    .action-submenu.show .submenu-item:nth-child(9) { transition-delay: 0.18s; }
-    .action-submenu.show .submenu-item:nth-child(10) { transition-delay: 0.20s; }
-    .action-submenu.show .submenu-item:nth-child(11) { transition-delay: 0.22s; }
-    .action-submenu.show .submenu-item:nth-child(12) { transition-delay: 0.24s; }
-
-    /* 菜单分组标签 */
-    .submenu-group-label {
-      padding: 8px 14px 4px;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text-tertiary);
-      border-bottom: none;
-      cursor: default;
-      user-select: none;
-    }
-    .submenu-group-label:first-child { padding-top: 10px; }
-    .submenu-group-label ~ .submenu-group-label {
-      margin-top: 4px;
-      border-top: 1px solid var(--border-secondary);
-      padding-top: 10px;
-    }
-
-    /* 遮罩 */
+    /* ━━ 遮罩（模态框用） ━━ */
     .menu-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -444,7 +296,7 @@ export function getBaseStyles() {
     /* ━━ 浮动按钮组 ━━ */
     .back-to-top {
       position: fixed;
-      bottom: 128px; right: 28px;
+      bottom: 72px; right: 28px;
       width: 34px; height: 34px;
       background: var(--back-to-top-bg);
       border: 1px solid var(--back-to-top-border);
@@ -477,7 +329,7 @@ export function getBaseStyles() {
 
     .theme-toggle-float {
       position: fixed;
-      bottom: 80px; right: 28px;
+      bottom: 28px; right: 28px;
       width: 34px; height: 34px;
       background: var(--theme-toggle-bg);
       border: 1px solid var(--theme-toggle-border);
@@ -496,7 +348,7 @@ export function getBaseStyles() {
     }
 
     .theme-toggle-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .back-to-top.show ~ .theme-toggle-float { bottom: 128px !important; }
+    .back-to-top.show ~ .theme-toggle-float { bottom: 72px !important; }
     .theme-toggle-float:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); background: var(--theme-toggle-hover); }
     .theme-toggle-float:active { transform: scale(0.95); }
 
@@ -571,78 +423,16 @@ export function getBaseStyles() {
       .search-clear { height: 32px; }
       .sort-trigger { font-size: 11px; padding: 3px 8px; }
 
-      .action-menu-float { top: 12px; right: 12px; }
-      .main-action-button { width: 34px; height: 34px; font-size: 16px; }
 
       .back-to-top, .theme-toggle-float {
         width: 32px; height: 32px; right: 12px; bottom: 16px;
       }
       .back-to-top.show ~ .theme-toggle-float { bottom: 56px !important; }
-
-      .action-submenu { min-width: 170px; top: 42px; }
-    }
-
-    /* 移动端 Bottom Sheet 交互 */
-    @media (max-width: 580px) {
-      .action-menu-float {
-        position: fixed !important;
-        inset: 0 !important;
-        z-index: 1100 !important;
-        display: flex !important;
-        align-items: flex-end !important;
-        justify-content: center !important;
-        background: rgba(0,0,0,0.35) !important;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
-      }
-      .action-menu-float.sheet-open {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .action-submenu {
-        position: relative !important;
-        right: auto !important;
-        bottom: auto !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        border-radius: 16px 16px 0 0 !important;
-        max-height: 70vh !important;
-        transform: translateY(100%) !important;
-        transition: transform 0.3s var(--ease-out) !important;
-        box-shadow: 0 -4px 24px rgba(0,0,0,0.15) !important;
-      }
-      .action-menu-float.sheet-open .action-submenu.show {
-        transform: translateY(0) !important;
-      }
-
-      /* Bottom Sheet 顶部手柄 */
-      .action-submenu::before {
-        content: '';
-        display: block;
-        width: 36px;
-        height: 4px;
-        border-radius: 2px;
-        background: var(--border-primary);
-        margin: 10px auto;
-      }
-
-      .submenu-item {
-        padding: 12px 20px !important;
-        font-size: 15px !important;
-      }
-      .submenu-group-label {
-        padding: 10px 20px 4px !important;
-      }
     }
 
     @media (max-width: 360px) {
       .page-title { font-size: 20px; }
-      .action-menu-float { top: 10px; right: 10px; }
       .back-to-top, .theme-toggle-float { width: 30px; height: 30px; right: 10px; }
-      .main-action-button { width: 32px; height: 32px; font-size: 15px; }
     }
 `;
 }

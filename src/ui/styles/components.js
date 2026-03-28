@@ -321,38 +321,96 @@ export function getComponentStyles() {
     /* 底部账户名已移至标题下方，此处隐藏 */
     .card-account { display: none; }
 
-    /* ━━ 设置 FAB（齿轮按钮） ━━ */
-    .settings-fab {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border-primary);
-      background: var(--menu-bg);
-      color: var(--text-secondary);
-      border-radius: 50%;
+    /* ━━ 内嵌工具箱 ━━ */
+    .toolbox-section {
+      margin: 24px 0 0;
+      border-top: 1px solid var(--border-secondary);
+      padding-top: 16px;
+    }
+
+    .toolbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
+      padding: 4px 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .toolbox-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toolbox-chevron {
+      color: var(--text-tertiary);
+      transition: transform var(--duration-fast);
+    }
+    .toolbox-section.collapsed .toolbox-chevron {
+      transform: rotate(-90deg);
+    }
+
+    .toolbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .toolbox-section.collapsed .toolbox-grid {
+      display: none;
+    }
+
+    .toolbox-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 8px;
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      background: var(--card-bg);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      font-family: var(--font-body);
+      font-size: 0;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .toolbox-item:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--bg-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .toolbox-item:active { transform: scale(0.97); }
+
+    .toolbox-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transition: all var(--duration-normal) var(--ease-out);
-      z-index: 1001;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
+      opacity: 0.7;
     }
+    .toolbox-item:hover .toolbox-icon { opacity: 1; }
 
-    .settings-fab:hover {
-      color: var(--text-primary);
-      transform: rotate(30deg) scale(1.05);
-      box-shadow: var(--shadow-xl);
+    .toolbox-label {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-align: center;
+      white-space: nowrap;
     }
-
-    .settings-fab:active { transform: scale(0.92); }
 
     /* ━━ Footer ━━ */
     .page-footer {
@@ -468,11 +526,8 @@ export function getComponentStyles() {
         gap: 8px;
       }
       .otp-code { font-size: 28px; }
-      .settings-fab {
-        width: 40px;
-        height: 40px;
-        right: 16px;
-        bottom: 16px;
+      .toolbox-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
       }
     }
 

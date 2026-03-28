@@ -6,7 +6,7 @@
 
 import { getStyles } from './styles/index.js';
 import { getScripts, getCoreScripts } from './scripts/index.js';
-import { getSideToolbar, getActionMenu, getFloatingButtons } from './toolbar.js';
+import { getToolboxSection, getFloatingButtons } from './toolbar.js';
 
 /**
  * 创建主页面（密钥管理界面）
@@ -183,6 +183,8 @@ function getHTMLBody() {
         <h3>还没有密钥</h3>
         <p>点击上方 + 按钮添加您的第一个2FA密钥</p>
       </div>
+
+      ${getToolboxSection()}
     </div>
   </div>
   
@@ -1224,6 +1226,7 @@ function getHTMLBody() {
     </div>
   </div>
 
+
   <!-- 页面底部链接 -->
   <footer class="page-footer">
     <div class="footer-content">
@@ -1248,10 +1251,6 @@ function getHTMLBody() {
       </div>
     </div>
   </footer>
-
-  ${getSideToolbar()}
-
-  ${getActionMenu()}
 
   ${getFloatingButtons()}
 

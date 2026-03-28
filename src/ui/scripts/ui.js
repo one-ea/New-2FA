@@ -187,52 +187,33 @@ export function getUICode() {
       hideModal('toolsModal');
     }
 
-    // 折叠式菜单控制函数（适配右侧 side-toolbar）
-    function toggleActionMenu() {
-      const submenu = document.getElementById('actionSubmenu');
-      const overlay = document.getElementById('menuOverlay');
-
-      if (submenu.classList.contains('show')) {
-        closeActionMenu();
-      } else {
-        openActionMenu();
+    // 工具箱折叠/展开控制
+    function toggleToolbox() {
+      const section = document.getElementById('toolboxSection');
+      if (section) {
+        section.classList.toggle('collapsed');
+        // 保存折叠状态到 localStorage
+        try {
+          localStorage.setItem('2fa-toolbox-collapsed', section.classList.contains('collapsed') ? '1' : '0');
+        } catch (e) {}
       }
     }
 
-    function openActionMenu() {
-      const submenu = document.getElementById('actionSubmenu');
-      const overlay = document.getElementById('menuOverlay');
-      const moreBtn = document.getElementById('toolbarMoreBtn');
-      const menuFloat = submenu.closest('.action-menu-float');
-
-      submenu.classList.add('show');
-      overlay.classList.add('show');
-      if (moreBtn) moreBtn.style.background = 'var(--bg-active)';
-      // 移动端 Bottom Sheet 模式
-      if (menuFloat && window.innerWidth <= 580) {
-        menuFloat.classList.add('sheet-open');
-        document.body.style.overflow = 'hidden';
-      }
-
-      // 防止点击事件冒泡
-      if (event) event.stopPropagation();
+    // 初始化工具箱折叠状态
+    function initToolboxState() {
+      try {
+        const collapsed = localStorage.getItem('2fa-toolbox-collapsed');
+        if (collapsed === '1') {
+          const section = document.getElementById('toolboxSection');
+          if (section) section.classList.add('collapsed');
+        }
+      } catch (e) {}
     }
 
-    function closeActionMenu() {
-      const submenu = document.getElementById('actionSubmenu');
-      const overlay = document.getElementById('menuOverlay');
-      const moreBtn = document.getElementById('toolbarMoreBtn');
-      const menuFloat = submenu ? submenu.closest('.action-menu-float') : null;
-
-      if (submenu) submenu.classList.remove('show');
-      if (overlay) overlay.classList.remove('show');
-      if (moreBtn) moreBtn.style.background = '';
-      // 移动端 Bottom Sheet 关闭
-      if (menuFloat) {
-        menuFloat.classList.remove('sheet-open');
-        document.body.style.overflow = '';
-      }
-    }
+    // 保留空实现以防残留调用
+    function toggleActionMenu() {}
+    function openActionMenu() {}
+    function closeActionMenu() {}
 
     // 高级选项切换函数
     function toggleAdvancedOptions() {
