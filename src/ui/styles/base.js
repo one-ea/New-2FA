@@ -18,9 +18,9 @@ export function getBaseStyles() {
 
     /* ━━ 主容器 ━━ */
     .container {
-      max-width: 1060px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 28px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -68,6 +68,9 @@ export function getBaseStyles() {
       color: var(--text-secondary);
       flex-shrink: 0;
     }
+
+    /* 搜索按钮与操作按钮组之间加间距 */
+    #searchToggleBtn { margin-right: 6px; }
 
     .search-toggle-btn:hover {
       border-color: var(--accent);

@@ -11,6 +11,7 @@ export function getComponentStyles() {
       grid-template-columns: repeat(3, 1fr);
       gap: 14px 16px;
       padding-bottom: 60px;
+      align-items: start;
     }
 
     /* ── 紧凑卡片（概念图 ~90px 高） ── */
@@ -59,24 +60,24 @@ export function getComponentStyles() {
     }
 
     .service-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-weight: 600;
-      font-size: 9px;
+      font-size: 10px;
       color: var(--accent);
       background: var(--accent-light);
     }
 
     .service-icon img {
-      width: 14px;
-      height: 14px;
+      width: 20px;
+      height: 20px;
       object-fit: contain;
-      border-radius: 3px;
+      border-radius: 4px;
     }
 
     .secret-text { flex: 1; min-width: 0; }
@@ -92,8 +93,16 @@ export function getComponentStyles() {
       text-overflow: ellipsis;
     }
 
-    /* 账户名在 header 中隐藏 */
-    .secret-text p { display: none; }
+    /* 账户名紧跟服务名下方 */
+    .secret-text p {
+      margin: 1px 0 0;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
 
     .secret-header {
       display: flex;
@@ -292,10 +301,10 @@ export function getComponentStyles() {
 
     .progress-top {
       width: 100%;
-      height: 4px;
+      height: 2px;
       background: var(--progress-bg);
       position: relative;
-      border-radius: 2px;
+      border-radius: 1px;
       overflow: hidden;
     }
 
@@ -304,21 +313,11 @@ export function getComponentStyles() {
       background: var(--progress-fill);
       transition: width 1s linear, background-color 0.5s ease;
       width: 0%;
-      border-radius: 2px;
+      border-radius: 1px;
     }
 
-    /* 账户名在进度条下方，右对齐（概念图风格） */
-    .card-account {
-      display: block;
-      font-size: 11px;
-      color: var(--text-tertiary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.2;
-      margin-top: 3px;
-      text-align: right;
-    }
+    /* 底部账户名已移至标题下方，此处隐藏 */
+    .card-account { display: none; }
 
     /* ━━ 设置 FAB（齿轮按钮） ━━ */
     .settings-fab {
@@ -699,16 +698,16 @@ export function getComponentStyles() {
 
     .inline-dash-score {
       position: relative;
-      width: 48px; height: 48px;
+      width: 56px; height: 56px;
       flex-shrink: 0;
     }
-    .inline-dash-ring { width: 48px; height: 48px; }
+    .inline-dash-ring { width: 56px; height: 56px; }
     .inline-ring-fg { transition: stroke-dashoffset 0.8s var(--ease-out); }
     .inline-dash-num {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 14px; font-weight: 800;
+      font-size: 16px; font-weight: 800;
       font-family: var(--font-mono);
     }
 
@@ -735,10 +734,13 @@ export function getComponentStyles() {
     .inline-dash-pills {
       display: flex;
       gap: 6px;
-      flex-wrap: wrap;
       flex-shrink: 0;
-      max-width: 260px;
+      max-width: 300px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .inline-dash-pills::-webkit-scrollbar { display: none; }
     .inline-pill {
       display: inline-flex;
       align-items: center;
@@ -765,9 +767,9 @@ export function getComponentStyles() {
     @media (max-width: 768px) { .inline-dash-pills { display: none; } }
     @media (max-width: 480px) {
       .inline-dash-card { padding: 10px 14px; gap: 12px; }
-      .inline-dash-score { width: 40px; height: 40px; }
-      .inline-dash-ring { width: 40px; height: 40px; }
-      .inline-dash-num { font-size: 12px; }
+      .inline-dash-score { width: 44px; height: 44px; }
+      .inline-dash-ring { width: 44px; height: 44px; }
+      .inline-dash-num { font-size: 13px; }
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
