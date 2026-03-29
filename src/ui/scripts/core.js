@@ -589,42 +589,7 @@ export function getCoreCode() {
       });
     }
     
-    // 二维码解析工具
-    function showQRScanAndDecode() {
-      hideToolsModal();
-      showQRDecodeModal();
-    }
-    
-    // 二维码生成工具
-    function showQRGenerateTool() {
-      hideToolsModal();
-      showQRGenerateModal();
-    }
-    
-    // Base32编解码工具
-    function showBase32Tool() {
-      hideToolsModal();
-      showBase32Modal();
-    }
-    
-    // 时间戳工具
-    function showTimestampTool() {
-      hideToolsModal();
-      showTimestampModal();
-    }
-    
-    // 密钥检查器
-    function showKeyCheckTool() {
-      hideToolsModal();
-      showKeyCheckModal();
-    }
-    
-    // 密钥生成器
-    function showKeyGeneratorTool() {
-      hideToolsModal();
-      showKeyGeneratorModal();
-    }
-    
+
     async function handleSubmit(event) {
       event.preventDefault();
 

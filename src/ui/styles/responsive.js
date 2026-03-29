@@ -399,29 +399,7 @@ export function getResponsiveStyles() {
         font-size: 13px;
       }
       
-      /* 实用工具移动端优化 */
-      .tools-list {
-        margin-top: 15px;
-      }
-      
-      .tool-item {
-        padding: 15px;
-      }
-      
-      .tool-icon {
-        font-size: 24px;
-        width: 40px;
-        height: 40px;
-        margin-right: 12px;
-      }
-      
-      .tool-title {
-        font-size: 15px;
-      }
-      
-      .tool-desc {
-        font-size: 13px;
-      }
+
 
       .header h1 {
         font-size: 20px;

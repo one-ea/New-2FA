@@ -178,15 +178,6 @@ export function getUICode() {
       enableBodyScroll();
     }
 
-    // 实用工具相关函数
-    function showToolsModal() {
-      showModal('toolsModal');
-    }
-
-    function hideToolsModal() {
-      hideModal('toolsModal');
-    }
-
     // 工具箱折叠/展开控制
     function toggleToolbox() {
       const section = document.getElementById('toolboxSection');

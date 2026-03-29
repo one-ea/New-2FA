@@ -7,7 +7,7 @@
  * - export.js (16KB/375行) - 导出功能
  * - backup.js (355行) - 备份管理
  * - qrcode.js (29KB/786行) - 二维码生成
- * - tools.js + 工具模块 - 工具集
+
  */
 
 /**
@@ -24,7 +24,7 @@ export function getModuleLoaderCode() {
       export: { loaded: false, loading: false, code: null },
       backup: { loaded: false, loading: false, code: null },
       qrcode: { loaded: false, loading: false, code: null },
-      tools: { loaded: false, loading: false, code: null },
+
       googleMigration: { loaded: false, loading: false, code: null }
     };
 
@@ -107,7 +107,7 @@ export function getModuleLoaderCode() {
         export: '导出功能',
         backup: '备份管理',
         qrcode: '二维码功能',
-        tools: '工具集',
+
         googleMigration: 'Google迁移'
       };
       return displayNames[moduleName] || moduleName;
@@ -230,15 +230,7 @@ export function getModuleLoaderCode() {
     window.showBackupExportFormatModal = createLazyWrapper('backup', 'showBackupExportFormatModal');
     window.hideBackupExportFormatModal = createLazyWrapper('backup', 'hideBackupExportFormatModal');
 
-    // 工具集懒加载
-    // 注意：showToolsModal 和 hideToolsModal 在 ui.js 核心模块中，不需要懒加载
-    // 只有具体的工具函数需要懒加载
-    window.showQRScanAndDecode = createLazyWrapper('tools', 'showQRScanAndDecode');
-    window.showQRGenerateTool = createLazyWrapper('tools', 'showQRGenerateTool');
-    window.showBase32Tool = createLazyWrapper('tools', 'showBase32Tool');
-    window.showTimestampTool = createLazyWrapper('tools', 'showTimestampTool');
-    window.showKeyCheckTool = createLazyWrapper('tools', 'showKeyCheckTool');
-    window.showKeyGeneratorTool = createLazyWrapper('tools', 'showKeyGeneratorTool');
+
 
     // 二维码功能懒加载
     window.showSecretQRCode = createLazyWrapper('qrcode', 'showSecretQRCode');

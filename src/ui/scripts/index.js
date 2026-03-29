@@ -12,7 +12,7 @@ import { getExportCode } from './export.js';
 import { getQRCodeCode } from './qrcode.js';
 import { getImportCode } from './import/index.js';
 import { getBackupCode } from './backup.js';
-import { getToolsCode } from './tools.js';
+
 import { getGoogleMigrationCode } from './googleMigration.js';
 import { getCoreCode } from './core.js';
 import { getUtilsCode } from './utils.js';
@@ -41,7 +41,7 @@ export function getCoreScripts() {
 export function getScripts() {
 	// QRCode must come before GoogleMigration, GoogleMigration must come before Export
 	// because Export calls showExportToGoogleModal from GoogleMigration
-	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getToolsCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}${getDashboardCode()}${getURLMatchCode()}${getSyncCode()}`;
+	return `${getUtilsCode()}${getStateCode()}${getAuthCode()}${getOTPCode()}${getUICode()}${getSearchCode()}${getGroupsCode()}${getQRCodeCode()}${getGoogleMigrationCode()}${getExportCode()}${getImportCode()}${getBackupCode()}${getWebDAVCode()}${getCoreCode()}${getAppLockCode()}${getDashboardCode()}${getURLMatchCode()}${getSyncCode()}`;
 }
 
 /**
@@ -55,7 +55,7 @@ export function getModuleCode(moduleName) {
 		export: getExportCode,
 		backup: getBackupCode,
 		qrcode: getQRCodeCode,
-		tools: getToolsCode,
+
 		webdav: getWebDAVCode,
 		googleMigration: getGoogleMigrationCode,
 	};

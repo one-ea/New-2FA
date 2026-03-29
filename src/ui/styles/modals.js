@@ -523,67 +523,7 @@ export function getModalStyles() {
       border: 1px solid var(--border-primary);
     }
 
-    /* 实用工具模态框样式 */
-    .tools-list {
-      background: var(--tool-bg);
-      border-radius: 12px;
-      overflow: hidden;
-      margin-top: 20px;
-    }
 
-    .tool-item {
-      display: flex;
-      align-items: flex-start;
-      padding: 20px;
-      border-bottom: 1px solid var(--tool-border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tool-item:last-child {
-      border-bottom: none;
-    }
-
-    .tool-item:hover {
-      background-color: var(--tool-hover-bg);
-      transform: translateX(5px);
-    }
-
-    .tool-item:active {
-      background-color: var(--bg-active);
-      transform: translateX(2px);
-    }
-
-    .tool-icon {
-      font-size: 32px;
-      margin-right: 16px;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: var(--tool-icon-bg);
-      border-radius: 12px;
-      border: 1px solid var(--tool-icon-border);
-    }
-
-    .tool-content {
-      flex: 1;
-    }
-
-    .tool-title {
-      font-size: 16px;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-      font-weight: 600;
-    }
-
-    .tool-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
 
     .import-label {
       font-weight: 600;

@@ -57,8 +57,7 @@ src/
     │   ├── dashboard.js   # 安全仪表盘
     │   ├── sync.js        # P2P 同步
     │   ├── import/        # 导入模块
-    │   ├── export/        # 导出模块
-    │   └── tools/         # 实用工具
+    │   └── export/        # 导出模块
     └── config/            # 配置
 ```
 
