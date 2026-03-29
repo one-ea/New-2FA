@@ -368,6 +368,28 @@ export async function autoWebDAVBackup(env) {
 
 	logger.info('WebDAV 自动备份完成', { filename, secretCount: secrets.length });
 
+	// 清理过时备份 (保留最近 30 天)
+	try {
+		const files = await listFiles(config.url, config.remotePath, config.username, config.password);
+		const backups = files.filter((f) => f.name.endsWith('.json') && f.name.includes('2fa_'));
+		
+		const thirtyDaysAgo = new Date();
+		thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+		
+		let deletedCount = 0;
+		for (const file of backups) {
+			if (file.modified && new Date(file.modified) < thirtyDaysAgo) {
+				await deleteFile(config.url, config.remotePath, file.name, config.username, config.password);
+				deletedCount++;
+			}
+		}
+		if (deletedCount > 0) {
+			logger.info('WebDAV 旧备份清理完成', { deleted: deletedCount });
+		}
+	} catch (error) {
+		logger.warn('清理 WebDAV 旧备份失败', {}, error);
+	}
+
 	return { filename, secretCount: secrets.length };
 }
 

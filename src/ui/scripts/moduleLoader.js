@@ -22,7 +22,6 @@ export function getModuleLoaderCode() {
     const moduleLoadState = {
       import: { loaded: false, loading: false, code: null },
       export: { loaded: false, loading: false, code: null },
-      backup: { loaded: false, loading: false, code: null },
       qrcode: { loaded: false, loading: false, code: null },
 
       googleMigration: { loaded: false, loading: false, code: null }
@@ -105,7 +104,6 @@ export function getModuleLoaderCode() {
       const displayNames = {
         import: '导入功能',
         export: '导出功能',
-        backup: '备份管理',
         qrcode: '二维码功能',
 
         googleMigration: 'Google迁移'
@@ -219,16 +217,6 @@ export function getModuleLoaderCode() {
     window.selectExportFormat = createLazyWrapper('export', 'selectExportFormat');
     window.showExportFormatModal = createLazyWrapper('export', 'showExportFormatModal');
     window.hideExportFormatModal = createLazyWrapper('export', 'hideExportFormatModal');
-
-    // 备份管理懒加载
-    window.loadBackupList = createLazyWrapper('backup', 'loadBackupList');
-    window.showRestoreModal = createLazyWrapper('backup', 'showRestoreModal');
-    window.hideRestoreModal = createLazyWrapper('backup', 'hideRestoreModal');
-    window.selectBackupFromDropdown = createLazyWrapper('backup', 'selectBackupFromDropdown');
-    window.exportSelectedBackup = createLazyWrapper('backup', 'exportSelectedBackup');
-    window.selectBackupExportFormat = createLazyWrapper('backup', 'selectBackupExportFormat');
-    window.showBackupExportFormatModal = createLazyWrapper('backup', 'showBackupExportFormatModal');
-    window.hideBackupExportFormatModal = createLazyWrapper('backup', 'hideBackupExportFormatModal');
 
 
 

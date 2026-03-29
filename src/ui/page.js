@@ -425,54 +425,7 @@ function getHTMLBody() {
     </div>
   </div>
 
-  <!-- 还原配置模态框 -->
-  <div id="restoreModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>🔄 还原配置</h2>
-        <button class="close-btn" onclick="hideRestoreModal()">&times;</button>
-      </div>
-      
-      <div class="restore-instructions">
-        <p>🔄 从备份中选择一个配置进行还原：</p>
-        <p>
-          ⚠️ 警告：还原操作将覆盖当前所有密钥，请谨慎操作！
-        </p>
-      </div>
-      
-      <div class="restore-content">
-        <div class="backup-list-container">
-          <div class="backup-list-header">
-            <span>📋 选择备份文件</span>
-          </div>
-          <div class="backup-select-wrapper">
-            <select id="backupSelect" class="backup-select" onchange="selectBackupFromDropdown()">
-              <option value="">请选择备份文件...</option>
-            </select>
-          </div>
-          <div class="backup-actions">
-            <button type="button" class="btn btn-outline" onclick="loadBackupList()" style="padding: 8px 16px; font-size: 12px;">🔄 刷新</button>
-            <button type="button" class="btn btn-outline" onclick="exportSelectedBackup()" id="exportBackupBtn" disabled style="padding: 8px 16px; font-size: 12px;">📥 导出备份</button>
-          </div>
-        </div>
-        
-        <div class="restore-preview" id="restorePreview" style="display: none;">
-          <div class="preview-header">
-            <span>📋 备份预览</span>
-          </div>
-          <div id="backupPreviewContent" class="backup-preview-content">
-            <!-- 备份内容预览将在这里显示 -->
-          </div>
-        </div>
-      </div>
-      
-      <div class="modal-actions">
-        <button type="button" class="btn btn-outline" onclick="hideRestoreModal()" style="padding: 12px 20px; border-radius: 8px; font-size: 14px;">❌ 取消</button>
-        <button type="button" class="btn btn-danger" onclick="confirmRestore()" id="confirmRestoreBtn" disabled style="padding: 12px 20px; border-radius: 8px; font-size: 14px;">🔄 确认还原</button>
-      </div>
-    </div>
-  </div>
-  
+
   <!-- WebDAV 备份模态框 -->
   <div id="webdavModal" class="modal">
     <div class="modal-content" style="max-width: 520px;">
@@ -985,90 +938,7 @@ function getHTMLBody() {
     </div>
   </div>
 
-  <!-- 📦 数据与同步弹窗 -->
-  <div id="dataSyncLauncherModal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 400px; border-radius: 16px;">
-      <div class="modal-header" style="border-bottom: 1px solid var(--border-secondary); padding: 16px 20px;">
-        <h2 style="font-size: 16px; font-weight: 600;">📦 数据与同步</h2>
-        <button class="close-btn" onclick="hideDataSyncLauncher()">&times;</button>
-      </div>
-      <div style="padding: 16px 20px 24px;">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showRestoreModal();">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-            <div style="text-align: left;">
-              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">历史备份与还原</div>
-              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">从云端快照或本地文件恢复数据</div>
-            </div>
-          </button>
-          
-          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showWebDAVModal();">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
-            <div style="text-align: left;">
-              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">WebDAV 云同步</div>
-              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">使用第三方私有云备份 (如 Nextcloud)</div>
-            </div>
-          </button>
-          
-          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showSyncModal();">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
-            <div style="text-align: left;">
-              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">设备互传</div>
-              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">通过配对码在两台设备间加密秒传</div>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 🔄 P2P 同步弹窗 -->
-  <div id="syncModal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 440px;">
-      <div class="modal-header">
-        <h2>🔄 设备同步</h2>
-        <button class="close-btn" onclick="hideSyncModal()">&times;</button>
-      </div>
 
-      <div style="padding: 0 20px 20px;">
-        <!-- Tab 切换 -->
-        <div class="sync-tabs">
-          <button class="sync-tab-btn active" id="syncTabSend" onclick="switchSyncTab('send')">📤 发送</button>
-          <button class="sync-tab-btn" id="syncTabReceive" onclick="switchSyncTab('receive')">📥 接收</button>
-        </div>
-
-        <!-- 发送面板 -->
-        <div id="syncSendPanel">
-          <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
-            <strong style="color: var(--text-primary);">🔐 端到端加密</strong><br>
-            密钥使用 AES-256-GCM 加密后传输<br>
-            服务器只存储密文，无法读取你的数据
-          </div>
-
-          <div id="syncPairingCode" class="sync-pairing-code"></div>
-          <div id="syncSendStatus" style="margin-bottom: 16px;"></div>
-
-          <button class="btn btn-primary" id="syncSendBtn" onclick="startSyncSend()" style="width: 100%; padding: 12px; border-radius: 8px; font-size: 14px;">📤 生成配对码</button>
-        </div>
-
-        <!-- 接收面板 -->
-        <div id="syncReceivePanel" style="display: none;">
-          <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
-            在另一台设备上生成配对码，然后在此输入
-          </div>
-
-          <div class="form-group" style="margin-bottom: 16px;">
-            <label style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px;">配对码（12位）</label>
-            <input type="text" id="syncReceiveInput" maxlength="14" placeholder="XXXX XXXX XXXX" autocomplete="off"
-                   style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1.5px solid var(--border-primary); background: var(--bg-secondary); color: var(--text-primary); font-size: 20px; letter-spacing: 4px; text-align: center; font-family: var(--font-mono); text-transform: uppercase;">
-          </div>
-
-          <div id="syncReceiveStatus" style="margin-bottom: 16px;"></div>
-
-          <button class="btn btn-primary" id="syncReceiveBtn" onclick="startSyncReceive()" style="width: 100%; padding: 12px; border-radius: 8px; font-size: 14px;">📥 开始接收</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 📊 安全仪表盘弹窗 -->
   <div id="securityDashboardModal" class="modal" style="display: none;">

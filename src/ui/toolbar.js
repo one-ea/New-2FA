@@ -9,7 +9,7 @@
  */
 export function getToolboxSection() {
 	const tools = [
-		{ icon: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>', action: 'showDataSyncLauncher()', text: '数据与同步' },
+		{ icon: '<path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>', action: 'showWebDAVModal()', text: 'WebDAV' },
 		{ icon: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>', action: 'showURLMatcher()', text: 'URL匹配' },
 		{ icon: '<path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>', action: 'showGroupManager()', text: '分组管理' },
 		{ icon: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>', action: 'showAppLockSettings()', text: '应用锁' },
