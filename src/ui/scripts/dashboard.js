@@ -20,66 +20,102 @@ export function getDashboardCode() {
       const checks = [];
       let deductions = 0;
 
-      // 1. 算法强度
-      const sha1Secrets = secrets.filter(s => !s.algorithm || s.algorithm === 'SHA1');
-      const sha1Pct = sha1Secrets.length / total;
-      if (sha1Pct > 0.5) {
-        checks.push({ id: 'algo-weak', severity: 'warning', icon: '🔧', title: '多数密钥使用 SHA1 算法', detail: sha1Secrets.length + '/' + total + ' 个密钥使用 SHA1，建议升级到 SHA256', items: sha1Secrets.map(s => s.name).slice(0, 5) });
-        deductions += 10;
-      } else if (sha1Secrets.length > 0) {
-        checks.push({ id: 'algo-mixed', severity: 'info', icon: '🔧', title: '部分密钥使用 SHA1 算法', detail: sha1Secrets.length + ' 个密钥使用 SHA1（多数服务强制，一般无需处理）', items: sha1Secrets.map(s => s.name).slice(0, 3) });
-        deductions += 3;
+      // 1. 算法情况 (仅提示，因大多数网站强制使用 SHA1)
+      const sha256Secrets = secrets.filter(s => s.algorithm && (s.algorithm.toUpperCase() === 'SHA256' || s.algorithm.toUpperCase() === 'SHA512'));
+      if (sha256Secrets.length > 0) {
+        checks.push({ id: 'algo-strong', severity: 'success', icon: '🛡️', title: sha256Secrets.length + ' 个应用使用强哈希算法', detail: '采用了安全级别更高的 SHA-256 / SHA-512', items: sha256Secrets.map(s => s.name).slice(0, 3) });
+      } else {
+        checks.push({ id: 'algo-standard', severity: 'info', icon: 'ℹ️', title: '所有密钥使用 SHA1 标准算法', detail: '这是行业默认标准，符合绝大多数网站的传统规范', items: [] });
       }
 
-      // 2. 重复密钥（高危）
+      // 2. 重复密钥（高危漏洞）
       const secretMap = {};
-      secrets.forEach(s => { const key = s.secret.toUpperCase(); if (!secretMap[key]) secretMap[key] = []; secretMap[key].push(s.name); });
+      secrets.forEach(s => { 
+        if (!s.secret) return;
+        const key = s.secret.toUpperCase(); 
+        if (!secretMap[key]) secretMap[key] = []; 
+        secretMap[key].push(s.name); 
+      });
       const duplicates = Object.values(secretMap).filter(arr => arr.length > 1);
       if (duplicates.length > 0) {
-        checks.push({ id: 'duplicate-secret', severity: 'danger', icon: '🚨', title: '发现重复密钥！', detail: duplicates.flat().length + ' 个密钥共享相同的 Secret，存在严重安全风险', items: duplicates.map(d => d.join(' = ')) });
-        deductions += 25;
+        checks.push({ id: 'duplicate-secret', severity: 'danger', icon: '🚨', title: '系统发现重复密钥', detail: duplicates.flat().length + ' 个账户共享了相同的底层通讯 Secret，一旦泄露将造成连带影响', items: duplicates.map(d => d.join(' = ')) });
+        deductions += 30;
       }
 
-      // 3. 位数检测
-      const eightDigit = secrets.filter(s => s.digits === 8);
-      if (eightDigit.length > 0) {
-        checks.push({ id: 'digit-strong', severity: 'success', icon: '✅', title: eightDigit.length + ' 个密钥使用 8 位验证码', detail: '8 位验证码安全性更高', items: eightDigit.map(s => s.name).slice(0, 3) });
+      // 3. 极短 Secret 预警 (低于 16 字 Base32 = 80 Bits 熵)
+      const weakSecrets = secrets.filter(s => s.secret && s.secret.replace(/=/g, '').length < 16);
+      if (weakSecrets.length > 0) {
+        checks.push({ id: 'secret-weak', severity: 'warning', icon: '📏', title: weakSecrets.length + ' 个密钥的文本过短', detail: '密钥随机性较弱，强烈建议前往对应平台取消绑定并重新生成新的身份码', items: weakSecrets.map(s => s.name).slice(0, 5) });
+        deductions += 15;
       }
 
-      // 4. 缺少账户名
+      // 4. 时效参数异动检测 (过长生命周期)
+      const extremelyLongPeriod = secrets.filter(s => s.period && parseInt(s.period) > 60);
+      if (extremelyLongPeriod.length > 0) {
+        checks.push({ id: 'period-very-long', severity: 'warning', icon: '⏱️', title: extremelyLongPeriod.length + ' 个验证码刷新周期异常', detail: '有效时间超过 60 秒，被钓鱼或截获重放的可能性增加', items: extremelyLongPeriod.map(s => s.name).slice(0, 5) });
+        deductions += 10;
+      }
+
+      // 5. 高阶验证码形态 (8位数或更多)
+      const strongDigit = secrets.filter(s => s.digits && s.digits >= 8);
+      if (strongDigit.length > 0) {
+        checks.push({ id: 'digit-strong', severity: 'success', icon: '✨', title: strongDigit.length + ' 个启用增强型验证码', detail: '应用采用了 8 位或更多验证码数字，极大地下降碰撞几率', items: strongDigit.map(s => s.name).slice(0, 3) });
+      }
+
+      // 6. 数据完整度：账户名称缺失
       const noAccount = secrets.filter(s => !s.account || !s.account.trim());
       if (noAccount.length > 0) {
-        checks.push({ id: 'no-account', severity: 'info', icon: '📝', title: noAccount.length + ' 个密钥未设置账户名', detail: '添加账户名有助于区分同名服务的不同账户', items: noAccount.map(s => s.name).slice(0, 5) });
-        deductions += Math.min(noAccount.length, 5);
+        checks.push({ id: 'no-account', severity: 'info', icon: '📝', title: noAccount.length + ' 个业务未设置账户标识', detail: '没有明确的 Account 名称可能会让你在拥有同一个平台多个小号时发生混淆', items: noAccount.map(s => s.name).slice(0, 5) });
+        deductions += 5;
       }
 
-      // 5. HOTP
-      const hotpSecrets = secrets.filter(s => s.type && s.type.toUpperCase() === 'HOTP');
-      if (hotpSecrets.length > 0) {
-        checks.push({ id: 'hotp-present', severity: 'info', icon: '🔄', title: hotpSecrets.length + ' 个 HOTP 密钥', detail: 'HOTP 需保持计数器同步，建议定期验证', items: hotpSecrets.map(s => s.name) });
+      // 7. 数据完整度：服务商 Issuer 缺失
+      const noIssuer = secrets.filter(s => !s.issuer || !s.issuer.trim());
+      if (noIssuer.length > 0) {
+        checks.push({ id: 'no-issuer', severity: 'info', icon: '🏷️', title: noIssuer.length + ' 个业务未指定服务商', detail: '缺少 Issuer 发行方信息，应用将无法在展示与搜索中有效关联相应的图标', items: noIssuer.map(s => s.name).slice(0, 5) });
       }
 
-      // 6. 覆盖率
-      if (total <= 2) { checks.push({ id: 'coverage-low', severity: 'warning', icon: '📉', title: '2FA 覆盖率较低', detail: '当前只有 ' + total + ' 个服务启用了 2FA，建议为更多重要服务开启', items: [] }); deductions += 10; }
-      else if (total >= 10) { checks.push({ id: 'coverage-good', severity: 'success', icon: '🛡️', title: '2FA 覆盖率良好', detail: '已为 ' + total + ' 个服务启用 2FA 保护', items: [] }); }
+      // 8. 全面防暴覆盖率评估
+      if (total <= 3) { 
+        checks.push({ id: 'coverage-low', severity: 'warning', icon: '📉', title: '2FA 防御面过于狭窄', detail: '当前仅有 ' + total + ' 个服务接入了验证码，建议为您持有的微信、银行、邮箱等均设置多重守护', items: [] }); 
+        deductions += 5; 
+      } else if (total >= 15) { 
+        checks.push({ id: 'coverage-good', severity: 'success', icon: '🛡️', title: '数字防御体系完善', detail: '已累计为 ' + total + ' 个关键网络资产开启 2FA，安全意识非常出众！', items: [] }); 
+      }
 
-      // 7. 应用锁
-      if (!isAppLockEnabled()) { checks.push({ id: 'no-app-lock', severity: 'warning', icon: '🔐', title: '未启用应用锁', detail: '建议启用 PIN 码锁定，防止他人直接查看你的验证码', items: [], action: { label: '立即设置', fn: 'showAppLockSettings' } }); deductions += 8; }
-      else { checks.push({ id: 'app-lock-ok', severity: 'success', icon: '🔐', title: '应用锁已启用', detail: 'PIN 码保护已开启', items: [] }); }
+      // 9. 物理/本地防渗透：前置应用锁
+      if (!isAppLockEnabled()) { 
+        checks.push({ id: 'no-app-lock', severity: 'warning', icon: '🔓', title: '设备处于免密敞开状态', detail: '未配置主 PIN 码，任何人拿到您的设备都可随意窥视全盘验证口令', items: [], action: { label: '设置应用锁', fn: 'showAppLockSettings' } }); 
+        deductions += 20; 
+      } else { 
+        checks.push({ id: 'app-lock-ok', severity: 'success', icon: '🔒', title: '本地防物理渗透已启用', detail: '强力的 PIN 盾牌保护了底层数据访问权', items: [] }); 
+      }
 
-      // 8. 备份
+      // 10. 云存储与容灾能力：私有 WebDAV
       const hasWebDAV = !!localStorage.getItem('2fa-webdav-config');
-      if (!hasWebDAV) { checks.push({ id: 'no-backup', severity: 'warning', icon: '💾', title: '未配置自动备份', detail: '建议配置 WebDAV 自动备份，防止数据丢失', items: [] }); deductions += 5; }
-      else { checks.push({ id: 'backup-ok', severity: 'success', icon: '💾', title: 'WebDAV 备份已配置', detail: '自动备份已就绪', items: [] }); }
+      if (!hasWebDAV) { 
+        checks.push({ id: 'no-backup', severity: 'warning', icon: '☁️', title: '异地云端容灾未打通', detail: '推荐立即建立与私有 WebDAV 的加密连接，为设备丢失或损坏提前做好准备计划', items: [], action: { label: '部署备份', fn: 'showWebDAVModal' } }); 
+        deductions += 10; 
+      } else { 
+        checks.push({ id: 'backup-ok', severity: 'success', icon: '💽', title: '三维架构冷热异地灾备完成', detail: '基于自动化的 WebDAV 数据管道已经处于工作状态', items: [] }); 
+      }
 
       const score = Math.max(0, Math.min(100, 100 - deductions));
       let grade;
-      if (score >= 90) grade = 'A'; else if (score >= 75) grade = 'B'; else if (score >= 60) grade = 'C'; else if (score >= 40) grade = 'D'; else grade = 'F';
+      if (score >= 95) grade = 'S+'; 
+      else if (score >= 90) grade = 'S'; 
+      else if (score >= 80) grade = 'A'; 
+      else if (score >= 65) grade = 'B'; 
+      else if (score >= 40) grade = 'C'; 
+      else grade = 'D';
 
       const severityOrder = { danger: 0, warning: 1, info: 2, success: 3 };
       checks.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
 
-      return { score, grade, checks, stats: { total, sha1Count: sha1Secrets.length, duplicateGroups: duplicates.length, hotpCount: hotpSecrets.length, noAccountCount: noAccount.length, eightDigitCount: eightDigit.length } };
+      return { 
+        score, grade, checks, 
+        stats: { total, weakCount: weakSecrets.length, duplicateGroups: duplicates.length, noAccountCount: noAccount.length, strongDigitCount: strongDigit.length, noIssuerCount: noIssuer.length } 
+      };
     }
 
     // ========== 内嵌仪表盘（主页卡片） ==========
@@ -97,8 +133,8 @@ export function getDashboardCode() {
 
       const report = analyzeSecurityStatus();
       const scoreColor = report.score >= 90 ? '#10B981' :
-                         report.score >= 75 ? '#4F6EF7' :
-                         report.score >= 60 ? '#F59E0B' :
+                         report.score >= 80 ? '#4F6EF7' :
+                         report.score >= 65 ? '#F59E0B' :
                          report.score >= 40 ? '#F97316' : '#EF4444';
 
       const warnings = report.checks.filter(c => c.severity === 'danger' || c.severity === 'warning');
@@ -135,14 +171,27 @@ export function getDashboardCode() {
 
       // 右侧：关键指标 pills
       html += '<div class="inline-dash-pills">';
+      let pillCount = 0;
       if (report.stats.duplicateGroups > 0) {
         html += '<span class="inline-pill danger">🚨 ' + report.stats.duplicateGroups + ' 组重复</span>';
+        pillCount++;
       }
-      warnings.forEach(w => {
-        if (w.id !== 'duplicate-secret') {
-          html += '<span class="inline-pill warning">' + w.icon + ' ' + w.title.substring(0, 8) + '</span>';
+      
+      let warningsRendered = 0;
+      const otherWarnings = warnings.filter(w => w.id !== 'duplicate-secret');
+      
+      otherWarnings.forEach(w => {
+        if (pillCount < 3) {
+          html += '<span class="inline-pill warning">' + w.icon + ' ' + w.title.substring(0, 10) + '</span>';
+          warningsRendered++;
+          pillCount++;
         }
       });
+      
+      const unrendered = otherWarnings.length - warningsRendered;
+      if (unrendered > 0) {
+         html += '<span class="inline-pill" style="background:var(--bg-tertiary);color:var(--text-secondary)">+' + unrendered + ' 项</span>';
+      }
       if (warnings.length === 0) {
         html += '<span class="inline-pill success">✅ 安全状态良好</span>';
       }
@@ -183,7 +232,10 @@ export function getDashboardCode() {
       const container = document.getElementById('dashboardContent');
       if (!container) return;
 
-      const scoreColor = report.score >= 90 ? '#10B981' : report.score >= 75 ? '#4F6EF7' : report.score >= 60 ? '#F59E0B' : report.score >= 40 ? '#F97316' : '#EF4444';
+      const scoreColor = report.score >= 90 ? '#10B981' : 
+                         report.score >= 80 ? '#4F6EF7' : 
+                         report.score >= 65 ? '#F59E0B' : 
+                         report.score >= 40 ? '#F97316' : '#EF4444';
 
       let html = '<div class="dash-score-section">';
       html += '<div class="dash-score-ring-wrap">';
