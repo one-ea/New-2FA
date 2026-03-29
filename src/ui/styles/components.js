@@ -256,22 +256,20 @@ export function getComponentStyles() {
 
     .otp-bottom { display: none; }
 
-    /* 下一个验证码预览（最后5秒显示），固定高度避免跳变 */
+    /* 下一个验证码预览（最后5秒显示），固定高度预留空间避免跳变 */
     .otp-next-container {
       display: flex;
       align-items: center;
       gap: 6px;
       margin-top: 2px;
+      height: 18px;
+      visibility: hidden;
       opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transform: translateY(-4px);
-      transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+      transition: opacity 0.3s ease, visibility 0.3s;
     }
     .otp-next-container.show {
+      visibility: visible;
       opacity: 1;
-      max-height: 24px;
-      transform: translateY(0);
     }
 
     .otp-next-label {
