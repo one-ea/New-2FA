@@ -244,7 +244,6 @@ export function getCoreCode() {
             '</div>' +
             (isHOTP ? '' :
               '<div class="otp-next-container" onclick="event.stopPropagation(); smartCopyOTP(&quot;' + secret.id + '&quot;)" title="点击复制下一个验证码">' +
-                '<div class="otp-next-label">下一个 →</div>' +
                 '<div class="otp-next-code" id="next-otp-' + secret.id + '">------</div>' +
               '</div>'
             ) +
