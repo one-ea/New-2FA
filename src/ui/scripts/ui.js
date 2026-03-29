@@ -178,27 +178,23 @@ export function getUICode() {
       enableBodyScroll();
     }
 
-    // 工具箱折叠/展开控制
-    function toggleToolbox() {
-      const section = document.getElementById('toolboxSection');
-      if (section) {
-        section.classList.toggle('collapsed');
-        // 保存折叠状态到 localStorage
-        try {
-          localStorage.setItem('2fa-toolbox-collapsed', section.classList.contains('collapsed') ? '1' : '0');
-        } catch (e) {}
+    // 数据与同步启动器
+    function showDataSyncLauncher() {
+      const modal = document.getElementById('dataSyncLauncherModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+        disableBodyScroll();
       }
     }
 
-    // 初始化工具箱折叠状态
-    function initToolboxState() {
-      try {
-        const collapsed = localStorage.getItem('2fa-toolbox-collapsed');
-        if (collapsed === '1') {
-          const section = document.getElementById('toolboxSection');
-          if (section) section.classList.add('collapsed');
-        }
-      } catch (e) {}
+    function hideDataSyncLauncher() {
+      const modal = document.getElementById('dataSyncLauncherModal');
+      if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300);
+        enableBodyScroll();
+      }
     }
 
     // 保留空实现以防残留调用

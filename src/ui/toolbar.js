@@ -9,10 +9,8 @@
  */
 export function getToolboxSection() {
 	const tools = [
-		{ icon: '<polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>', action: 'showRestoreModal()', text: '还原配置' },
-		{ icon: '<path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>', action: 'showWebDAVModal()', text: 'WebDAV' },
-		{ icon: '<polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/>', action: 'showSyncModal()', text: '设备同步' },
-		{ icon: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>', action: 'showURLMatcher()', text: 'URL 匹配' },
+		{ icon: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>', action: 'showDataSyncLauncher()', text: '数据与同步' },
+		{ icon: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>', action: 'showURLMatcher()', text: 'URL匹配' },
 		{ icon: '<path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>', action: 'showGroupManager()', text: '分组管理' },
 		{ icon: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>', action: 'showAppLockSettings()', text: '应用锁' },
 	];
@@ -20,12 +18,11 @@ export function getToolboxSection() {
 	let html = `
   <!-- 工具箱区域 -->
   <div class="toolbox-section" id="toolboxSection">
-    <div class="toolbox-header" onclick="toggleToolbox()">
+    <div class="toolbox-header">
       <span class="toolbox-title">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
         工具与设置
       </span>
-      <svg class="toolbox-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
     </div>
     <div class="toolbox-grid" id="toolboxGrid">`;
 

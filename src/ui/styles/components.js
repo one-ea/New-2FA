@@ -330,10 +330,8 @@ export function getComponentStyles() {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      cursor: pointer;
       padding: 4px 0;
       user-select: none;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .toolbox-title {
@@ -347,24 +345,11 @@ export function getComponentStyles() {
       letter-spacing: 0.5px;
     }
 
-    .toolbox-chevron {
-      color: var(--text-tertiary);
-      transition: transform var(--duration-fast);
-    }
-    .toolbox-section.collapsed .toolbox-chevron {
-      transform: rotate(-90deg);
-    }
-
     .toolbox-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
       margin-top: 12px;
-      transition: all 0.25s ease;
-    }
-
-    .toolbox-section.collapsed .toolbox-grid {
-      display: none;
     }
 
     .toolbox-item {

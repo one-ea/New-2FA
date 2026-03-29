@@ -103,7 +103,6 @@ export function getCoreCode() {
         
         // 恢复用户的排序选择
         restoreSortPreference();
-        initToolboxState();
 
         // 页面加载后立即刷新所有OTP，确保时间同步
         setTimeout(() => {

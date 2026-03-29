@@ -985,6 +985,42 @@ function getHTMLBody() {
     </div>
   </div>
 
+  <!-- 📦 数据与同步弹窗 -->
+  <div id="dataSyncLauncherModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; border-radius: 16px;">
+      <div class="modal-header" style="border-bottom: 1px solid var(--border-secondary); padding: 16px 20px;">
+        <h2 style="font-size: 16px; font-weight: 600;">📦 数据与同步</h2>
+        <button class="close-btn" onclick="hideDataSyncLauncher()">&times;</button>
+      </div>
+      <div style="padding: 16px 20px 24px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showRestoreModal();">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+            <div style="text-align: left;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">历史备份与还原</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">从云端快照或本地文件恢复数据</div>
+            </div>
+          </button>
+          
+          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showWebDAVModal();">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+            <div style="text-align: left;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">WebDAV 云同步</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">使用第三方私有云备份 (如 Nextcloud)</div>
+            </div>
+          </button>
+          
+          <button class="secondary-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 16px; height: auto;" onclick="hideDataSyncLauncher(); showSyncModal();">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+            <div style="text-align: left;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">设备互传</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); font-weight: normal;">通过配对码在两台设备间加密秒传</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 🔄 P2P 同步弹窗 -->
   <div id="syncModal" class="modal" style="display: none;">
     <div class="modal-content" style="max-width: 440px;">
