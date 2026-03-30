@@ -17,6 +17,8 @@ export function getComponentStyles() {
     /* ── 紧凑卡片（概念图 ~90px 高） ── */
     .secret-card {
       background: var(--card-bg);
+      backdrop-filter: var(--glass-blur, none);
+      -webkit-backdrop-filter: var(--glass-blur, none);
       border-radius: var(--radius-md);
       padding: 14px 16px 0;
       border: 1px solid var(--card-border);

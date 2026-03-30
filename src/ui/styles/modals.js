@@ -23,6 +23,8 @@ export function getModalStyles() {
 
     .modal-content {
       background: var(--modal-bg);
+      backdrop-filter: var(--glass-blur-heavy, none);
+      -webkit-backdrop-filter: var(--glass-blur-heavy, none);
       border: 1px solid var(--modal-border);
       border-radius: 20px;
       padding: 28px;

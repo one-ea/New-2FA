@@ -178,24 +178,7 @@ export function getUICode() {
       enableBodyScroll();
     }
 
-    // 数据与同步启动器
-    function showDataSyncLauncher() {
-      const modal = document.getElementById('dataSyncLauncherModal');
-      if (modal) {
-        modal.style.display = 'flex';
-        setTimeout(() => modal.classList.add('show'), 10);
-        disableBodyScroll();
-      }
-    }
 
-    function hideDataSyncLauncher() {
-      const modal = document.getElementById('dataSyncLauncherModal');
-      if (modal) {
-        modal.classList.remove('show');
-        setTimeout(() => modal.style.display = 'none', 300);
-        enableBodyScroll();
-      }
-    }
 
     // 保留空实现以防残留调用
     function toggleActionMenu() {}
