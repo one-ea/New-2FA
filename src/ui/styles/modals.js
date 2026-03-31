@@ -23,10 +23,8 @@ export function getModalStyles() {
 
     .modal-content {
       background: var(--modal-bg);
-      backdrop-filter: var(--glass-blur-heavy, none);
-      -webkit-backdrop-filter: var(--glass-blur-heavy, none);
       border: 1px solid var(--modal-border);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       padding: 28px;
       max-width: 600px;
       width: 100%;
@@ -376,12 +374,12 @@ export function getModalStyles() {
     .btn {
       padding: 12px 22px;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--radius-xl); /* MD3 Fully rounded buttons */
       font-size: 14px;
       font-weight: 500;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Ensure box-shadow is added */
       min-width: 120px;
       display: flex;
       align-items: center;

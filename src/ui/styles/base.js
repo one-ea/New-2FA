@@ -7,8 +7,7 @@ export function getBaseStyles() {
 
     body {
       font-family: var(--font-body);
-      background: var(--bg-primary-grad, var(--bg-primary)); /* 优先使用渐变暗色背景 */
-      background-attachment: fixed; /* 防止背景随滚动突变 */
+      background: var(--bg-primary); /* Material Design 3 Solid Surface */
       min-height: 100vh;
       color: var(--text-primary);
       overflow-x: hidden;
