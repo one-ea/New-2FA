@@ -19,7 +19,8 @@ export function getComponentStyles() {
       align-items: center;
       background: transparent;
       border-radius: 0;
-      padding: 16px 20px;
+      padding: 10px 16px;
+      min-height: 72px; /* 强制压缩最低高度匹配 MD3 列表规格 */
       border-bottom: 1px solid var(--border-primary);
       transition: background-color var(--duration-normal) var(--ease-out);
       position: relative;
@@ -83,14 +84,17 @@ export function getComponentStyles() {
     }
 
     .card-issuer {
-      font-size: 14px;
+      font-size: 11px;
       font-family: var(--font-body);
       color: var(--text-secondary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 2px;
+      margin-bottom: 0;
+      line-height: 1;
       font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
     .card-issuer span {
@@ -100,13 +104,13 @@ export function getComponentStyles() {
     }
 
     .card-otp {
-      font-family: var(--font-body);
-      font-size: 34px;
+      font-family: var(--font-mono);
+      font-size: 30px;
       font-weight: 400;
       color: var(--text-primary);
       letter-spacing: 2px;
-      line-height: 1.2;
-      margin: 4px 0;
+      line-height: 1;
+      margin: 2px 0;
       transition: opacity var(--duration-fast);
     }
 
@@ -122,13 +126,14 @@ export function getComponentStyles() {
     }
 
     .card-account {
-      font-size: 14px;
+      font-size: 12px;
       font-family: var(--font-body);
-      color: var(--text-secondary);
+      color: var(--text-tertiary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
+      margin-top: 0;
+      line-height: 1;
     }
 
     /* ── 右侧：操作区 (倒计时及菜单) ── */
@@ -434,8 +439,8 @@ export function getComponentStyles() {
     }
 
     @media (max-width: 480px) {
-      .secret-card { padding: 12px 16px; gap: 12px; }
-      .card-otp { font-size: 26px; }
+      .secret-card { padding: 8px 16px; gap: 12px; }
+      .card-otp { font-size: 26px; margin: 0; }
       .card-icon { width: 36px; height: 36px; font-size: 16px; }
     }
 
