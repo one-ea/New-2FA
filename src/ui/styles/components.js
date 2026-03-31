@@ -19,8 +19,8 @@ export function getComponentStyles() {
       align-items: center;
       background: transparent;
       border-radius: 0;
-      padding: 10px 16px;
-      min-height: 72px; /* 强制压缩最低高度匹配 MD3 列表规格 */
+      padding: 20px 24px;
+      min-height: 96px; /* 恢复为超大块布局 */
       border-bottom: 1px solid var(--border-primary);
       transition: background-color var(--duration-normal) var(--ease-out);
       position: relative;
@@ -45,8 +45,8 @@ export function getComponentStyles() {
 
     /* ── 左侧：品牌图标 (Google 风格纯色圆) ── */
     .card-icon {
-      width: 40px;
-      height: 40px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -84,17 +84,16 @@ export function getComponentStyles() {
     }
 
     .card-issuer {
-      font-size: 11px;
+      font-size: 14px;
       font-family: var(--font-body);
       color: var(--text-secondary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 0;
-      line-height: 1;
+      margin-bottom: 4px;
+      line-height: 1.2;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0;
     }
     
     .card-issuer span {
@@ -105,12 +104,12 @@ export function getComponentStyles() {
 
     .card-otp {
       font-family: var(--font-mono);
-      font-size: 30px;
-      font-weight: 400;
+      font-size: 38px;
+      font-weight: 500;
       color: var(--text-primary);
-      letter-spacing: 2px;
-      line-height: 1;
-      margin: 2px 0;
+      letter-spacing: 3px;
+      line-height: 1.2;
+      margin: 4px 0;
       transition: opacity var(--duration-fast);
     }
 
@@ -126,14 +125,14 @@ export function getComponentStyles() {
     }
 
     .card-account {
-      font-size: 12px;
+      font-size: 14px;
       font-family: var(--font-body);
       color: var(--text-tertiary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 0;
-      line-height: 1;
+      margin-top: 4px;
+      line-height: 1.2;
     }
 
     /* ── 右侧：操作区 (倒计时及菜单) ── */
@@ -439,9 +438,9 @@ export function getComponentStyles() {
     }
 
     @media (max-width: 480px) {
-      .secret-card { padding: 8px 16px; gap: 12px; }
-      .card-otp { font-size: 26px; margin: 0; }
-      .card-icon { width: 36px; height: 36px; font-size: 16px; }
+      .secret-card { padding: 16px 16px; gap: 16px; }
+      .card-otp { font-size: 34px; margin: 2px 0; }
+      .card-icon { width: 40px; height: 40px; font-size: 18px; }
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

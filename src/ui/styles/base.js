@@ -18,7 +18,7 @@ export function getBaseStyles() {
 
     /* ━━ 主容器 ━━ */
     .container {
-      max-width: 1200px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 28px;
       min-height: 100vh;
