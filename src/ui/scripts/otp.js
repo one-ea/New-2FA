@@ -435,11 +435,26 @@ export function getOTPCode() {
       const progressElement = document.getElementById('progress-' + secretId);
       if (progressElement) {
         const progress = (remaining / timeStep) * 100;
-        progressElement.style.width = progress + '%';
-
-        // 通过 opacity 暗示剩余时间紧迫度（保留品牌色）
-        const ratio = remaining / timeStep;
-        progressElement.style.opacity = ratio > 0.3 ? '1' : '0.7';
+        
+        // Google Authenticator 风格：更新环形进度条
+        if (progressElement.tagName.toLowerCase() === 'circle') {
+          // 圆环总周长约为 2 * pi * 10 = 62.83
+          const circumference = 62.8318;
+          const offset = circumference * (1 - progress / 100);
+          progressElement.style.strokeDashoffset = offset;
+          
+          // 最后 5 秒变红警示
+          if (remaining <= 5) {
+            progressElement.style.stroke = 'var(--danger)';
+          } else {
+            // 恢复原始服务颜色
+            const secret = secrets.find(s => s.id === secretId);
+            progressElement.style.stroke = secret ? getServiceColor(secret.name) : 'var(--primary)';
+          }
+        } else {
+          // 向下兼容旧版 HTML 结构
+          progressElement.style.width = progress + '%';
+        }
       }
 
       // 最后 5 秒显示下一个验证码预览

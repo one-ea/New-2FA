@@ -202,31 +202,45 @@ export function getCoreCode() {
       return colors[Math.abs(hash) % colors.length];
     }
 
-    // 创建密钥卡片
+    // 创建密钥卡片 (Google Authenticator 风格排版)
     function createSecretCard(secret) {
       const logoUrl = getServiceLogo(secret.name);
       const isHOTP = secret.type && secret.type.toUpperCase() === 'HOTP';
+      const serviceColor = getServiceColor(secret.name);
+      const firstLetter = secret.name.charAt(0).toUpperCase();
 
-      return '<div class="secret-card" onclick="copyOTPFromCard(event, &quot;' + secret.id + '&quot;)" title="点击卡片复制验证码">' +
-        /* 头部：图标 + 服务名 + 菜单 */
-        '<div class="card-header">' +
-          '<div class="secret-info">' +
-            '<div class="service-icon">' +
-              (logoUrl ?
-                '<img src="' + logoUrl + '" alt="' + secret.name + '" style="width: 16px; height: 16px; object-fit: contain;" onerror="this.style.display=&quot;none&quot;; this.nextElementSibling.style.display=&quot;block&quot;;">' +
-                '<span style="display: none;">' + secret.name.charAt(0).toUpperCase() + '</span>' :
-                '<span>' + secret.name.charAt(0).toUpperCase() + '</span>'
-              ) +
-            '</div>' +
-            '<div class="secret-text">' +
-            '<h3>' + secret.name + (isHOTP ? ' <span style="font-size: 10px; color: var(--text-tertiary); font-weight: 500;">[HOTP]</span>' : '') + '</h3>' +
-            (secret.account ? '<p>' + secret.account + '</p>' : '') +
-            '</div>' +
-          '</div>' +
-          '<div class="card-menu" onclick="event.stopPropagation(); toggleCardMenu(&quot;' + secret.id + '&quot;)">' +
+      return '<div class="secret-card" onclick="copyOTPFromCard(event, &quot;' + secret.id + '&quot;)" title="点击复制验证码">' +
+        /* 左侧：Logo 圆环 */
+        '<div class="card-icon" style="background: ' + (logoUrl ? 'transparent' : serviceColor) + ';">' +
+          (logoUrl ?
+            '<img src="' + logoUrl + '" alt="' + secret.name + '" onerror="this.style.display=&quot;none&quot;; this.nextElementSibling.style.display=&quot;flex&quot;;">' +
+            '<span class="fallback-icon" style="display: none; background: ' + serviceColor + ';">' + firstLetter + '</span>' :
+            '<span class="fallback-icon">' + firstLetter + '</span>'
+          ) +
+        '</div>' +
+
+        /* 中间：服务名 + 超大验证码 + 账户名 */
+        '<div class="card-content">' +
+          '<div class="card-issuer">' + secret.name + (isHOTP ? ' <span>[HOTP]</span>' : '') + '</div>' +
+          '<div class="card-otp" id="otp-' + secret.id + '">------</div>' +
+          (secret.account ? '<div class="card-account">' + secret.account + '</div>' : '') +
+          (isHOTP ? '' : '<div class="otp-next-preview" id="next-otp-' + secret.id + '" style="display:none;">------</div>') +
+        '</div>' +
+
+        /* 右侧：环形倒计时特效 + 菜单 */
+        '<div class="card-actions">' +
+          (isHOTP ? '' : 
+            '<div class="timer-ring-wrapper">' +
+              '<svg class="timer-ring" width="24" height="24" viewBox="0 0 24 24">' +
+                '<circle class="timer-ring-track" cx="12" cy="12" r="10"></circle>' +
+                '<circle class="timer-ring-fill" id="progress-' + secret.id + '" cx="12" cy="12" r="10" stroke="' + serviceColor + '"></circle>' +
+              '</svg>' +
+            '</div>'
+          ) +
+          '<div class="card-menu-wrapper" onclick="event.stopPropagation(); toggleCardMenu(&quot;' + secret.id + '&quot;)">' +
             '<div class="menu-dots">⋮</div>' +
             '<div class="card-menu-dropdown" id="menu-' + secret.id + '">' +
-              '<div class="menu-item menu-item-fav" onclick="event.stopPropagation(); toggleFavorite(&quot;' + secret.id + '&quot;); closeAllCardMenus();">' + (isFavorite(secret.id) ? '<span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></span> 取消收藏' : '<span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></span> 收藏') + '</div>' +
+              '<div class="menu-item menu-item-fav" onclick="event.stopPropagation(); toggleFavorite(&quot;' + secret.id + '&quot;); closeAllCardMenus();">' + (isFavorite(secret.id) ? '<span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></span> 取消' : '<span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></span> 收藏') + '</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); showQRCode(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3"/><path d="M20 14v3h-3"/></svg></span> 二维码</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); copyOTPAuthURL(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></span> 复制链接</div>' +
               '<div class="menu-item" onclick="event.stopPropagation(); editSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span> 编辑</div>' +
@@ -234,28 +248,6 @@ export function getCoreCode() {
               '<div class="menu-item menu-item-danger" onclick="event.stopPropagation(); deleteSecret(&quot;' + secret.id + '&quot;); closeAllCardMenus();"><span class="mi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></span> 删除</div>' +
             '</div>' +
           '</div>' +
-        '</div>' +
-        /* OTP 验证码 */
-        '<div class="otp-preview">' +
-          '<div class="otp-main">' +
-            '<div class="otp-code-container">' +
-              '<div class="otp-code" id="otp-' + secret.id + '" onclick="event.stopPropagation(); copyOTP(&quot;' + secret.id + '&quot;)" title="点击复制验证码">------</div>' +
-            '</div>' +
-            (isHOTP ? '' :
-              '<div class="otp-next-container" onclick="event.stopPropagation(); smartCopyOTP(&quot;' + secret.id + '&quot;)" title="点击复制下一个验证码">' +
-                '<div class="otp-next-code" id="next-otp-' + secret.id + '">------</div>' +
-              '</div>'
-            ) +
-          '</div>' +
-        '</div>' +
-        /* 底部：进度条（品牌色） + 账户名 */
-        '<div class="card-bottom">' +
-          (isHOTP ? '' :
-            '<div class="progress-top">' +
-              '<div class="progress-top-fill" id="progress-' + secret.id + '" style="background:' + getServiceColor(secret.name) + ';"></div>' +
-            '</div>'
-          ) +
-          (secret.account ? '<span class="card-account">' + secret.account + '</span>' : '') +
         '</div>' +
       '</div>';
     }

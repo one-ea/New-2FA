@@ -54,5 +54,10 @@ export function getFloatingButtons() {
   <!-- 主题切换按钮 -->
   <button class="theme-toggle-float" onclick="toggleTheme()" title="当前：跟随系统（点击切换）" aria-label="切换主题" type="button">
     <span class="theme-icon" id="theme-icon" aria-hidden="true">🌓</span>
+  </button>
+
+  <!-- Google Authenticator 巨大添加悬浮按钮 (FAB) -->
+  <button class="add-fab-btn" onclick="showAddModal()" title="添加新的 2FA 密钥" aria-label="添加密钥">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
   </button>`;
 }

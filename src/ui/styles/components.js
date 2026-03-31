@@ -4,169 +4,228 @@
 export function getComponentStyles() {
 	return `
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       紧凑三列网格
+       Google Authenticator 格式列表
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .secrets-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px 16px;
-      padding-bottom: 60px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-bottom: 110px;
     }
 
-    /* ── 紧凑卡片（概念图 ~90px 高） ── */
+    /* ── 列表宽行卡片（纯平态无阴影边框的 MD3 列表） ── */
     .secret-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg); /* MD3 uses larger radius */
-      padding: 14px 16px 0;
-      border: 1px solid var(--card-border);
-      transition: border-color var(--duration-normal) var(--ease-out),
-                  box-shadow var(--duration-normal) var(--ease-out),
-                  transform var(--duration-normal) var(--ease-out);
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-radius: 0;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-primary);
+      transition: background-color var(--duration-normal) var(--ease-out);
       position: relative;
-      width: 100%;
-      box-shadow: var(--card-shadow);
       cursor: pointer;
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: none;
-      overflow: visible;
+      gap: 16px;
+    }
+
+    .secret-card:last-child {
+      border-bottom: none;
     }
 
     .secret-card:hover {
-      border-color: var(--card-hover-border);
-      box-shadow: var(--card-hover-shadow);
-      transform: translateY(-1px);
+      background: var(--bg-hover);
     }
 
     .secret-card:active {
-      transform: translateY(0) scale(0.99);
+      background: var(--bg-active);
     }
 
-    /* ── 卡片头部：品牌图标 + 服务名（同行，紧凑） ── */
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2px;
-    }
-
-    .secret-info {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 0;
-    }
-
-    .service-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 5px;
+    /* ── 左侧：品牌图标 (Google 风格纯色圆) ── */
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-weight: 600;
-      font-size: 10px;
-      color: var(--accent);
-      background: var(--accent-light);
+      overflow: hidden;
+      color: #fff;
+      font-weight: 500;
+      font-size: 18px;
     }
 
-    .service-icon img {
-      width: 20px;
-      height: 20px;
+    .card-icon img {
+      width: 80%;
+      height: 80%;
       object-fit: contain;
-      border-radius: 4px;
     }
-
-    .secret-text { flex: 1; min-width: 0; }
-
-    .secret-text h3 {
-      color: var(--text-primary);
-      font-size: 13px;
-      font-weight: 600;
-      margin: 0;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* 账户名紧跟服务名下方 */
-    .secret-text p {
-      margin: 1px 0 0;
-      font-size: 11px;
-      color: var(--text-tertiary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.2;
-    }
-
-    .secret-header {
+    
+    .fallback-icon {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
-    .service-details { flex: 1; min-width: 0; }
+    /* ── 中间：服务名 + 超大验证码 + 账户名 ── */
+    .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      justify-content: center;
+    }
 
-    /* ── 卡片菜单（hover 才显示） ── */
-    .card-menu {
+    .card-issuer {
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+    
+    .card-issuer span {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      font-weight: normal;
+    }
+
+    .card-otp {
+      font-family: var(--font-body);
+      font-size: 34px;
+      font-weight: 400;
+      color: var(--text-primary);
+      letter-spacing: 2px;
+      line-height: 1.2;
+      margin: 4px 0;
+      transition: opacity var(--duration-fast);
+    }
+
+    .card-otp:hover {
+      opacity: 0.7;
+    }
+
+    .otp-next-preview {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .card-account {
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    /* ── 右侧：操作区 (倒计时及菜单) ── */
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    /* 环形倒计时 */
+    .timer-ring-wrapper {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .timer-ring {
+      transform: rotate(-90deg);
+    }
+    
+    .timer-ring-track {
+      fill: none;
+      stroke: var(--border-secondary);
+      stroke-width: 4;
+    }
+
+    .timer-ring-fill {
+      fill: none;
+      stroke-width: 4;
+      stroke-dasharray: 62.8318;
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+    }
+
+    /* 卡片菜单按钮 */
+    .card-menu-wrapper {
       position: relative;
       cursor: pointer;
-      padding: 2px 4px;
-      margin: -2px -4px;
-      border-radius: 4px;
-      transition: background var(--duration-fast), opacity var(--duration-fast);
-      opacity: 0;
+      padding: 8px;
+      margin: -8px 0 -8px -8px;
+      border-radius: 50%;
+      transition: background var(--duration-fast);
+      color: var(--text-tertiary);
     }
 
-    .secret-card:hover .card-menu { opacity: 1; }
-    .card-menu:hover { background: var(--bg-hover); }
+    .card-menu-wrapper:hover { 
+      background: var(--bg-hover); 
+      color: var(--text-primary);
+    }
 
     .menu-dots {
-      font-size: 14px;
-      color: var(--text-tertiary);
+      font-size: 20px;
       line-height: 1;
-      user-select: none;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
     }
 
+    /* 菜单下拉项 (继承 M3 风格) */
     .card-menu-dropdown {
       display: none;
       position: absolute;
-      top: 24px; right: 0;
+      top: 36px; right: 0;
       background: var(--menu-bg);
-      border: 1px solid var(--menu-border);
-      border-radius: 10px;
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
       min-width: 140px;
       width: fit-content;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-md);
       z-index: 10000;
       overflow: hidden;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       padding: 4px 0;
     }
 
     .card-menu-dropdown.show { display: block; }
 
     .menu-item {
-      padding: 8px 14px;
+      padding: 10px 16px;
       color: var(--text-primary);
       cursor: pointer;
       transition: background var(--duration-fast);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       white-space: nowrap;
       font-family: var(--font-body);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
 
-    /* 菜单项图标 */
     .mi {
       font-size: 14px;
       width: 18px;
@@ -177,7 +236,6 @@ export function getComponentStyles() {
 
     .menu-item:hover { background: var(--menu-item-hover); }
 
-    /* 分割线 */
     .menu-divider {
       height: 1px;
       background: var(--border-primary);
@@ -186,138 +244,6 @@ export function getComponentStyles() {
 
     .menu-item-danger { color: var(--danger) !important; }
     .menu-item-danger:hover { background: var(--danger-light) !important; }
-
-    /* ── 操作按钮 ── */
-    .secret-actions {
-      display: flex;
-      gap: 4px;
-      flex-shrink: 0;
-      margin-left: 6px;
-    }
-
-    .action-btn {
-      background: var(--bg-tertiary);
-      border: none;
-      color: var(--text-secondary);
-      border-radius: 4px;
-      padding: 3px 8px;
-      font-size: 11px;
-      font-weight: 500;
-      font-family: var(--font-body);
-      cursor: pointer;
-      transition: all var(--duration-fast);
-    }
-
-    .action-btn:hover { background: var(--bg-active); color: var(--text-primary); }
-    .delete-btn:hover { background: var(--danger-light); color: var(--danger); }
-
-    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       OTP 显示（极紧凑）
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-    .otp-preview {
-      margin: 0;
-      padding: 0;
-      background: none;
-      border: none;
-    }
-
-    .otp-main {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-    }
-
-    .otp-code-container {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .otp-code {
-      font-family: var(--font-mono);
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--otp-text);
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: opacity var(--duration-fast);
-      user-select: none;
-      margin: 0;
-      padding: 2px 0;
-      line-height: 1.2;
-      background: none;
-      border: none;
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-
-    .otp-code:hover { opacity: 0.6; }
-
-    .otp-bottom { display: none; }
-
-    /* 下一个验证码预览（最后5秒显示），固定高度预留空间避免跳变 */
-    .otp-next-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 2px;
-      height: 18px;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease, visibility 0.3s;
-    }
-    .otp-next-container.show {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .otp-next-label {
-      font-size: 10px;
-      color: var(--text-tertiary);
-      white-space: nowrap;
-    }
-
-    .otp-next-code {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 1.5px;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .otp-next-code:hover { opacity: 0.7; }
-
-    /* ── 卡片底部：进度条 + 账户名（概念图风格） ── */
-    .card-bottom {
-      margin-top: 6px;
-      padding-bottom: 10px;
-    }
-
-    /* 进度条 */
-    .progress-mini { display: none; }
-    .progress-mini-fill { display: none; }
-
-    .progress-top {
-      width: 100%;
-      height: 2px;
-      background: var(--progress-bg);
-      position: relative;
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .progress-top-fill {
-      height: 100%;
-      background: var(--progress-fill);
-      transition: width 1s linear, background-color 0.5s ease;
-      width: 0%;
-      border-radius: 1px;
-    }
-
-    /* 底部账户名已移至标题下方，此处隐藏 */
-    .card-account { display: none; }
 
     /* ━━ 内嵌工具箱 ━━ */
     .toolbox-section {
@@ -496,31 +422,21 @@ export function getComponentStyles() {
     .webdav-action-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
     .webdav-delete-btn:hover { background: var(--danger); border-color: var(--danger); }
 
-    /* ━━ 响应式卡片 ━━ */
-    @media (max-width: 900px) {
-      .secrets-list {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
+    /* ━━ 响应式卡片调整 ━━ */
     @media (max-width: 580px) {
       .secrets-list {
-        grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 0;
       }
-      .otp-code { font-size: 28px; }
+      .card-otp { font-size: 28px; letter-spacing: 1px; }
       .toolbox-grid {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
       }
     }
 
     @media (max-width: 480px) {
-      .secret-card { padding: 8px 10px 0; }
-      .otp-code { font-size: 24px; letter-spacing: 1.5px; }
-    }
-
-    @media (min-width: 1200px) {
-      .secrets-list { gap: 12px; }
+      .secret-card { padding: 12px 16px; gap: 12px; }
+      .card-otp { font-size: 26px; }
+      .card-icon { width: 36px; height: 36px; font-size: 16px; }
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

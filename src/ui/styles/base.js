@@ -133,33 +133,6 @@ export function getBaseStyles() {
 
     .search-close-btn:hover { color: var(--danger); }
 
-    /* header 内 + 小按钮（概念图风格：橙色小圆角） */
-    .header-add-btn {
-      width: 32px;
-      height: 32px;
-      border: none;
-      border-radius: 8px;
-      background: #F5A623;
-      color: white;
-      font-size: 18px;
-      font-weight: 300;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--duration-fast);
-      padding: 0;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-
-    .header-add-btn:hover {
-      background: #E09516;
-      transform: translateY(-1px);
-    }
-
-    .header-add-btn:active { transform: scale(0.94); }
-
     .search-stats {
       margin-bottom: 8px;
       padding: 0 2px;
@@ -293,11 +266,11 @@ export function getBaseStyles() {
     }
     .menu-overlay.show { opacity: 1; visibility: visible; }
 
-    /* ━━ 浮动按钮组 ━━ */
+    /* ━━ 悬浮按钮组 ━━ */
     .back-to-top {
       position: fixed;
-      bottom: 72px; right: 28px;
-      width: 34px; height: 34px;
+      bottom: 152px; right: 28px;
+      width: 40px; height: 40px;
       background: var(--back-to-top-bg);
       border: 1px solid var(--back-to-top-border);
       border-radius: var(--radius-sm);
@@ -329,8 +302,8 @@ export function getBaseStyles() {
 
     .theme-toggle-float {
       position: fixed;
-      bottom: 28px; right: 28px;
-      width: 34px; height: 34px;
+      bottom: 100px; right: 28px;
+      width: 40px; height: 40px;
       background: var(--theme-toggle-bg);
       border: 1px solid var(--theme-toggle-border);
       border-radius: var(--radius-sm);
@@ -348,9 +321,39 @@ export function getBaseStyles() {
     }
 
     .theme-toggle-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .back-to-top.show ~ .theme-toggle-float { bottom: 72px !important; }
+    .back-to-top.show ~ .theme-toggle-float { bottom: 100px !important; }
     .theme-toggle-float:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); background: var(--theme-toggle-hover); }
     .theme-toggle-float:active { transform: scale(0.95); }
+
+    /* ── 标志性巨大的添加按钮 (Google Authenticator) ── */
+    .add-fab-btn {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 56px; height: 56px;
+      background: var(--float-btn-bg, #EADDFF);
+      color: var(--float-btn-text, #21005D);
+      border: none;
+      border-radius: 16px; /* MD3 FAB 弧度 */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--duration-normal) var(--ease-out);
+      z-index: 1000;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .add-fab-btn:hover {
+      box-shadow: var(--shadow-xl);
+      background: var(--float-btn-hover, #D0BCFF);
+      transform: translateY(-2px);
+    }
+
+    .add-fab-btn:active {
+      transform: scale(0.95);
+      box-shadow: var(--shadow-md);
+    }
 
     .theme-toggle-float .theme-icon {
       font-size: 15px;
@@ -425,9 +428,14 @@ export function getBaseStyles() {
 
 
       .back-to-top, .theme-toggle-float {
-        width: 32px; height: 32px; right: 12px; bottom: 16px;
+        width: 38px; height: 38px; right: 16px;
       }
-      .back-to-top.show ~ .theme-toggle-float { bottom: 56px !important; }
+      .add-fab-btn {
+        right: 16px; bottom: 20px;
+      }
+      .theme-toggle-float { bottom: 92px; }
+      .back-to-top.show ~ .theme-toggle-float { bottom: 92px !important; }
+      .back-to-top { bottom: 144px; }
     }
 
     @media (max-width: 360px) {
