@@ -269,11 +269,11 @@ export function getBaseStyles() {
     /* ━━ 悬浮按钮组 ━━ */
     .back-to-top {
       position: fixed;
-      bottom: 152px; right: 28px;
+      bottom: 100px; right: 36px;
       width: 40px; height: 40px;
       background: var(--back-to-top-bg);
       border: 1px solid var(--back-to-top-border);
-      border-radius: var(--radius-sm);
+      border-radius: 50%; /* 让它圆润一点，更配 FAB */
       cursor: pointer;
       transition: all var(--duration-normal) var(--ease-out);
       display: flex;
@@ -300,30 +300,7 @@ export function getBaseStyles() {
       color: var(--back-to-top-text);
     }
 
-    .theme-toggle-float {
-      position: fixed;
-      bottom: 100px; right: 28px;
-      width: 40px; height: 40px;
-      background: var(--theme-toggle-bg);
-      border: 1px solid var(--theme-toggle-border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-out);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
-      z-index: 1000;
-      user-select: none;
-      outline: none;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
 
-    .theme-toggle-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .back-to-top.show ~ .theme-toggle-float { bottom: 100px !important; }
-    .theme-toggle-float:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); background: var(--theme-toggle-hover); }
-    .theme-toggle-float:active { transform: scale(0.95); }
 
     /* ── 标志性巨大的添加按钮 (Google Authenticator) ── */
     .add-fab-btn {
@@ -355,12 +332,7 @@ export function getBaseStyles() {
       box-shadow: var(--shadow-md);
     }
 
-    .theme-toggle-float .theme-icon {
-      font-size: 15px;
-      transition: transform 0.3s;
-    }
 
-    .theme-toggle-float:hover .theme-icon { transform: rotate(15deg); }
 
     /* ━━ 空状态 ━━ */
     .empty-state {
@@ -427,20 +399,17 @@ export function getBaseStyles() {
       .sort-trigger { font-size: 11px; padding: 3px 8px; }
 
 
-      .back-to-top, .theme-toggle-float {
-        width: 38px; height: 38px; right: 16px;
+      .back-to-top {
+        width: 38px; height: 38px; right: 25px; bottom: 92px;
       }
       .add-fab-btn {
         right: 16px; bottom: 20px;
       }
-      .theme-toggle-float { bottom: 92px; }
-      .back-to-top.show ~ .theme-toggle-float { bottom: 92px !important; }
-      .back-to-top { bottom: 144px; }
     }
 
     @media (max-width: 360px) {
       .page-title { font-size: 20px; }
-      .back-to-top, .theme-toggle-float { width: 30px; height: 30px; right: 10px; }
+      .back-to-top { width: 34px; height: 34px; right: 28px; }
     }
 `;
 }
